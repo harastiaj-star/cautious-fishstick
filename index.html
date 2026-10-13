@@ -128,6 +128,8 @@ pre.code { margin: 0; background: var(--paper); border: 1.5px solid var(--line);
 /* canvases */
 .canvas-box { position: relative; width: 100%; line-height: 0; background: var(--aloe); outline: 1.5px solid var(--line); }
 .canvas-box canvas { width: 100%; height: auto; display: block; }
+.canvas-box canvas.sheet-view { width: auto; max-width: 100%; max-height: 80vh; margin: 0 auto; }
+.canvas-box:has(canvas.sheet-view) { background: var(--aloe); padding: 14px; }
 .canvas-box .before { position: absolute; inset: 0; }
 .canvas-box .split { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--paper); box-shadow: 0 0 0 1px var(--ink); pointer-events: none; }
 .tag { position: absolute; top: 10px; font-size: 12px; line-height: 1; letter-spacing: .12em; background: var(--paper); color: var(--ink); padding: 6px 9px 4px; border-radius: 999px; }
@@ -316,6 +318,24 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
 .zine-page select { font-size: 13px; }
 .fold-steps { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; line-height: 1.5; color: var(--ink); }
 
+
+/* cyanotype */
+.cy-timer { gap: 10px; }
+.cy-clock { font-size: clamp(54px, 9vw, 88px); line-height: 1; color: #1b3f6b; font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.cy-clock.done { color: var(--sun); }
+
+
+/* live camera */
+.cam-box { position: relative; width: 100%; background: #1e2433; outline: 1.5px solid var(--line); line-height: 0; min-height: 240px; display: grid; place-items: center; }
+.cam-box canvas { width: 100%; height: auto; display: block; max-height: 74vh; object-fit: contain; }
+.cam-msg { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px; text-align: center; line-height: 1.45; background: rgba(30, 36, 51, .82); color: var(--paper); }
+.cam-msg p { max-width: 42ch; font-size: 15px; }
+.cam-msg .btn.ghost { color: var(--paper); box-shadow: inset 0 0 0 1.5px rgba(247, 240, 221, .6); }
+.cam-msg .btn.ghost:hover { background: rgba(247, 240, 221, .12); }
+.cam-bar { justify-content: center; }
+.cam-shoot { font-size: 17px; padding: 14px 26px 12px; border-radius: 999px; }
+.btn:disabled { opacity: .45; cursor: default; }
+
 /* fine print */
 .legal { max-width: 68ch; display: flex; flex-direction: column; gap: 10px; }
 .legal h3 { font-size: 18px; letter-spacing: .04em; margin-top: 14px; color: var(--clay); }
@@ -414,7 +434,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
         <h3 class="home-h">What's here</h3>
         <div class="home-tiles">
           <button class="home-tile" data-go="design"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 50 L30 10 L40 14 L26 52 Z"/><path d="M26 52 L46 22 L54 28 L36 56 Z"/><circle cx="28" cy="20" r="3"/><circle cx="44" cy="32" r="3"/><path d="M10 56 H58" stroke-width="1.5"/></svg></span><b>Design tools</b><span class="home-desc">Palette, gradients and shadows, type scale, image colors, a letter maker that turns your handwriting into a font, and a mood board.</span><span class="home-go">Open design tools ›</span></button>
-          <button class="home-tile" data-go="photo"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="48" height="38" rx="3"/><path d="M12 46 L26 28 L34 38 L42 30 L52 46"/><circle cx="44" cy="22" r="4"/></svg></span><b>Photo lab</b><span class="home-desc">Adjust, blend modes, print effects, textures, line art, screen print, photo to topo, linocut and golden hour.</span><span class="home-go">Open photo lab ›</span></button>
+          <button class="home-tile" data-go="photo"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="48" height="38" rx="3"/><path d="M12 46 L26 28 L34 38 L42 30 L52 46"/><circle cx="44" cy="22" r="4"/></svg></span><b>Photo lab</b><span class="home-desc">Adjust, blend modes, print effects, textures, line art, screen print, photo to topo, linocut, cyanotype, golden hour, and a live camera that does it all in real time.</span><span class="home-go">Open photo lab ›</span></button>
           <button class="home-tile" data-go="make"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="8" width="30" height="42"/><path d="M15 30 L22 20 L27 26 L31 21 L36 30" stroke-width="2"/><path d="M15 38 H35 M15 43 H29" stroke-width="2"/><circle cx="46" cy="44" r="12"/><circle cx="46" cy="44" r="7" stroke-width="1.5"/></svg></span><b>Make</b><span class="home-desc">Posters, badges, zines, patterns, stamps and patches, field guide cards, trail maps, and mockups on a tote or tee.</span><span class="home-go">Open make ›</span></button>
           <button class="home-tile" data-go="check"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="30" height="36" stroke-dasharray="4 4" stroke-width="2"/><path d="M8 14 H14 V8 M50 14 H44 V8 M8 50 H14 V56 M50 50 H44 V56" stroke-width="2"/><circle cx="40" cy="38" r="9"/><path d="M47 45 L56 54"/></svg></span><b>Check it</b><span class="home-desc">A quick read of any design against the Trailhead style, and a print check for sharpness, bleed and color.</span><span class="home-go">Open check it ›</span></button>
           <button class="home-tile" data-go="handoff"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10 L56 22 L32 34 L8 22 Z"/><path d="M8 32 L32 44 L56 32"/><path d="M8 42 L32 54 L56 42"/></svg></span><b>Photoshop handoff</b><span class="home-desc">How to take what you make here into Photoshop with the layers still in place.</span><span class="home-go">Open photoshop handoff ›</span></button>
@@ -424,7 +444,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
         <div class="home-plugin" id="homePlugin">
           <div>
             <h3 class="home-h">Trailhead for Photoshop</h3>
-            <p>A free panel for Photoshop. It opens files you save here straight from the zip, keeps all ten trail palettes a click away, pulls colors from whatever you have open, and paints paper grain, speckle, halftone, stamp wear and topo lines onto new layers.</p>
+            <p>A free panel for Photoshop. It runs Linocut, Photo to topo, Line art and Cyanotype on the photo you have open, and puts the result on a new layer. It also opens files you save here straight from the zip, keeps all ten trail palettes a click away, pulls colors from your document, and paints paper grain, halftone and other textures.</p>
             <div class="btns"><button class="btn" id="homePluginDl">Download the plugin</button></div>
             <p class="hint">Works with Photoshop 2023 or newer. Textures and pulling colors need Photoshop 2024 or newer.</p>
           </div>
@@ -1183,7 +1203,13 @@ Pine cone prints</textarea></div>
           <p class="lede">Makes a photo look carved into a block and printed by hand. Dark areas print solid, light areas are cut away, and the tones in between turn into gouge marks.</p>
         </div>
         <div class="tool">
-          <div class="stage"><div class="canvas-box"><canvas id="liOut"></canvas></div></div>
+          <div class="stage">
+            <div class="chips" id="liView">
+              <button class="chip" data-v="print" aria-pressed="true">The print</button>
+              <button class="chip" data-v="sheet" aria-pressed="false">Transfer sheet</button>
+            </div>
+            <div class="canvas-box"><canvas id="liOut"></canvas></div>
+          </div>
           <aside class="panel">
             <h3>start from</h3>
             <div class="chips" id="liStyles"></div>
@@ -1208,6 +1234,70 @@ Pine cone prints</textarea></div>
               <button class="btn ghost" data-pin="linocut">Pin to mood board</button>
             </div>
             <p class="hint">In Photoshop the key block and the color block are separate layers, the way you'd carve and print them.</p>
+            <hr>
+            <h3>carve it</h3>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 110px"><label for="liBlock">Block size</label><select id="liBlock"></select></div>
+              <div class="ctl" style="flex:1 1 90px"><label for="liSheet">Paper</label><select id="liSheet"></select></div>
+            </div>
+            <div class="btns"><button class="btn" id="liTransfer">Save transfer sheet</button></div>
+            <p class="hint">A full-size, mirrored print of your design to transfer onto a real block. Black areas stay and print. Hatched areas get carved away. With a second color you get one sheet per block, with matching corner marks to line them up.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- CYANOTYPE -->
+      <section class="page" data-page="cyanotype" hidden>
+        <div class="page-head">
+          <h2>Cyanotype</h2>
+          <p class="lede">Turns a photo into a negative for sun printing. Print the negative on transparency film, lay it on paper coated with cyanotype chemistry, and leave it in the sun. The preview shows roughly how the finished print will look.</p>
+        </div>
+        <div class="tool">
+          <div class="stage">
+            <div class="chips" id="cyView">
+              <button class="chip" data-v="print" aria-pressed="true">The print</button>
+              <button class="chip" data-v="neg" aria-pressed="false">The negative</button>
+              <button class="chip" data-v="sheet" aria-pressed="false">Film sheet</button>
+            </div>
+            <div class="canvas-box"><canvas id="cyOut"></canvas></div>
+            <div class="panel cy-timer">
+              <h3>expose it</h3>
+              <div class="cy-clock" id="cyClock">10:00</div>
+              <div class="chips" id="cyLight"></div>
+              <div class="row">
+                <div class="ctl" style="flex:0 1 120px"><label for="cyMin">Minutes</label><input type="text" id="cyMin" value="10" inputmode="decimal"></div>
+                <div class="btns" style="align-self:flex-end">
+                  <button class="btn" id="cyGo">Start</button>
+                  <button class="btn ghost" id="cyReset">Reset</button>
+                </div>
+              </div>
+              <p class="hint">These times are rough starting points. Every paper, batch of chemistry and day is different, so make a test strip first: cover the print with card and slide it back a little every few minutes. When the time is up, rinse the print in cool water for about five minutes, until the water runs clear. The blue deepens as it dries over the next day.</p>
+            </div>
+          </div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="chips" id="cyStyles"></div>
+            <hr>
+            <h3>tune it</h3>
+            <div class="ctl"><label for="cyBright">Brightness <output></output></label><input type="range" id="cyBright" min="-50" max="50" value="0"></div>
+            <div class="ctl"><label for="cyContrast">Contrast <output></output></label><input type="range" id="cyContrast" min="-50" max="50" value="10"></div>
+            <div class="ctl"><label for="cyCurve">Curve for the chemistry <output></output></label><input type="range" id="cyCurve" min="0" max="100" value="55"></div>
+            <label class="check"><input type="checkbox" id="cyEdges" checked> Brushed edges in the preview</label>
+            <label class="check"><input type="checkbox" id="cyMirror" checked> Mirror the negative</label>
+            <label class="check"><input type="checkbox" id="cyWedge" checked> Add a test strip to the film sheet</label>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 110px"><label for="cySize">Print size</label><select id="cySize"></select></div>
+              <div class="ctl" style="flex:1 1 90px"><label for="cySheet">Film sheet</label><select id="cySheet"></select></div>
+            </div>
+            <hr>
+            <h3>save it</h3>
+            <div class="btns">
+              <button class="btn" id="cyFilm">Save film sheet</button>
+              <button class="btn ghost" id="cyPNG">Save preview</button>
+              <button class="btn ghost" id="cyPSD">Save for Photoshop</button>
+              <button class="btn ghost" data-pin="cyanotype">Pin to mood board</button>
+            </div>
+            <p class="hint">The film sheet is a 300 dpi image at true size. Print it on inkjet transparency film at 100% with no scaling. Mirroring puts the ink side against the paper, which keeps the print sharp. The curve corrects for how cyanotype handles midtones. If your prints come out too dark in the middle, raise it. If they look flat, lower it.</p>
           </aside>
         </div>
       </section>
@@ -1237,6 +1327,48 @@ Pine cone prints</textarea></div>
               <button class="btn ghost" data-pin="relight">Pin to mood board</button>
             </div>
             <p class="hint">The sun marker only shows here. It never ends up in your saved files.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- LIVE CAMERA -->
+      <section class="page" data-page="camera" hidden>
+        <div class="page-head">
+          <h2>Live camera</h2>
+          <p class="lede">Point your phone or webcam at something and watch it turn into a linocut, a topo map, line art or a cyanotype as you move. Take a photo to keep working on it at full quality. The video stays on your device and never gets uploaded.</p>
+        </div>
+        <div class="tool">
+          <div class="stage">
+            <div class="cam-box" id="camBox">
+              <canvas id="camOut" width="640" height="480" aria-label="Live camera preview"></canvas>
+              <span class="tag r" id="camFps" hidden></span>
+              <div class="cam-msg" id="camMsg">
+                <p id="camMsgText">Your browser will ask before the camera turns on.</p>
+                <div class="btns" style="justify-content:center">
+                  <button class="btn" id="camStart">Turn on the camera</button>
+                  <button class="btn ghost" id="camStill" hidden>Try it on a photo instead</button>
+                </div>
+              </div>
+            </div>
+            <div class="btns cam-bar">
+              <button class="btn cam-shoot" id="camShoot" disabled>Take photo</button>
+              <button class="btn ghost" id="camFlip" disabled>Switch camera</button>
+              <button class="btn ghost" id="camStop" disabled>Turn off</button>
+            </div>
+          </div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="chips" id="camModes"></div>
+            <hr>
+            <h3>tune it</h3>
+            <div class="ctl"><label for="camDetail">Detail <output></output></label><input type="range" id="camDetail" min="0" max="100" value="50"></div>
+            <div class="ctl"><label for="camQuality">Preview</label><select id="camQuality"><option value="360">Smooth</option><option value="540" selected>Balanced</option><option value="760">Sharp</option></select></div>
+            <label class="check"><input type="checkbox" id="camMirror"> Mirror the preview</label>
+            <p class="hint">Colors come from each tool, so pick a style in Linocut or Photo to topo first if you want a different look.</p>
+            <hr>
+            <h3>save it</h3>
+            <p class="hint">Take photo saves a full-size snapshot as your working photo and opens it in the matching tool, where you can fine-tune and save it for Photoshop.</p>
+            <div class="btns"><button class="btn ghost" id="camSaveFrame" disabled>Save this frame</button></div>
           </aside>
         </div>
       </section>
@@ -1483,7 +1615,7 @@ Pine cone prints</textarea></div>
             <div class="file"><b>.png</b><span class="from">from every photo tool and Gradient</span><p>A flat image, good for sharing or dropping straight into a layout.</p></div>
             <div class="file"><b>.svg</b><span class="from">from Line art</span><p>Every line as a vector, so it scales to any size and opens in Illustrator.</p></div>
             <div class="file"><b>.otf</b><span class="from">from Letter maker</span><p>Your own font. Double-click to install it, then restart Photoshop to see it in the font list.</p></div>
-            <div class="next"><span class="script">the trailhead panel</span><p>A Photoshop plugin that opens these zips directly, keeps all ten palettes in a panel, and paints grain, speckle, halftone, stamp wear and topo lines onto new layers. You install it once with Adobe's free UXP Developer Tool, and it appears under Plugins › Trailhead.</p></div>
+            <div class="next"><span class="script">the trailhead panel</span><p>A Photoshop plugin that opens these zips directly, runs the Linocut, topo, line art and cyanotype filters on any photo you have open, keeps all ten palettes in a panel, and paints textures onto new layers. Download it from the home page. Once it's installed, it appears under Plugins › Trailhead.</p></div>
           </div>
         </div>
       </section>
@@ -1808,14 +1940,14 @@ document.addEventListener("paste", e => {
 const SECTIONS = {
   home: { name: "Home", tabs: [["home", "Home", ""]] },
   design: { name: "Design tools", tabs: [["palette", "Palette", "find your colors"], ["gradient", "Gradient & shadow", "soft light, long shadows"], ["type", "Type scale", "say it loud"], ["extract", "Image colors", "what's it made of?"], ["letters", "Letter maker", "your own hand"], ["moodboard", "Mood board", "gather the good stuff"]] },
-  photo: { name: "Photo lab", tabs: [["adjust", "Adjust", "set the mood"], ["blend", "Blend modes", "layer it up"], ["effects", "Print effects", "fresh off the press"], ["textures", "Texture maker", "rough it up"], ["lineart", "Line art", "draw it out"], ["screenprint", "Screen print", "ink by ink"], ["topo", "Photo to topo", ""], ["linocut", "Linocut", ""], ["relight", "Golden hour", ""]] },
+  photo: { name: "Photo lab", tabs: [["adjust", "Adjust", "set the mood"], ["blend", "Blend modes", "layer it up"], ["effects", "Print effects", "fresh off the press"], ["textures", "Texture maker", "rough it up"], ["lineart", "Line art", "draw it out"], ["screenprint", "Screen print", "ink by ink"], ["topo", "Photo to topo", ""], ["linocut", "Linocut", ""], ["cyanotype", "Cyanotype", ""], ["relight", "Golden hour", ""], ["camera", "Live camera", ""]] },
   make: { name: "Make", tabs: [["poster", "Poster maker", ""], ["badge", "Badge maker", ""], ["zine", "Zine maker", ""], ["pattern", "Pattern maker", ""], ["stamp", "Stamps & patches", ""], ["fieldguide", "Field guide card", ""], ["trailmap", "Trail map", ""], ["mockups", "Mockups", ""]] },
   check: { name: "Check it", tabs: [["director", "Art director", ""], ["printcheck", "Print check", ""]] },
   handoff: { name: "Photoshop handoff", tabs: [["handoff", "Photoshop handoff", ""]] },
   about: { name: "About", tabs: [["about", "About", ""]] },
   fine: { name: "The fine print", tabs: [["privacy", "Privacy", ""], ["terms", "Terms of use", ""], ["credits", "Credits", ""]] }
 };
-const PHOTO = new Set(["extract", "adjust", "blend", "effects", "lineart", "screenprint", "topo", "linocut", "relight"]);
+const PHOTO = new Set(["extract", "adjust", "blend", "effects", "lineart", "screenprint", "topo", "linocut", "cyanotype", "relight"]);
 const lastTab = { home: "home", design: "palette", photo: "adjust", make: "poster", check: "director", handoff: "handoff", about: "about", fine: "privacy" };
 let current = "palette";
 const rendered = {};
@@ -1846,6 +1978,7 @@ function show(tab) {
   if (tab === "stamp") stShow();
   if (tab === "fieldguide") fgShow();
   if (tab === "home") homeDemo();
+  if (tab === "camera") camShow(); else if (typeof camStream !== "undefined" && camStream) camStop();
 }
 $("#trailTabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) show(b.dataset.tab); });
 $$(".sec").forEach(b => b.addEventListener("click", () => { show(lastTab[b.dataset.sec]); window.scrollTo({ top: 0 }); }));
@@ -3121,7 +3254,7 @@ function grainLayer(W, H, ink) {
   const t = makeTexture("Paper grain", Math.round(W / 2), Math.round(H / 2), { amount: 70, scale: 4 }, 11, ink), c = newCanvas(W, H);
   c.getContext("2d").drawImage(t, 0, 0, W, H); grainCache = { [key]: c }; return c;
 }
-const SOURCE_NAMES = ["Poster", "Badge", "Trail map", "Line art", "Screen print", "Photo to topo", "Linocut", "Golden hour", "Mood board", "Texture", "Working photo", "My file"];
+const SOURCE_NAMES = ["Poster", "Badge", "Trail map", "Line art", "Screen print", "Photo to topo", "Linocut", "Cyanotype", "Golden hour", "Mood board", "Texture", "Working photo", "My file"];
 const uploads = {};
 function fillSourceSelect(sel, def, tool) { sel.innerHTML = SOURCE_NAMES.filter(n => n !== "My file" || uploads[tool]).map(n => `<option>${n}</option>`).join(""); sel.value = def; }
 async function getSource(name, tool, opts = {}) {
@@ -3129,6 +3262,7 @@ async function getSource(name, tool, opts = {}) {
   if (name === "Poster") return renderPoster({ preview: !!opts.preview }).composite;
   if (name === "Photo to topo") return renderTopo().composite;
   if (name === "Linocut") return renderLinocut().composite;
+  if (name === "Cyanotype") return renderCyanotype().print;
   if (name === "Golden hour") return renderRelight().composite;
   if (name === "Badge") return renderBadge().composite;
   if (name === "Trail map") { tmEnsure(); return renderMap().composite; }
@@ -3902,11 +4036,11 @@ function liApply(k) { liStyle = k; const s = LI_STYLES[k]; ["ink", "ink2", "pape
 liApply(liStyle);
 $("#liStyles").addEventListener("click", e => { const b = e.target.closest("[data-li]"); if (b) { liApply(b.dataset.li); scheduleLI(); } });
 ["liLevel", "liSize", "liAngle", "liEdges", "liWear", "liTwo", "liInk", "liInk2", "liPaper"].forEach(id => $("#" + id).addEventListener("input", () => { if (/Ink|Paper|Two/.test(id)) { liStyle = null; $$("#liStyles .chip").forEach(c => c.setAttribute("aria-pressed", "false")); } scheduleLI(); }));
-function renderLinocut() {
-  const G = grayOf(src, 1200), { W, H } = G, k = W / 1200, ink = $("#liInk").value, ink2 = $("#liInk2").value, paperHex = $("#liPaper").value, lightInk = lum(ink) > lum(paperHex);
+function renderLinocut(opts = {}) {
+  const G = grayOf(src, opts.maxSide || 1200), { W, H } = G, k = W / 1200, ink = $("#liInk").value, ink2 = $("#liInk2").value, paperHex = $("#liPaper").value, lightInk = lum(ink) > lum(paperHex);
   const g = blur3(G.g, W, H, Math.max(1, Math.round(k))), soft = blur3(G.g, W, H, Math.max(2, Math.round(6 * k)));
   const size = +$("#liSize").value * Math.max(1, k), ang = +$("#liAngle").value * Math.PI / 180, ca = Math.cos(ang), sa = Math.sin(ang), shift = +$("#liLevel").value / 100 * .3;
-  const lo = .3 + shift, hi = .64 + shift, eThr = .3 - +$("#liEdges").value / 100 * .22, wear = +$("#liWear").value / 100;
+  const lo = .3 + shift, hi = .64 + shift, eThr = .3 - +$("#liEdges").value / 100 * .22, wear = opts.clean ? 0 : +$("#liWear").value / 100;
   const n = makeNoise(13), n2 = makeNoise(29), r = rng(41), key = new Float32Array(W * H), blk = new Float32Array(W * H);
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const i = y * W + x; let t = g[i]; if (lightInk) t = 1 - t;
@@ -3923,15 +4057,346 @@ function renderLinocut() {
   const layers = [mkLayer(W, H, "Paper", x => { x.fillStyle = paperHex; x.fillRect(0, 0, W, H); })];
   if ($("#liTwo").checked) { const c = alphaToInk(blk, W, H, ink2); layers.push({ name: "Color block", canvas: c, mode: lightInk ? "source-over" : "multiply", left: Math.round(3 * k), top: Math.round(2 * k) }); }
   layers.push({ name: "Key block", canvas: alphaToInk(key, W, H, ink), mode: lightInk ? "source-over" : "multiply" });
-  liResult = { W, H, layers, composite: compose(W, H, layers) };
+  liResult = { W, H, layers, composite: compose(W, H, layers), key, blk, two: $("#liTwo").checked };
   return liResult;
 }
 let liT = 0;
 function scheduleLI() { clearTimeout(liT); liT = setTimeout(drawLI, 60); }
-function drawLI() { showOutputs(["liLevel", "liSize", "liAngle", "liEdges", "liWear"]); const r = renderLinocut(), o = $("#liOut"); o.width = r.W; o.height = r.H; o.getContext("2d").drawImage(r.composite, 0, 0); }
+function drawLI() {
+  showOutputs(["liLevel", "liSize", "liAngle", "liEdges", "liWear"]);
+  const r = renderLinocut(), o = $("#liOut"); o.classList.toggle("sheet-view", liView === "sheet");
+  if (liView === "sheet") { const sh = liTransferSheets(110, 1200)[0].canvas; o.width = sh.width; o.height = sh.height; o.getContext("2d").drawImage(sh, 0, 0); return; }
+  o.width = r.W; o.height = r.H; o.getContext("2d").drawImage(r.composite, 0, 0);
+}
 const liName = () => slug(imgInfo.name) + "-linocut";
 $("#liPNG").addEventListener("click", async () => saveFile(liName() + ".png", await toBlob((liResult || renderLinocut()).composite)));
 $("#liPSD").addEventListener("click", () => { const r = liResult || renderLinocut(); savePSD(liName(), r.layers.map(l => ({ name: l.name, canvas: l.canvas, mode: l.mode, left: l.left, top: l.top })), cloneCanvas(r.composite)); });
+/* ---------- linocut transfer sheet ---------- */
+const SHEETS = { "Letter": [8.5, 11], "A4": [8.27, 11.69] };
+const LI_BLOCKS = { "4 × 6 in": [4, 6], "5 × 7 in": [5, 7], "6 × 8 in": [6, 8], "8 × 10 in": [8, 10] };
+$("#liBlock").innerHTML = Object.keys(LI_BLOCKS).map(k => `<option>${k}</option>`).join(""); $("#liBlock").value = "5 × 7 in";
+$("#liSheet").innerHTML = Object.keys(SHEETS).map(k => `<option>${k}</option>`).join("");
+let liView = "print";
+$("#liView").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if (!b) return; liView = b.dataset.v; $$("#liView .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); scheduleLI(); });
+["liBlock", "liSheet"].forEach(id => $("#" + id).addEventListener("input", () => { if (liView === "sheet") scheduleLI(); }));
+/* Crop a canvas to an aspect ratio (w / h), centered, like object-fit: cover. */
+function coverCrop(canvas, aspect, maxSide) {
+  let w = canvas.width, h = w / aspect; if (h > canvas.height) { h = canvas.height; w = h * aspect; }
+  const s = maxSide ? Math.max(1, maxSide / Math.max(w, h)) : 1, c = newCanvas(Math.round(w * s), Math.round(h * s));
+  const x = c.getContext("2d"); x.imageSmoothingQuality = "high"; x.drawImage(canvas, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h, 0, 0, c.width, c.height); return c;
+}
+/* Block and page sizes in inches, turned to match the photo's orientation. */
+function sheetLayout(blockIn, sheetIn, landscape) {
+  const b = landscape ? [Math.max(...blockIn), Math.min(...blockIn)] : [Math.min(...blockIn), Math.max(...blockIn)];
+  const p = landscape ? [Math.max(...sheetIn), Math.min(...sheetIn)] : [Math.min(...sheetIn), Math.max(...sheetIn)];
+  return { b, p };
+}
+function hatchPattern(x, u) {
+  const t = newCanvas(Math.max(4, Math.round(14 * u)), Math.max(4, Math.round(14 * u))), tx = t.getContext("2d");
+  tx.strokeStyle = "#bdb6a8"; tx.lineWidth = Math.max(1, 1.4 * u); tx.beginPath();
+  for (let k = -1; k <= 1; k++) { tx.moveTo(k * t.width, t.height); tx.lineTo(k * t.width + t.width, 0); }
+  tx.stroke(); return x.createPattern(t, "repeat");
+}
+function cropMarks(x, bx, by, bw, bh, u) {
+  const g = 6 * u, L = 14 * u; x.strokeStyle = "#141210"; x.lineWidth = Math.max(1, 1.2 * u); x.beginPath();
+  [[bx, by, -1, -1], [bx + bw, by, 1, -1], [bx, by + bh, -1, 1], [bx + bw, by + bh, 1, 1]].forEach(([cx, cy, sx, sy]) => {
+    x.moveTo(cx + sx * g, cy); x.lineTo(cx + sx * (g + L), cy); x.moveTo(cx, cy + sy * g); x.lineTo(cx, cy + sy * (g + L));
+  });
+  x.stroke();
+}
+function sheetText(x, str, px, X, Y, align = "left", color = "#141210") { x.font = `${px}px "TAY Dumpling", sans-serif`; x.fillStyle = color; x.textAlign = align; x.textBaseline = "alphabetic"; x.fillText(str.toUpperCase(), X, Y); }
+function sheetWrap(x, str, px, X, Y, maxW, lh) { x.font = `${px}px "TAY Dumpling", sans-serif`; x.fillStyle = "#141210"; x.textAlign = "left"; const words = str.split(" "); let line = "", yy = Y; words.forEach(w => { const t = line ? line + " " + w : w; if (x.measureText(t.toUpperCase()).width > maxW && line) { x.fillText(line.toUpperCase(), X, yy); line = w; yy += lh; } else line = t; }); if (line) x.fillText(line.toUpperCase(), X, yy); return yy; }
+/* Run the linocut on a different image without disturbing the tool's current result. */
+function liRenderFor(canvas, maxSide, clean) {
+  const keepSrc = src, keepR = liResult; src = canvas;
+  try { return renderLinocut({ maxSide, clean }); } finally { src = keepSrc; liResult = keepR; }
+}
+function liTransferSheets(dpi, maxRender) {
+  const landscape = src.width >= src.height, { b, p } = sheetLayout(LI_BLOCKS[$("#liBlock").value], SHEETS[$("#liSheet").value], landscape);
+  const crop = coverCrop(src, b[0] / b[1], Math.max(1200, Math.min(maxRender, Math.round(Math.max(...b) * dpi))));
+  const r = liRenderFor(crop, Math.max(crop.width, crop.height), true);
+  const blocks = [["Key block", r.key]]; if (r.two) blocks.push(["Color block", r.blk]);
+  const PW = Math.round(p[0] * dpi), PH = Math.round(p[1] * dpi), BW = Math.round(b[0] * dpi), BH = Math.round(b[1] * dpi), u = dpi / 100;
+  const bx = Math.round((PW - BW) / 2), by = Math.round((PH - BH) / 2);
+  return blocks.map(([name, a]) => {
+    /* Crisp black where ink stays. Hatching only in the open areas you'd actually gouge out, not in the thin gaps between cuts. */
+    const N = r.W * r.H, inkA = new Float32Array(N), open = new Float32Array(N);
+    for (let i = 0; i < N; i++) { inkA[i] = a[i] > .5 ? 1 : 0; open[i] = 1 - inkA[i]; }
+    const spread = blur3(open, r.W, r.H, Math.max(2, Math.round(r.W / 260))), hatchA = new Float32Array(N);
+    for (let i = 0; i < N; i++) hatchA[i] = clamp((spread[i] - .82) * 12, 0, 1) * open[i];
+    const blockC = newCanvas(r.W, r.H), bxx = blockC.getContext("2d"), ur = r.W / (b[0] * 100);
+    bxx.fillStyle = hatchPattern(bxx, ur); bxx.fillRect(0, 0, r.W, r.H);
+    bxx.globalCompositeOperation = "destination-in"; bxx.drawImage(alphaToInk(hatchA, r.W, r.H, "#000"), 0, 0);
+    bxx.globalCompositeOperation = "source-over"; bxx.drawImage(alphaToInk(inkA, r.W, r.H, "#141210"), 0, 0);
+    const c = newCanvas(PW, PH), x = c.getContext("2d");
+    x.fillStyle = "#ffffff"; x.fillRect(0, 0, PW, PH);
+    x.save(); x.translate(bx + BW, by); x.scale(-1, 1); x.imageSmoothingQuality = "high"; x.drawImage(blockC, 0, 0, BW, BH); x.restore();
+    x.strokeStyle = "#141210"; x.lineWidth = Math.max(1, 1.2 * u); x.setLineDash([6 * u, 5 * u]); x.strokeRect(bx, by, BW, BH); x.setLineDash([]);
+    cropMarks(x, bx, by, BW, BH, u);
+    const top = by - 0.28 * dpi, fs = Math.round(0.1 * dpi);
+    if (top > fs) {
+      sheetText(x, `Trailhead · linocut transfer · ${name} · ${$("#liBlock").value.replace(" in", "")} in`, fs, bx, top);
+      sheetText(x, "Mirrored for carving", fs, bx + BW, top, "right");
+    }
+    const bottom = by + BH + 0.36 * dpi;
+    if (PH - bottom > fs * 1.5) sheetWrap(x, name === "Key block"
+      ? "Black stays and prints. Carve away the hatched areas. Lay this sheet face down on the block and rub the back with a spoon, or slide carbon paper underneath and trace."
+      : "Second color. Carve away the hatched areas. Line this sheet up with the key block on the corner marks so the colors register.", Math.round(0.085 * dpi), bx, bottom, BW, Math.round(0.13 * dpi));
+    return { name, canvas: c };
+  });
+}
+$("#liTransfer").addEventListener("click", async () => {
+  toast("Building your transfer sheet. Big blocks take a few seconds.");
+  await new Promise(r => setTimeout(r, 30));
+  try {
+    const sheets = liTransferSheets(300, 2400), base = liName() + "-transfer-" + slug($("#liBlock").value);
+    if (sheets.length === 1) saveFile(base + ".png", await pngWithDpi(sheets[0].canvas, 300));
+    else saveFile(base + ".zip", makeZip(await Promise.all(sheets.map(async sh => ({ name: base + "-" + slug(sh.name) + ".png", data: await pngWithDpi(sh.canvas, 300) })))));
+  } catch (e) { toast("Couldn't build the transfer sheet: " + e.message); }
+});
+
+
+/* =========================================================
+   CYANOTYPE
+   ========================================================= */
+const CY_STYLES = {
+  "Classic blue": ["#f3efe4", "#8fb3cf", "#2f6a9a", "#0f3560"],
+  "Deep indigo": ["#f6f3ea", "#9db0cc", "#2c4f80", "#0a2246"],
+  "Tea toned": ["#ecdcc0", "#c3b29c", "#6e5b5e", "#2f2833"],
+  "Coffee toned": ["#e7d4b2", "#bf9f7c", "#6d4c37", "#2b1d16"]
+};
+const CY_SIZES = { "Whole sheet": null, "4 × 6 in": [4, 6], "5 × 7 in": [5, 7], "8 × 10 in": [8, 10] };
+const CY_LIGHT = { "Bright sun": 10, "Hazy sun": 20, "Cloudy": 35, "UV lamp": 15 };
+let cyStyle = "Classic blue", cyView = "print", cyResult = null;
+$("#cyStyles").innerHTML = Object.keys(CY_STYLES).map(k => `<button class="chip" data-cy="${k}" aria-pressed="${k === cyStyle}">${k}</button>`).join("");
+$("#cySize").innerHTML = Object.keys(CY_SIZES).map(k => `<option>${k}</option>`).join("");
+$("#cySheet").innerHTML = Object.keys(SHEETS).map(k => `<option>${k}</option>`).join("");
+$("#cyLight").innerHTML = Object.entries(CY_LIGHT).map(([k, m]) => `<button class="chip" data-light="${m}" aria-pressed="${m === 10}">${k} · ${m} min</button>`).join("");
+$("#cyStyles").addEventListener("click", e => { const b = e.target.closest("[data-cy]"); if (!b) return; cyStyle = b.dataset.cy; $$("#cyStyles .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); scheduleCY(); });
+$("#cyView").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if (!b) return; cyView = b.dataset.v; $$("#cyView .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); scheduleCY(); });
+["cyBright", "cyContrast", "cyCurve", "cyEdges", "cyMirror", "cyWedge", "cySize", "cySheet"].forEach(id => $("#" + id).addEventListener("input", scheduleCY));
+const cyA = () => .4 + +$("#cyCurve").value / 100 * 4.6;
+/* p is the photo's tone (0 black, 1 white). T is how much light the negative lets through.
+   Cyanotype darkens quickly at first and then levels off, so midtones on the negative are opened up to keep them from going too dark. */
+function cyTone(canvas, maxSide) {
+  const G = grayOf(canvas, maxSide), { W, H } = G, b = +$("#cyBright").value / 100 * .6, c = 1 + +$("#cyContrast").value / 100 * 1.6, a = cyA(), ea = 1 - Math.exp(-a);
+  const P = new Float32Array(W * H), T = new Float32Array(W * H);
+  for (let i = 0; i < P.length; i++) { const p = clamp((G.g[i] - .5) * c + .5 + b, 0, 1); P[i] = p; T[i] = -Math.log(1 - (1 - p) * ea) / a; }
+  return { W, H, P, T };
+}
+function cyRamp(stops) { const rgb = stops.map(hexToRgb); return t => { const f = clamp(t, 0, 1) * (rgb.length - 1), i = Math.min(rgb.length - 2, Math.floor(f)), u = f - i; return [0, 1, 2].map(k => rgb[i][k] + (rgb[i + 1][k] - rgb[i][k]) * u); }; }
+function cyPrintCanvas(t) {
+  const { W, H, P } = t, ramp = cyRamp(CY_STYLES[cyStyle]), paper = hexToRgb(CY_STYLES[cyStyle][0]), n = makeNoise(17), n2 = makeNoise(53), k = W / 1200, edges = $("#cyEdges").checked;
+  const c = newCanvas(W, H), x = c.getContext("2d"), id = x.createImageData(W, H), d = id.data, m = Math.min(W, H);
+  for (let y = 0; y < H; y++) for (let xx = 0; xx < W; xx++) {
+    const i = y * W + xx;
+    let D = 1 - P[i]; D = D * .94 + (n(xx / (3 * k), y / (3 * k)) - .5) * .06 + (fbm(n2, xx / (160 * k), y / (160 * k), 3) - .5) * .08;
+    let col = ramp(D), coat = 1;
+    if (edges) {
+      const e = Math.min(xx, W - 1 - xx, y, H - 1 - y) / m, horiz = Math.min(y, H - 1 - y) < Math.min(xx, W - 1 - xx);
+      const streak = horiz ? n2(xx / (90 * k), y / (6 * k)) : n2(xx / (6 * k), y / (90 * k)), edge = .035 + (fbm(n, xx / (70 * k), y / (70 * k), 3) - .5) * .05 + (streak - .5) * .03;
+      coat = clamp((e - edge) * 90, 0, 1);
+    }
+    if (coat < 1) { const stain = .06 * (1 - coat) * n2(xx / (20 * k), y / (20 * k)); col = col.map((v, j) => paper[j] * (1 - coat) + v * coat - stain * 40 * (j === 2 ? -.4 : 1) * (1 - coat)); }
+    d[i * 4] = col[0]; d[i * 4 + 1] = col[1]; d[i * 4 + 2] = col[2]; d[i * 4 + 3] = 255;
+  }
+  x.putImageData(id, 0, 0); return c;
+}
+function cyNegCanvas(t, mirror) {
+  const { W, H, T } = t, c = newCanvas(W, H), x = c.getContext("2d"), id = x.createImageData(W, H), d = id.data;
+  for (let y = 0; y < H; y++) for (let xx = 0; xx < W; xx++) { const v = Math.round(T[y * W + (mirror ? W - 1 - xx : xx)] * 255), j = (y * W + xx) * 4; d[j] = d[j + 1] = d[j + 2] = v; d[j + 3] = 255; }
+  x.putImageData(id, 0, 0); return c;
+}
+function renderCyanotype() { const t = cyTone(src, 1200); cyResult = { t, print: cyPrintCanvas(t), neg: cyNegCanvas(t, false) }; return cyResult; }
+function cySheetCanvas(dpi, maxRender) {
+  const landscape = src.width >= src.height, sheetIn = SHEETS[$("#cySheet").value], size = CY_SIZES[$("#cySize").value], wedge = $("#cyWedge").checked;
+  const p = landscape ? [Math.max(...sheetIn), Math.min(...sheetIn)] : [Math.min(...sheetIn), Math.max(...sheetIn)];
+  const margin = .5, band = wedge ? .95 : 0, aspect = src.width / src.height;
+  let b;
+  if (size) b = landscape ? [Math.max(...size), Math.min(...size)] : [Math.min(...size), Math.max(...size)];
+  else { let w = p[0] - margin * 2, h = w / aspect; if (h > p[1] - margin * 2 - band) { h = p[1] - margin * 2 - band; w = h * aspect; } b = [w, h]; }
+  const fitsWedge = wedge && b[1] + band <= p[1] - .4;
+  const PW = Math.round(p[0] * dpi), PH = Math.round(p[1] * dpi), BW = Math.round(b[0] * dpi), BH = Math.round(b[1] * dpi), u = dpi / 100;
+  const bandPx = fitsWedge ? Math.round(band * dpi) : 0, bx = Math.round((PW - BW) / 2), by = Math.round((PH - BH - bandPx) / 2);
+  const crop = size ? coverCrop(src, b[0] / b[1], Math.min(maxRender, Math.max(BW, BH))) : coverCrop(src, aspect, Math.min(maxRender, Math.max(BW, BH)));
+  const t = cyTone(crop, Math.max(crop.width, crop.height)), neg = cyNegCanvas(t, $("#cyMirror").checked);
+  const c = newCanvas(PW, PH), x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, PW, PH);
+  x.imageSmoothingQuality = "high"; x.drawImage(neg, bx, by, BW, BH);
+  cropMarks(x, bx, by, BW, BH, u);
+  const fs = Math.round(.1 * dpi);
+  if (by - .28 * dpi > fs) { sheetText(x, `Trailhead · cyanotype negative · ${b.map(v => +v.toFixed(2)).join(" × ")} in`, fs, bx, by - .28 * dpi); sheetText(x, $("#cyMirror").checked ? "Ink side down" : "Ink side up", fs, bx + BW, by - .28 * dpi, "right"); }
+  if (fitsWedge) {
+    const steps = 21, wy = by + BH + Math.round(.3 * dpi), wh = Math.round(.32 * dpi), ww = Math.min(BW, PW - dpi), wx = Math.round((PW - ww) / 2), sw = ww / steps;
+    for (let i = 0; i < steps; i++) { const v = Math.round(i / (steps - 1) * 255); x.fillStyle = `rgb(${v},${v},${v})`; x.fillRect(Math.round(wx + i * sw), wy, Math.ceil(sw), wh); }
+    x.strokeStyle = "#141210"; x.lineWidth = Math.max(1, u); x.strokeRect(wx, wy, ww, wh);
+    const ls = Math.round(.07 * dpi); for (let i = 0; i < steps; i += 2) sheetText(x, String(i + 1), ls, wx + (i + .5) * sw, wy + wh + ls * 1.4, "center");
+    sheetText(x, "Test strip. Expose it with the print. If the clear end isn't deep blue after rinsing, expose longer.", ls, wx, wy + wh + ls * 3, "left");
+  }
+  return { canvas: c, dropped: wedge && !fitsWedge };
+}
+let cyT = 0;
+function scheduleCY() { clearTimeout(cyT); cyT = setTimeout(drawCY, 60); }
+function drawCY() {
+  showOutputs(["cyBright", "cyContrast", "cyCurve"]);
+  const o = $("#cyOut"), x = o.getContext("2d"); o.classList.toggle("sheet-view", cyView === "sheet");
+  if (cyView === "sheet") { const sh = cySheetCanvas(110, 1200).canvas; o.width = sh.width; o.height = sh.height; o.getContext("2d").drawImage(sh, 0, 0); return; }
+  const r = renderCyanotype(), img = cyView === "neg" ? r.neg : r.print; o.width = img.width; o.height = img.height; o.getContext("2d").drawImage(img, 0, 0);
+}
+const cyName = () => slug(imgInfo.name) + "-cyanotype";
+$("#cyPNG").addEventListener("click", async () => saveFile(cyName() + ".png", await toBlob((cyResult || renderCyanotype()).print)));
+$("#cyPSD").addEventListener("click", () => { const r = cyResult || renderCyanotype(); savePSD(cyName(), [{ name: "Negative", canvas: cloneCanvas(r.neg) }, { name: "Print preview · " + cyStyle, canvas: cloneCanvas(r.print) }], cloneCanvas(r.print)); });
+$("#cyFilm").addEventListener("click", async () => {
+  toast("Building your film sheet…"); await new Promise(r => setTimeout(r, 30));
+  try { const sh = cySheetCanvas(300, 2400); saveFile(cyName() + "-film-" + slug($("#cySize").value) + ".png", await pngWithDpi(sh.canvas, 300)); if (sh.dropped) setTimeout(() => toast("The test strip didn't fit at this print size, so the sheet has the negative only."), 2600); }
+  catch (e) { toast("Couldn't build the film sheet: " + e.message); }
+});
+/* exposure timer */
+let cyEnd = 0, cyLeft = 600000, cyTick = 0, cyAudio = null;
+const cyFmt = ms => { const s = Math.max(0, Math.ceil(ms / 1000)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
+function cyMinutes() { const m = parseFloat(String($("#cyMin").value).replace(",", ".")); return isFinite(m) && m > 0 ? Math.min(m, 180) : 10; }
+function cyResetTimer() { clearInterval(cyTick); cyTick = 0; cyEnd = 0; cyLeft = cyMinutes() * 60000; $("#cyClock").textContent = cyFmt(cyLeft); $("#cyClock").classList.remove("done"); $("#cyGo").textContent = "Start"; }
+function cyBeep() { try { const a = cyAudio; if (!a) return; [0, .35, .7].forEach(t => { const o = a.createOscillator(), g = a.createGain(); o.frequency.value = 660; g.gain.setValueAtTime(.0001, a.currentTime + t); g.gain.exponentialRampToValueAtTime(.3, a.currentTime + t + .02); g.gain.exponentialRampToValueAtTime(.0001, a.currentTime + t + .28); o.connect(g).connect(a.destination); o.start(a.currentTime + t); o.stop(a.currentTime + t + .3); }); } catch (e) {} }
+$("#cyLight").addEventListener("click", e => { const b = e.target.closest("[data-light]"); if (!b) return; $$("#cyLight .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); $("#cyMin").value = b.dataset.light; cyResetTimer(); });
+$("#cyMin").addEventListener("input", () => { $$("#cyLight .chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.light === $("#cyMin").value.trim()))); if (!cyTick) cyResetTimer(); });
+$("#cyGo").addEventListener("click", () => {
+  try { cyAudio = cyAudio || new (window.AudioContext || window.webkitAudioContext)(); cyAudio.resume && cyAudio.resume(); } catch (e) {}
+  if (cyTick) { clearInterval(cyTick); cyTick = 0; cyLeft = cyEnd - Date.now(); $("#cyGo").textContent = "Keep going"; return; }
+  if (cyLeft <= 0) cyResetTimer();
+  cyEnd = Date.now() + cyLeft; $("#cyGo").textContent = "Pause"; $("#cyClock").classList.remove("done");
+  cyTick = setInterval(() => {
+    const left = cyEnd - Date.now(); $("#cyClock").textContent = cyFmt(left);
+    if (left <= 0) { clearInterval(cyTick); cyTick = 0; cyLeft = 0; $("#cyClock").textContent = "Rinse it"; $("#cyClock").classList.add("done"); $("#cyGo").textContent = "Start"; cyBeep(); toast("Time's up. Rinse the print in cool water."); }
+  }, 250);
+});
+$("#cyReset").addEventListener("click", cyResetTimer);
+
+/* =========================================================
+   LIVE CAMERA
+   Each frame is shrunk to preview size and run through quick versions of the photo tools.
+   Nothing leaves the device: frames go from the video element to a canvas and stop there.
+   ========================================================= */
+const CAM_MODES = { "Linocut": "linocut", "Photo to topo": "topo", "Line art": "lineart", "Cyanotype": "cyanotype" };
+let camMode = "Linocut", camStream = null, camFacing = "environment", camRAF = 0, camStillMode = false, camWork = null, camFrames = [];
+const camVideo = document.createElement("video"); camVideo.muted = true; camVideo.playsInline = true; camVideo.setAttribute("playsinline", ""); camVideo.setAttribute("muted", "");
+$("#camModes").innerHTML = Object.keys(CAM_MODES).map(k => `<button class="chip" data-cam="${k}" aria-pressed="${k === camMode}">${k}</button>`).join("");
+$("#camModes").addEventListener("click", e => { const b = e.target.closest("[data-cam]"); if (!b) return; camMode = b.dataset.cam; $$("#camModes .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); if (camStillMode) camStillRender(); });
+["camDetail", "camQuality", "camMirror"].forEach(id => $("#" + id).addEventListener("input", () => { showOutputs(["camDetail"]); if (camStillMode) camStillRender(); }));
+showOutputs(["camDetail"]);
+const inFrame = (() => { try { return window.top !== window; } catch (e) { return true; } })();
+function camWorkFor(W, H) {
+  if (!camWork || camWork.W !== W || camWork.H !== H) { const c = newCanvas(W, H); camWork = { W, H, c, x: c.getContext("2d", { willReadFrequently: true }), phaseKey: "", phase: null }; }
+  return camWork;
+}
+function camLinoPhase(w, size, ang) {
+  const key = size + "|" + ang; if (w.phaseKey === key) return w.phase;
+  const { W, H } = w, k = W / 1200, n = makeNoise(13), ca = Math.cos(ang), sa = Math.sin(ang), P = new Float32Array(W * H);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const warp = (n(x / (55 * k), y / (55 * k)) - .5) * size * 2.2; P[y * W + x] = .5 + .5 * Math.cos((x * ca + y * sa + warp) / size * Math.PI * 2); }
+  w.phase = P; w.phaseKey = key; return P;
+}
+/* Returns an RGBA ImageData for one frame. g is the frame in gray (0 to 1). */
+function camProcess(w, g, out) {
+  const { W, H } = w, d = out.data, detail = +$("#camDetail").value / 100, k = W / 1200;
+  const paint = (a, inkHex, paperHex) => { const ink = hexToRgb(inkHex), pap = hexToRgb(paperHex); for (let i = 0; i < a.length; i++) { const t = a[i], j = i * 4; d[j] = pap[0] + (ink[0] - pap[0]) * t; d[j + 1] = pap[1] + (ink[1] - pap[1]) * t; d[j + 2] = pap[2] + (ink[2] - pap[2]) * t; d[j + 3] = 255; } };
+  const a = new Float32Array(W * H);
+  if (camMode === "Linocut") {
+    const ink = $("#liInk").value, paper = $("#liPaper").value, lightInk = lum(ink) > lum(paper), b = boxBlur(g, W, H, 1);
+    const size = Math.max(3, +$("#liSize").value * k * 1.1), P = camLinoPhase(w, size, +$("#liAngle").value * Math.PI / 180), shift = +$("#liLevel").value / 100 * .3, lo = .3 + shift, hi = .64 + shift, eThr = .34 - detail * .26;
+    for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) {
+      const i = y * W + x; let t = b[i]; if (lightInk) t = 1 - t;
+      const cover = t < lo ? 1 : t > hi ? 0 : 1 - (t - lo) / (hi - lo); let v = clamp((cover - P[i]) * 3.2 + .5, 0, 1);
+      const e = Math.abs(b[i + 1] - b[i - 1]) + Math.abs(b[i + W] - b[i - W]); if (e > eThr) v = Math.max(v, clamp((e - eThr) * 14, 0, 1));
+      a[i] = v;
+    }
+    paint(a, ink, paper);
+  } else if (camMode === "Photo to topo") {
+    const r = Math.max(1, Math.round((1 + (1 - detail) * 9) * W / 600)), f = blur3(g, W, H, r), n = 10 + detail * 30, inv = $("#toInvert").checked, wgt = Math.max(1.1, +$("#toWeight").value * W / 900);
+    for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) {
+      const i = y * W + x, v = (inv ? 1 - f[i] : f[i]) * n, gx = ((inv ? 1 - f[i + 1] : f[i + 1]) - (inv ? 1 - f[i - 1] : f[i - 1])) * n / 2, gy = ((inv ? 1 - f[i + W] : f[i + W]) - (inv ? 1 - f[i - W] : f[i - W])) * n / 2;
+      const gm = Math.max(.01, Math.hypot(gx, gy)), kk = Math.round(v), dd = Math.abs(v - kk) / gm, ww = kk % 5 === 0 ? wgt * 1.8 : wgt;
+      a[i] = clamp(ww / 2 - dd + .5, 0, 1);
+    }
+    paint(a, $("#toInk").value, $("#toPaper").value);
+  } else if (camMode === "Line art") {
+    /* XDoG: a sharpened difference of two blurs, soft-thresholded. Reads like a quick pen drawing. */
+    const r1 = Math.max(1, Math.round(W / 420)), b1 = blur3(g, W, H, r1), b2 = blur3(g, W, H, Math.round(r1 * 1.8) + 1), eps = .45 - detail * .25;
+    for (let i = 0; i < a.length; i++) { const S = 31 * b1[i] - 30 * b2[i]; a[i] = S > eps ? 0 : clamp(-Math.tanh(6 * (S - eps)), 0, 1); }
+    paint(a, $("#laInk").value, $("#laPaper").value);
+  } else {
+    const ramp = cyRamp(CY_STYLES[cyStyle]), bb = +$("#cyBright").value / 100 * .6, c = 1 + +$("#cyContrast").value / 100 * 1.6;
+    for (let i = 0; i < g.length; i++) { const p = clamp((g[i] - .5) * c + .5 + bb, 0, 1), col = ramp(1 - p), j = i * 4; d[j] = col[0]; d[j + 1] = col[1]; d[j + 2] = col[2]; d[j + 3] = 255; }
+  }
+  return out;
+}
+function camRenderFrom(el, sw, sh) {
+  if (!sw || !sh) return;
+  const q = +$("#camQuality").value, s = Math.min(1, q / Math.max(sw, sh)), W = Math.max(2, Math.round(sw * s)), H = Math.max(2, Math.round(sh * s)), w = camWorkFor(W, H), mirror = $("#camMirror").checked;
+  w.x.save(); if (mirror) { w.x.translate(W, 0); w.x.scale(-1, 1); } w.x.drawImage(el, 0, 0, W, H); w.x.restore();
+  const img = w.x.getImageData(0, 0, W, H), px = img.data, g = new Float32Array(W * H);
+  for (let i = 0; i < g.length; i++) g[i] = (.2126 * px[i * 4] + .7152 * px[i * 4 + 1] + .0722 * px[i * 4 + 2]) / 255;
+  const o = $("#camOut"); if (o.width !== W || o.height !== H) { o.width = W; o.height = H; }
+  o.getContext("2d").putImageData(camProcess(w, g, img), 0, 0);
+}
+function camLoop() {
+  camRAF = requestAnimationFrame(camLoop);
+  if (camVideo.readyState < 2) return;
+  const t0 = performance.now(); camRenderFrom(camVideo, camVideo.videoWidth, camVideo.videoHeight);
+  camFrames.push(performance.now()); while (camFrames.length && camFrames[0] < camFrames[camFrames.length - 1] - 1000) camFrames.shift();
+  if (camFrames.length > 2) { const f = $("#camFps"); f.hidden = false; f.textContent = camFrames.length + " fps"; }
+}
+function camButtons(on) { ["camShoot", "camFlip", "camStop", "camSaveFrame"].forEach(id => $("#" + id).disabled = !on); }
+function camMessage(text, showStill) { $("#camMsg").hidden = false; $("#camMsgText").textContent = text; $("#camStill").hidden = !showStill; $("#camStart").hidden = false; }
+function camFail(e) {
+  const n = e && e.name;
+  let msg;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) msg = inFrame ? "This preview can't use your camera. Open Trailhead on its own website to use Live camera." : "This browser can't use a camera here. Live camera needs a secure (https) address and a recent browser.";
+  else if (n === "NotAllowedError" || n === "SecurityError") msg = inFrame ? "This preview can't use your camera. Open Trailhead on its own website to use Live camera." : "Camera access was blocked. Allow the camera for this site in your browser's settings, then try again.";
+  else if (n === "NotFoundError" || n === "OverconstrainedError" || n === "DevicesNotFoundError") msg = "No camera was found on this device.";
+  else if (n === "NotReadableError" || n === "TrackStartError") msg = "Another app is using the camera. Close it and try again.";
+  else msg = "The camera didn't start" + (e && e.message ? ": " + e.message : ".");
+  camMessage(msg, true); camButtons(false);
+}
+async function camStart() {
+  camStillMode = false; $("#camShoot").textContent = "Take photo";
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { camFail(null); return; }
+  $("#camMsgText").textContent = "Waiting for the camera…"; $("#camStart").hidden = true; $("#camStill").hidden = true;
+  try {
+    camStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: camFacing }, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
+    if (current !== "camera") { camStop(); return; }
+    camVideo.srcObject = camStream; await camVideo.play();
+    const st = camStream.getVideoTracks()[0]?.getSettings?.() || {};
+    $("#camMirror").checked = (st.facingMode || camFacing) === "user";
+    $("#camMsg").hidden = true; camButtons(true); cancelAnimationFrame(camRAF); camFrames = []; camLoop();
+  } catch (e) { camStream = null; camFail(e); }
+}
+function camStop() {
+  cancelAnimationFrame(camRAF); camRAF = 0;
+  if (camStream) camStream.getTracks().forEach(t => t.stop());
+  camStream = null; camVideo.srcObject = null; $("#camFps").hidden = true; camButtons(false);
+  if (!camStillMode) camMessage("The camera is off.", false);
+}
+function camStillRender() { camRenderFrom(src, src.width, src.height); }
+function camShow() { if (camStillMode) camStillRender(); else if (!camStream) camMessage("Your browser will ask before the camera turns on.", false); }
+$("#camStart").addEventListener("click", camStart);
+$("#camStop").addEventListener("click", camStop);
+$("#camFlip").addEventListener("click", () => { camFacing = camFacing === "user" ? "environment" : "user"; camStop(); camStart(); });
+$("#camStill").addEventListener("click", () => {
+  camStop(); camStillMode = true; $("#camMsg").hidden = true; camStillRender();
+  $("#camShoot").disabled = false; $("#camShoot").textContent = "Open in " + camMode; $("#camSaveFrame").disabled = false;
+  toast("Showing your working photo. Live camera works on the Trailhead website.");
+});
+$("#camModes").addEventListener("click", () => { if (camStillMode) $("#camShoot").textContent = "Open in " + camMode; });
+$("#camShoot").addEventListener("click", () => {
+  if (camStillMode) { show(CAM_MODES[camMode]); window.scrollTo({ top: 0 }); return; }
+  if (!camStream || camVideo.readyState < 2) return;
+  const vw = camVideo.videoWidth, vh = camVideo.videoHeight, s = Math.min(1, 1600 / Math.max(vw, vh)), c = newCanvas(Math.round(vw * s), Math.round(vh * s)), x = c.getContext("2d");
+  if ($("#camMirror").checked) { x.translate(c.width, 0); x.scale(-1, 1); }
+  x.drawImage(camVideo, 0, 0, c.width, c.height);
+  const when = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  camStop(); setImage(c, { name: "Camera photo " + when, example: false });
+  show(CAM_MODES[camMode]); window.scrollTo({ top: 0 }); toast("Got it. Here's your photo at full quality.");
+});
+$("#camSaveFrame").addEventListener("click", async () => saveFile("trailhead-live-" + slug(camMode) + ".png", await toBlob($("#camOut"))));
+document.addEventListener("visibilitychange", () => { if (document.hidden && camStream) camStop(); });
 
 /* =========================================================
    GOLDEN HOUR
@@ -4304,6 +4769,7 @@ $("#fgPSD").addEventListener("click", async () => { const r = await renderFieldG
 Object.assign(PIN_MAKERS, {
   topo: () => [(toResult || renderTopo()).composite, imgInfo.name + " · Topo"],
   linocut: () => [(liResult || renderLinocut()).composite, imgInfo.name + " · Linocut", "tape"],
+  cyanotype: () => [(cyResult || renderCyanotype()).print, imgInfo.name + " · Cyanotype", "tape"],
   relight: () => [(reResult || renderRelight()).composite, imgInfo.name + " · " + reMood],
   zine: () => znLast ? [znLast, "Zine"] : null,
   pattern: () => paTileC ? [paSheet(paTileC, 900, 600, +$("#paZoom").value / 100), "Pattern", "clean"] : null,
@@ -4329,7 +4795,7 @@ function homeDemo() {
 }
 
 /* ---------- boot ---------- */
-const RENDER = { extract: renderExtract, adjust: renderAdjust, blend: () => renderBlend(true), effects: () => { renderFxControls(); renderFx(); }, lineart: renderLA, screenprint: renderSP, topo: drawTO, linocut: drawLI, relight: drawRE };
+const RENDER = { extract: renderExtract, adjust: renderAdjust, blend: () => renderBlend(true), effects: () => { renderFxControls(); renderFx(); }, lineart: renderLA, screenprint: renderSP, topo: drawTO, linocut: drawLI, cyanotype: drawCY, relight: drawRE };
 preloadPhotos.then(() => {
 setImage(EXAMPLES["Waterfall"](1200, 800), { name: "Waterfall", example: true });
 renderPalette(); renderGradient(); applyTPreset("Trail sign"); syncAdjUI();

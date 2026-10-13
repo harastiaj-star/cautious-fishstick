@@ -1,6 +1,6 @@
 Trailhead for Photoshop
 
-Needs Photoshop 2023 (version 24.2) or newer. Textures and color pulling need Photoshop 2024 or newer.
+Needs Photoshop 2023 (version 24.2) or newer. Filters, textures and color pulling need Photoshop 2024 or newer.
 
 Install
 1. Quit Photoshop.

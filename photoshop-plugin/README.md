@@ -3,11 +3,12 @@
 A Photoshop panel that opens what you make on the Trailhead site.
 
 - **Open a Trailhead file**: pick a zip you saved from the site. The layered .psd opens and any swatches go into your Swatches panel. You don't need to unzip anything. Plain .psd, .png and .ase files work too.
+- **Trailhead filters**: runs Linocut, Photo to topo, Line art, Cyanotype print or Cyanotype negative on everything visible in your document. The result lands on a new layer, with an optional paper layer underneath, so your original stays untouched.
 - **Palettes**: all ten Trailhead palettes. Tap a color to make it your foreground color, or add a whole palette to Swatches.
 - **Colors from this document**: finds the main colors in whatever you have open (3 to 8 of them) and adds them to Swatches.
 - **Textures**: paper grain, speckle, halftone, stamp wear and topo lines, painted in your chosen ink on a new layer the size of your document.
 
-Works with Photoshop 2023 (version 24.2) or newer. Textures and pulling colors need Photoshop 2024 or newer.
+Works with Photoshop 2023 (version 24.2) or newer. Filters, textures and pulling colors need Photoshop 2024 or newer.
 
 ## Install
 

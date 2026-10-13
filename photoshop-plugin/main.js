@@ -1,7 +1,7 @@
 /* Trailhead for Photoshop
    A UXP panel that picks up where the Trailhead site leaves off:
    opens Trailhead downloads (zipped or not), adds trail palettes as swatches,
-   and paints Trailhead textures onto new layers. */
+   runs Trailhead photo filters, and paints Trailhead textures onto new layers. */
 
 let ps = null, uxp = null;
 try { ps = require("photoshop"); uxp = require("uxp"); } catch (e) { /* running outside Photoshop (tests) */ }
@@ -164,6 +164,110 @@ async function addTexture(kind, inkHex) {
   });
 }
 
+/* ---------- Trailhead filters (same math as the site's photo tools) ---------- */
+function boxBlur(a, W, H, r) {
+  if (r < 1) return a;
+  const t = new Float32Array(W * H), o = new Float32Array(W * H), d = 2 * r + 1;
+  for (let y = 0; y < H; y++) { let s = 0; const row = y * W; for (let i = -r; i <= r; i++) s += a[row + clamp(i, 0, W - 1)]; for (let x = 0; x < W; x++) { t[row + x] = s / d; s += a[row + Math.min(W - 1, x + r + 1)] - a[row + Math.max(0, x - r)]; } }
+  for (let x = 0; x < W; x++) { let s = 0; for (let i = -r; i <= r; i++) s += t[clamp(i, 0, H - 1) * W + x]; for (let y = 0; y < H; y++) { o[y * W + x] = s / d; s += t[Math.min(H - 1, y + r + 1) * W + x] - t[Math.max(0, y - r) * W + x]; } }
+  return o;
+}
+const blur3 = (a, W, H, r) => boxBlur(boxBlur(boxBlur(a, W, H, r), W, H, r), W, H, r);
+const lumHex = h => { const [r, g, b] = hexToRgb(h); return (.2126 * r + .7152 * g + .0722 * b) / 255; };
+function grayFromPixels(data, comps, W, H) {
+  const g = new Float32Array(W * H);
+  for (let i = 0; i < g.length; i++) {
+    const j = i * comps; let r = data[j], gg = data[j + 1], b = data[j + 2];
+    if (comps === 4) { const a = data[j + 3] / 255; r = r * a + 255 * (1 - a); gg = gg * a + 255 * (1 - a); b = b * a + 255 * (1 - a); }
+    g[i] = (.2126 * r + .7152 * gg + .0722 * b) / 255;
+  }
+  return g;
+}
+const DETAIL = { Bold: { cut: 16, lines: 12, smooth: 20, la: .2 }, Medium: { cut: 11, lines: 20, smooth: 14, la: .4 }, Fine: { cut: 7, lines: 34, smooth: 8, la: .75 } };
+function linocutAlpha(g, W, H, detail, lightInk) {
+  const k = W / 1200, gb = blur3(g, W, H, Math.max(1, Math.round(k))), size = DETAIL[detail].cut * Math.max(1, k), ang = 30 * Math.PI / 180, ca = Math.cos(ang), sa = Math.sin(ang);
+  const lo = .3, hi = .64, eThr = .3 - .45 * .22, wear = .25, n = makeNoise(13), n2 = makeNoise(29), r = rng(41), a = new Float32Array(W * H);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const i = y * W + x; let t = gb[i]; if (lightInk) t = 1 - t;
+    const cover = t < lo ? 1 : t > hi ? 0 : 1 - (t - lo) / (hi - lo);
+    const warp = (n(x / (55 * k), y / (55 * k)) - .5) * size * 2.2, p = .5 + .5 * Math.cos((x * ca + y * sa + warp) / size * Math.PI * 2);
+    let v = clamp((cover - p) * 3.2 + .5, 0, 1);
+    if (x > 0 && y > 0 && x < W - 1 && y < H - 1) { const e = Math.abs(gb[i + 1] - gb[i - 1]) + Math.abs(gb[i + W] - gb[i - W]); if (e > eThr) v = Math.max(v, clamp((e - eThr) * 18, 0, 1)); }
+    if (t > hi && t < hi + .12 && n2((x * ca + y * sa) / (size * 4), (y * ca - x * sa) / (size * .9)) > .9) v = Math.max(v, .85);
+    const m = fbm(n2, x / (110 * k), y / (110 * k), 4); v *= clamp(1 - wear * Math.max(0, .42 - m) * 2, 0, 1); if (r() < wear * .03) v *= .3;
+    a[i] = v;
+  }
+  return a;
+}
+function topoAlpha(g, W, H, detail) {
+  const f = blur3(g, W, H, Math.max(1, Math.round(DETAIL[detail].smooth * W / 1200))), n = DETAIL[detail].lines, wgt = 2 * Math.max(1, W / 1200), a = new Float32Array(W * H);
+  for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) {
+    const i = y * W + x, gx = (f[i + 1] - f[i - 1]) * n / 2, gy = (f[i + W] - f[i - W]) * n / 2, v = f[i] * n, gm = Math.max(.01, Math.hypot(gx, gy)), kk = Math.round(v), d = Math.abs(v - kk) / gm, w = kk % 5 === 0 ? wgt * 1.9 : wgt;
+    a[i] = clamp(w / 2 - d + .5, 0, 1);
+  }
+  return a;
+}
+function lineArtAlpha(g, W, H, detail) {
+  const r1 = Math.max(1, Math.round(W / 700)), b1 = blur3(g, W, H, r1), b2 = blur3(g, W, H, Math.round(r1 * 1.8) + 1), eps = .45 - DETAIL[detail].la * .25, a = new Float32Array(W * H);
+  for (let i = 0; i < a.length; i++) { const S = 31 * b1[i] - 30 * b2[i]; a[i] = S > eps ? 0 : clamp(-Math.tanh(6 * (S - eps)), 0, 1); }
+  return a;
+}
+const CY_RAMP = ["#f3efe4", "#8fb3cf", "#2f6a9a", "#0f3560"].map(hexToRgb);
+function cyRampAt(t) { const f = clamp(t, 0, 1) * 3, i = Math.min(2, Math.floor(f)), u = f - i; return [0, 1, 2].map(k => CY_RAMP[i][k] + (CY_RAMP[i + 1][k] - CY_RAMP[i][k]) * u); }
+/* Scales the small result up to the document size with bilinear sampling, straight into an RGBA buffer. */
+function upscaleInto(W, H, pw, ph, sample) {
+  const out = new Uint8Array(W * H * 4), sx = pw / W, sy = ph / H;
+  for (let y = 0; y < H; y++) {
+    const fy = Math.min(ph - 1, Math.max(0, (y + .5) * sy - .5)), y0 = Math.floor(fy), y1 = Math.min(ph - 1, y0 + 1), vy = fy - y0;
+    for (let x = 0; x < W; x++) {
+      const fx = Math.min(pw - 1, Math.max(0, (x + .5) * sx - .5)), x0 = Math.floor(fx), x1 = Math.min(pw - 1, x0 + 1), vx = fx - x0;
+      sample(y0 * pw + x0, y0 * pw + x1, y1 * pw + x0, y1 * pw + x1, vx, vy, (y * W + x) * 4, out);
+    }
+  }
+  return out;
+}
+/* kind: Linocut | Photo to topo | Line art | Cyanotype print | Cyanotype negative. Returns an RGBA buffer at W x H. */
+function filterRGBA(kind, g, pw, ph, W, H, inkHex, detail) {
+  const lerp = (a, b, c, d, vx, vy) => (a * (1 - vx) + b * vx) * (1 - vy) + (c * (1 - vx) + d * vx) * vy;
+  if (kind === "Cyanotype print" || kind === "Cyanotype negative") {
+    const a = 3, ea = 1 - Math.exp(-a), T = new Float32Array(pw * ph);
+    for (let i = 0; i < T.length; i++) T[i] = -Math.log(1 - (1 - g[i]) * ea) / a;
+    return upscaleInto(W, H, pw, ph, (i00, i01, i10, i11, vx, vy, o, out) => {
+      if (kind === "Cyanotype negative") { const v = lerp(T[i00], T[i01], T[i10], T[i11], vx, vy) * 255; out[o] = out[o + 1] = out[o + 2] = v; }
+      else { const c = cyRampAt(1 - lerp(g[i00], g[i01], g[i10], g[i11], vx, vy)); out[o] = c[0]; out[o + 1] = c[1]; out[o + 2] = c[2]; }
+      out[o + 3] = 255;
+    });
+  }
+  const lightInk = lumHex(inkHex) > .5;
+  const A = kind === "Linocut" ? linocutAlpha(g, pw, ph, detail, lightInk) : kind === "Photo to topo" ? topoAlpha(g, pw, ph, detail) : lineArtAlpha(g, pw, ph, detail);
+  const [r, gg, b] = hexToRgb(inkHex);
+  return upscaleInto(W, H, pw, ph, (i00, i01, i10, i11, vx, vy, o, out) => { out[o] = r; out[o + 1] = gg; out[o + 2] = b; out[o + 3] = clamp(lerp(A[i00], A[i01], A[i10], A[i11], vx, vy), 0, 1) * 255; });
+}
+async function putLayer(doc, name, buf, W, H) {
+  const layer = doc.createPixelLayer ? await doc.createPixelLayer({ name, opacity: 100 }) : await doc.createLayer({ name, opacity: 100 });
+  const img = await ps.imaging.createImageDataFromBuffer(buf, { width: W, height: H, components: 4, chunky: true, colorSpace: "RGB", colorProfile: "sRGB IEC61966-2.1" });
+  try { await ps.imaging.putPixels({ layerID: layer.id, imageData: img, replace: true }); } finally { img.dispose(); }
+}
+async function applyFilter(kind, inkHex, detail, paperHex) {
+  const app = ps.app, C = ps.constants;
+  if (!app.activeDocument) throw new Error("Open a photo first.");
+  const doc = app.activeDocument;
+  try { if (C && C.DocumentMode && doc.mode !== C.DocumentMode.RGB) throw new Error("Filters need an RGB document. Switch with Image › Mode › RGB Color."); } catch (e) { if (/RGB/.test(e.message)) throw e; }
+  if (!ps.imaging) throw new Error("This version of Photoshop can't read pixels from a plugin. Photoshop 2024 or newer can.");
+  const W = Math.round(doc.width), H = Math.round(doc.height);
+  if (W * H > 40e6) throw new Error("That document is very large. Try the filter on a copy under 40 megapixels.");
+  const s = Math.min(1, 2400 / Math.max(W, H));
+  await modal("Trailhead " + kind, async () => {
+    const res = await ps.imaging.getPixels({ documentID: doc.id, targetSize: { width: Math.max(1, Math.round(W * s)), height: Math.max(1, Math.round(H * s)) }, componentSize: 8, applyAlpha: false, colorSpace: "RGB" });
+    const img = res.imageData; let g, pw, ph;
+    try { pw = img.width; ph = img.height; const data = await img.getData({ chunky: true }); g = grayFromPixels(data, img.components || Math.round(data.length / (pw * ph)), pw, ph); } finally { try { img.dispose(); } catch (e) {} }
+    const out = filterRGBA(kind, g, pw, ph, W, H, inkHex, detail);
+    const solid = !/Cyanotype/.test(kind);
+    if (solid && paperHex) { const [r, gg, b] = hexToRgb(paperHex), pb = new Uint8Array(W * H * 4); for (let i = 0; i < pb.length; i += 4) { pb[i] = r; pb[i + 1] = gg; pb[i + 2] = b; pb[i + 3] = 255; } await putLayer(doc, "Trailhead · Paper", pb, W, H); }
+    await putLayer(doc, "Trailhead · " + kind, out, W, H);
+  });
+}
+
 /* ---------- colors from the open document ---------- */
 function rgbToHex(r, g, b) { return "#" + [r, g, b].map(v => clamp(Math.round(v), 0, 255).toString(16).padStart(2, "0")).join(""); }
 function rgbToHsl(r, g, b) { r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2; if (mx !== mn) { const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; } return [h, s, l]; }
@@ -225,6 +329,9 @@ function readSelect(sel, items) {
 }
 const PAL_ITEMS = Object.keys(PALETTES).map(k => [k, k]);
 const INK_ITEMS = INKS.map(([n, h]) => [n, h]);
+const FX_ITEMS = [["Linocut", "Linocut"], ["Photo to topo", "Photo to topo"], ["Line art", "Line art"], ["Cyanotype print", "Cyanotype print"], ["Cyanotype negative", "Cyanotype negative"]];
+const DETAIL_ITEMS = [["Medium", "Medium"], ["Bold", "Bold"], ["Fine", "Fine"]];
+const PAPER_ITEMS = [["Cream paper", "#f4ecd8"], ["White paper", "#ffffff"], ["No paper (ink only)", ""]];
 const TEX_ITEMS = [["Topo lines", "Topo lines"], ["Paper grain", "Paper grain"], ["Speckle", "Speckle"], ["Halftone", "Halftone"], ["Stamp wear", "Stamp wear"]];
 function setupPanel() {
   const palPick = document.getElementById("palPick"), sw = document.getElementById("swatches"), inkPick = document.getElementById("inkPick"), texPick = document.getElementById("texPick");
@@ -282,6 +389,18 @@ function setupPanel() {
     try { await addSwatches(lastPulled.map(c => ({ name: c.name, rgb: hexToRgb(c.hex) })), name); status("Added " + lastPulled.length + " colors to your Swatches panel."); }
     catch (e) { status("Couldn't add the swatches: " + e.message, true); }
   });
+  const fxPick = document.getElementById("fxPick"), fxInk = document.getElementById("fxInk"), fxDetail = document.getElementById("fxDetail"), fxPaper = document.getElementById("fxPaper");
+  fillSelect(fxPick, FX_ITEMS); fillSelect(fxInk, INK_ITEMS.filter(i => i[0] !== "Paper").concat([["Paper (for dark backgrounds)", "#f7f0dd"]])); fillSelect(fxDetail, DETAIL_ITEMS); fillSelect(fxPaper, PAPER_ITEMS);
+  const FX_INKS = INK_ITEMS.filter(i => i[0] !== "Paper").concat([["Paper (for dark backgrounds)", "#f7f0dd"]]);
+  document.getElementById("fxBtn").addEventListener("click", async () => {
+    const kind = readSelect(fxPick, FX_ITEMS), ink = readSelect(fxInk, FX_INKS), detail = readSelect(fxDetail, DETAIL_ITEMS);
+    const pi = typeof fxPaper.selectedIndex === "number" && fxPaper.selectedIndex >= 0 ? fxPaper.selectedIndex : 0, paper = PAPER_ITEMS[pi] ? PAPER_ITEMS[pi][1] : "";
+    status("Running " + kind.toLowerCase() + "… this takes a few seconds on big photos.");
+    try {
+      await applyFilter(kind, ink, detail, paper);
+      status(kind === "Cyanotype negative" ? "The negative is on a new layer. Before printing it on film, flip it with Image › Image Rotation › Flip Canvas Horizontal." : kind + " is on a new layer above your photo. Your original layers weren't touched.");
+    } catch (e) { status(e.message, true); }
+  });
   status("Ready. Messages and errors show up here.");
 }
 if (typeof window !== "undefined" && typeof document !== "undefined") {
@@ -293,4 +412,4 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   const fitScroll = () => { const el = document.querySelector(".scroll"); if (el && window.innerHeight) el.style.height = window.innerHeight + "px"; };
   try { fitScroll(); window.addEventListener("resize", fitScroll); } catch (e) {}
 }
-if (typeof module !== "undefined" && module.exports) module.exports = { readZip, readASE, textureRGBA, textureAlpha, mainColors, pixelsToPoints };
+if (typeof module !== "undefined" && module.exports) module.exports = { readZip, readASE, textureRGBA, textureAlpha, mainColors, pixelsToPoints, filterRGBA, grayFromPixels };
