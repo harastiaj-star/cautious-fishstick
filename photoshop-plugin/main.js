@@ -1,7 +1,8 @@
 /* Trailhead for Photoshop
    A UXP panel that picks up where the Trailhead site leaves off:
    opens Trailhead downloads (zipped or not), adds trail palettes as swatches,
-   runs Trailhead photo filters, and paints Trailhead textures onto new layers. */
+   runs Trailhead photo filters, paints Trailhead textures onto new layers, and receives
+   photos from a phone through the pocket scanner. */
 
 let ps = null, uxp = null;
 try { ps = require("photoshop"); uxp = require("uxp"); } catch (e) { /* running outside Photoshop (tests) */ }
@@ -333,6 +334,97 @@ const FX_ITEMS = [["Linocut", "Linocut"], ["Photo to topo", "Photo to topo"], ["
 const DETAIL_ITEMS = [["Medium", "Medium"], ["Bold", "Bold"], ["Fine", "Fine"]];
 const PAPER_ITEMS = [["Cream paper", "#f4ecd8"], ["White paper", "#ffffff"], ["No paper (ink only)", ""]];
 const TEX_ITEMS = [["Topo lines", "Topo lines"], ["Paper grain", "Paper grain"], ["Speckle", "Speckle"], ["Halftone", "Halftone"], ["Stamp wear", "Stamp wear"]];
+
+/* ---------- pocket scanner ----------
+   The panel makes a random topic and key and shows them as a QR code that opens the site's
+   Pocket scanner page on a phone. The phone encrypts each photo with AES-CTR and sends it to
+   ntfy.sh/<topic>. Here we poll that topic, decrypt, and place the photo.
+   Format: "THS1" + 16-byte counter + ciphertext. */
+const SITE = "https://harastiaj-star.github.io/cautious-fishstick/";
+const libAES = () => { try { if (typeof aesjs !== "undefined") return aesjs; } catch (e) {} try { return require("./aes.js"); } catch (e) { return null; } };
+const libQR = () => { try { if (typeof qrcode !== "undefined") return qrcode; } catch (e) {} try { return require("./qrcode.js"); } catch (e) { return null; } };
+function randomBytes(n) {
+  const out = new Uint8Array(n);
+  try { if (typeof crypto !== "undefined" && crypto.getRandomValues) { crypto.getRandomValues(out); return out; } } catch (e) {}
+  /* fallback if this Photoshop has no Web Crypto: mixes time and Math.random, weaker but still unguessable in practice */
+  let t = Date.now() ^ Math.floor(Math.random() * 0x7fffffff);
+  for (let i = 0; i < n; i++) { t = (t * 1103515245 + 12345 + Math.floor(Math.random() * 65536)) >>> 0; out[i] = (t >>> 16) & 255; }
+  return out;
+}
+const toHex = b => Array.from(b, v => v.toString(16).padStart(2, "0")).join("");
+function newPairing() {
+  const alphabet = "abcdefghijkmnpqrstuvwxyz23456789", r = randomBytes(16);
+  return { t: "trailhead-" + Array.from(r, v => alphabet[v % alphabet.length]).join(""), k: toHex(randomBytes(16)), since: Math.floor(Date.now() / 1000) };
+}
+function decryptScan(buf, keyHex) {
+  const b = new Uint8Array(buf);
+  if (b.length < 21 || b[0] !== 84 || b[1] !== 72 || b[2] !== 83 || b[3] !== 49) throw new Error("That file wasn't from the Trailhead scanner.");
+  const A = libAES(); if (!A) throw new Error("The panel's decryption code is missing. Reinstall the plugin.");
+  const key = A.utils.hex.toBytes(keyHex), iv = b.slice(4, 20);
+  return new A.ModeOfOperation.ctr(key, new A.Counter(iv)).decrypt(b.slice(20));
+}
+const imageKind = b => b[0] === 0xff && b[1] === 0xd8 ? "jpg" : b[0] === 0x89 && b[1] === 0x50 ? "png" : null;
+async function placeScan(file, intoDoc) {
+  let doc = null; try { doc = ps.app.activeDocument; } catch (e) {}
+  if (!intoDoc || !doc) { await openEntry(file); return "opened as a new document"; }
+  const token = uxp.storage.localFileSystem.createSessionToken(file);
+  await modal("Place scan", async () => {
+    await ps.action.batchPlay([{ _obj: "placeEvent", null: { _path: token, _kind: "local" }, freeTransformCenterState: { _enum: "quadCenterState", _value: "QCSAverage" }, offset: { _obj: "offset", horizontal: { _unit: "pixelsUnit", _value: 0 }, vertical: { _unit: "pixelsUnit", _value: 0 } }, _options: { dialogOptions: "dontDisplay" } }], {});
+  });
+  return "placed on a new layer";
+}
+function drawQR(box, text) {
+  while (box.firstChild) box.removeChild(box.firstChild);
+  const Q = libQR(); if (!Q) { box.textContent = "The QR code library is missing. Reinstall the plugin."; return; }
+  const q = Q(0, "L"); q.addData(text); q.make();
+  const n = q.getModuleCount(), quiet = 3, cell = Math.max(3, Math.floor(196 / (n + quiet * 2)));
+  box.style.width = (n + quiet * 2) * cell + "px"; box.style.padding = quiet * cell + "px"; box.style.backgroundColor = "#ffffff";
+  for (let r = 0; r < n; r++) {
+    const row = document.createElement("div"); row.style.display = "flex"; row.style.height = cell + "px";
+    for (let c = 0; c < n; c++) { const d = document.createElement("div"); d.style.width = cell + "px"; d.style.height = cell + "px"; d.style.backgroundColor = q.isDark(r, c) ? "#141210" : "#ffffff"; row.appendChild(d); }
+    box.appendChild(row);
+  }
+}
+function setupScanner() {
+  const pairBtn = document.getElementById("scPair"), qrBox = document.getElementById("scQR"), linkEl = document.getElementById("scLink"), stateEl = document.getElementById("scState"), stopBtn = document.getElementById("scForget"), into = document.getElementById("scInto");
+  let pair = null, timer = null, busy = false, seen = {};
+  try { pair = JSON.parse(localStorage.getItem("trailhead-scanner") || "null"); } catch (e) {}
+  const save = () => { try { localStorage.setItem("trailhead-scanner", JSON.stringify(pair)); } catch (e) {} };
+  const url = () => `${SITE}#scanner?t=${pair.t}&k=${pair.k}`;
+  const render = () => {
+    const on = !!pair; qrBox.style.display = on ? "block" : "none"; linkEl.style.display = on ? "block" : "none"; stopBtn.style.display = on ? "inline-block" : "none";
+    pairBtn.textContent = on ? "Show the code again" : "Pair a phone";
+    if (on) { drawQR(qrBox, url()); linkEl.textContent = url(); stateEl.textContent = "Listening for photos. Keep this panel open."; }
+    else stateEl.textContent = "Not paired.";
+  };
+  async function poll() {
+    if (!pair || busy) return; busy = true;
+    try {
+      const r = await fetch(`https://ntfy.sh/${pair.t}/json?poll=1&since=${pair.since}`);
+      if (!r.ok) throw new Error("relay " + r.status);
+      const lines = (await r.text()).split("\n").filter(Boolean);
+      for (const line of lines) {
+        let m; try { m = JSON.parse(line); } catch (e) { continue; }
+        if (m.event !== "message" || seen[m.id]) continue; seen[m.id] = 1; pair.since = m.id; save();
+        if (!m.attachment || !m.attachment.url) continue;
+        stateEl.textContent = "A photo is coming in…";
+        const a = await fetch(m.attachment.url); if (!a.ok) { status("A photo arrived but had already expired on the relay.", true); continue; }
+        const plain = decryptScan(await a.arrayBuffer(), pair.k), kind = imageKind(plain);
+        if (!kind) { status("A photo arrived but didn't unlock. Pair the phone again.", true); continue; }
+        const base = (m.attachment.name || "scan").replace(/\.ths$/i, "").replace(/\.(jpg|png)$/i, "").replace(/[^a-z0-9_-]+/gi, "-");
+        const f = await writeTemp(base + "." + kind, plain.buffer.slice(plain.byteOffset, plain.byteOffset + plain.byteLength));
+        const how = await placeScan(f, into.checked);
+        status("Scan " + how + ".");
+      }
+      stateEl.textContent = "Listening for photos. Keep this panel open.";
+    } catch (e) { stateEl.textContent = "Can't reach the relay right now. Trying again…"; }
+    busy = false;
+  }
+  const start = () => { if (timer) clearInterval(timer); if (pair) { timer = setInterval(poll, 4000); poll(); } };
+  pairBtn.addEventListener("click", () => { if (!pair) { pair = newPairing(); save(); } render(); start(); status("Scan the code with your phone's camera."); });
+  stopBtn.addEventListener("click", () => { pair = null; try { localStorage.removeItem("trailhead-scanner"); } catch (e) {} if (timer) clearInterval(timer); timer = null; render(); status("Unpaired. Photos from that phone won't arrive anymore."); });
+  render(); start();
+}
 function setupPanel() {
   const palPick = document.getElementById("palPick"), sw = document.getElementById("swatches"), inkPick = document.getElementById("inkPick"), texPick = document.getElementById("texPick");
   fillSelect(palPick, PAL_ITEMS); fillSelect(inkPick, INK_ITEMS); fillSelect(texPick, TEX_ITEMS);
@@ -401,6 +493,7 @@ function setupPanel() {
       status(kind === "Cyanotype negative" ? "The negative is on a new layer. Before printing it on film, flip it with Image › Image Rotation › Flip Canvas Horizontal." : kind + " is on a new layer above your photo. Your original layers weren't touched.");
     } catch (e) { status(e.message, true); }
   });
+  try { setupScanner(); } catch (e) { status("The pocket scanner didn't start: " + e.message, true); }
   status("Ready. Messages and errors show up here.");
 }
 if (typeof window !== "undefined" && typeof document !== "undefined") {
@@ -412,4 +505,4 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   const fitScroll = () => { const el = document.querySelector(".scroll"); if (el && window.innerHeight) el.style.height = window.innerHeight + "px"; };
   try { fitScroll(); window.addEventListener("resize", fitScroll); } catch (e) {}
 }
-if (typeof module !== "undefined" && module.exports) module.exports = { readZip, readASE, textureRGBA, textureAlpha, mainColors, pixelsToPoints, filterRGBA, grayFromPixels };
+if (typeof module !== "undefined" && module.exports) module.exports = { decryptScan, newPairing, imageKind, readZip, readASE, textureRGBA, textureAlpha, mainColors, pixelsToPoints, filterRGBA, grayFromPixels };

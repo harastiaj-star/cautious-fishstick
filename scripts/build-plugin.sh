@@ -10,7 +10,7 @@ cd "$(dirname "$0")/.."
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
-(cd photoshop-plugin && zip -q -X -r "$tmp/Trailhead.ccx" manifest.json index.html main.js icons)
+(cd photoshop-plugin && zip -q -X -r "$tmp/Trailhead.ccx" manifest.json index.html main.js aes.js qrcode.js icons)
 cp photoshop-plugin/INSTALL.txt "$tmp/README.txt"
 
 mkdir -p downloads

@@ -438,7 +438,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
 .ba img { width: 132px; height: 88px; object-fit: cover; border-radius: 8px; outline: 1.5px solid var(--line); display: block; background: var(--pottery); }
 .ba figcaption { font-size: 11px; letter-spacing: .12em; color: var(--muted); }
 .ba-arrow { font-size: 26px; color: var(--sun); }
-@media (max-width: 900px) { .ba { display: none; } .page-head.has-ba { display: flex; } }
+@media (max-width: 900px) { .ba { display: none; } .page-head.has-ba { display: block; } }
 #findList li { flex-direction: row !important; align-items: center; gap: 12px !important; }
 #findList li > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 #findList li img, .find-dot { width: 54px; height: 36px; border-radius: 6px; object-fit: cover; flex: none; background: var(--pottery); display: block; }
@@ -469,6 +469,76 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
 @media (prefers-reduced-motion: no-preference) {
   .tab, .chip, .btn, .sw, .mode, .sec, .marker { transition: background-color .15s, border-color .15s, color .15s; }
 }
+
+/* living prints camera */
+.ar-view { position: fixed; inset: 0; z-index: 200; background: #000; }
+.ar-view[hidden] { display: none; }
+.ar-view #arOut { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ar-top { position: absolute; left: 0; right: 0; top: 0; display: flex; gap: 8px; align-items: center; padding: 12px 16px; padding-top: max(12px, env(safe-area-inset-top)); background: linear-gradient(rgba(0,0,0,.6), transparent); color: #f7f0dd; font-family: "TAY Dumpling", sans-serif; letter-spacing: .04em; }
+.ar-top span { flex: 1; font-size: 14px; }
+.ar-top .btn.ghost { color: #f7f0dd; border-color: rgba(247,240,221,.7); }
+/* lake color year */
+.lk-progress { height: 8px; border-radius: 4px; background: rgba(107,64,45,.15); overflow: hidden; margin-top: 10px; }
+.lk-progress i { display: block; height: 100%; width: 0; background: var(--clay); transition: width .2s; }
+.mini-steps { margin: 0 0 10px; padding-left: 20px; }
+.mini-steps li { margin-bottom: 6px; line-height: 1.45; }
+
+/* video */
+.vl-transport { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.vl-transport .vt-seek { flex: 1 1 160px; min-width: 120px; }
+.vl-time { font-size: 13px; letter-spacing: .04em; min-width: 92px; font-variant-numeric: tabular-nums; }
+.cg-box canvas { cursor: crosshair; touch-action: none; }
+
+/* dark mode: the same tokens, night version. Artwork on canvases keeps its own colors. */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --paper: #1d1916;
+  --pottery: #2a2420;
+  --aloe: #3a3a31;
+  --sage: #8f8a62;
+  --pollen: #e0a85a;
+  --sun: #e39a5c;
+  --clay: #e39a5c;
+  --ink: #efe3c8;
+  --ink-black: #f7f0dd;
+  --muted: #bdb59c;
+  --line: rgba(239, 227, 200, .2);
+  --line-strong: rgba(239, 227, 200, .5);
+  --ok: #9cc489;
+  --bad: #f0a48a;
+} }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #1d1916;
+  --pottery: #2a2420;
+  --aloe: #3a3a31;
+  --sage: #8f8a62;
+  --pollen: #e0a85a;
+  --sun: #e39a5c;
+  --clay: #e39a5c;
+  --ink: #efe3c8;
+  --ink-black: #f7f0dd;
+  --muted: #bdb59c;
+  --line: rgba(239, 227, 200, .2);
+  --line-strong: rgba(239, 227, 200, .5);
+  --ok: #9cc489;
+  --bad: #f0a48a;
+}
+:root[data-theme="dark"] body::before { mix-blend-mode: screen; opacity: .05; }
+:root[data-theme="dark"] [stroke="#6b402d"] { stroke: var(--ink); }
+:root[data-theme="dark"] img.brand-mark { filter: invert(1) hue-rotate(180deg) brightness(1.05); }
+:root[data-theme="dark"] .cam-msg, :root[data-theme="dark"] .cam-msg .btn.ghost { color: #f7f0dd; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body::before { mix-blend-mode: screen; opacity: .05; }
+  :root:not([data-theme="light"]) [stroke="#6b402d"] { stroke: var(--ink); }
+  :root:not([data-theme="light"]) img.brand-mark { filter: invert(1) hue-rotate(180deg) brightness(1.05); }
+  :root:not([data-theme="light"]) .cam-msg, :root:not([data-theme="light"]) .cam-msg .btn.ghost { color: #f7f0dd; }
+}
+.theme-btn { position: fixed; left: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); z-index: 56; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--line-strong); background: var(--pottery); color: var(--ink); display: grid; place-items: center; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.theme-btn:hover { border-color: var(--clay); }
+.theme-btn svg { width: 22px; height: 22px; }
+/* send to */
+.send-to select { width: 100%; }
 </style>
 
 <div class="wrap">
@@ -484,6 +554,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
     <nav class="sections" aria-label="Sections">
       <button class="sec" data-sec="color">Color &amp; type</button>
       <button class="sec" data-sec="photo">Photo lab</button>
+      <button class="sec" data-sec="video">Video</button>
       <button class="sec" data-sec="print">Printmaking</button>
       <button class="sec" data-sec="handmade">Handmade</button>
       <button class="sec" data-sec="layouts">Layouts</button>
@@ -544,6 +615,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
         <div class="home-tiles">
           <button class="home-tile" data-go="color"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 50 L30 10 L40 14 L26 52 Z"/><path d="M26 52 L46 22 L54 28 L36 56 Z"/><circle cx="28" cy="20" r="3"/><circle cx="44" cy="32" r="3"/><path d="M10 56 H58" stroke-width="1.5"/></svg></span><b>Color &amp; type</b><span class="home-desc">Palettes, gradients and shadows, type sizes, the colors hiding in a photo, every palette at once, and a letter maker that turns your handwriting into a font.</span><span class="home-go">Open color &amp; type ›</span></button>
           <button class="home-tile" data-go="photo"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="48" height="38" rx="3"/><path d="M12 46 L26 28 L34 38 L42 30 L52 46"/><circle cx="44" cy="22" r="4"/></svg></span><b>Photo lab</b><span class="home-desc">Light and color, blend modes, print effects, golden-hour light, and a live camera that turns what you see into a print as you move.</span><span class="home-go">Open photo lab ›</span></button>
+          <button class="home-tile" data-go="video"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="16" width="36" height="32" rx="3"/><path d="M44 28 L56 20 V44 L44 36"/><path d="M8 24 H44 M8 40 H44"/><path d="M14 16 V24 M22 16 V24 M30 16 V24 M38 16 V24"/></svg></span><b>Video</b><span class="home-desc">Looks and effects for short clips, cinemagraphs where one thing keeps moving, animated titles, and clips redrawn as a hand-drawn sketch.</span><span class="home-go">Open video ›</span></button>
           <button class="home-tile" data-go="print"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="34" width="40" height="18" rx="2"/><path d="M14 34 V28 H42 V34" stroke-width="2"/><circle cx="48" cy="18" r="8"/><path d="M48 26 V34 M40 18 H22 V28" stroke-width="2"/></svg></span><b>Printmaking</b><span class="home-desc">Linocut with carving sheets, cyanotype negatives, screen print and riso separations, line art and photo-to-topo.</span><span class="home-go">Open printmaking ›</span></button>
           <button class="home-tile" data-go="handmade"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 52 L44 20"/><circle cx="47" cy="17" r="3.5"/><path d="M44 20 C56 30 30 40 40 54" stroke-width="2"/><path d="M12 12 h8 v8 h-8z M24 12 h8 v8 h-8z M12 24 h8 v8 h-8z" stroke-width="1.5"/></svg></span><b>Handmade</b><span class="home-desc">Cross-stitch, knitting and quilt patterns, layered paper cuts, stamps and patches, zines and stapled booklets.</span><span class="home-go">Open handmade ›</span></button>
           <button class="home-tile" data-go="layouts"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="8" width="30" height="42"/><path d="M15 30 L22 20 L27 26 L31 21 L36 30" stroke-width="2"/><path d="M15 38 H35 M15 43 H29" stroke-width="2"/><circle cx="46" cy="44" r="12"/><circle cx="46" cy="44" r="7" stroke-width="1.5"/></svg></span><b>Layouts</b><span class="home-desc">Posters, badges, field guide cards, trail maps, patterns, a mood board, mockups, letterpress, and a wiggle that makes still art look hand-animated.</span><span class="home-go">Open layouts ›</span></button>
@@ -1427,6 +1499,308 @@ Pine cone prints</textarea></div>
         </div>
       </section>
 
+      <!-- LIVING PRINTS -->
+      <section class="page" data-page="living" hidden>
+        <div class="page-head">
+          <h2>Living prints</h2>
+          <p class="lede">Print something here, hang it up, then point a phone at it and it comes alive on the paper. The stars turn, the sound plays, the lichen grows, the lines shimmer. A small code on the print tells any phone which animation belongs to it, so friends can scan it too.</p>
+        </div>
+        <div class="tool">
+          <div class="stage">
+            <div class="canvas-box poster-box"><canvas id="lvOut"></canvas></div>
+            <p class="hint" id="lvNote"></p>
+          </div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="chips" id="lvKinds"></div>
+            <div class="ctl" id="lvSrcWrap"><label for="lvSrc">Design to bring to life</label><select id="lvSrc"></select></div>
+            <p class="hint" id="lvHow"></p>
+            <hr>
+            <h3>save it</h3>
+            <div class="btns">
+              <button class="btn" id="lvLive">Bring it to life</button>
+              <button class="btn ghost" id="lvSave">Save the print</button>
+            </div>
+            <p class="hint">Print it at any size on matte paper, so lights don't glare off it. Then press Bring it to life on your phone, or scan the code with your phone's camera. Prints with lots of detail track best. The camera image stays on your phone.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- LAKE COLOR YEAR -->
+      <section class="page" data-page="lake" hidden>
+        <div class="page-head">
+          <h2>Lake color year</h2>
+          <p class="lede">Pick a lake and a year, and Trailhead reads the color of the water from NASA satellite photos, one day at a time. You get the whole year as a print: winter ice, spring runoff, summer blue, algae blooms, fall storms. Then use those colors as a palette anywhere on the site.</p>
+        </div>
+        <div class="tool">
+          <div class="stage">
+            <div class="canvas-box poster-box"><canvas id="lkOut"></canvas></div>
+            <div class="lk-progress" id="lkProg" hidden><i id="lkBar"></i></div>
+            <p class="hint" id="lkStatus">Pick a place and press Gather the year. It reads about 365 small satellite images, which takes a minute or two.</p>
+          </div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="ctl"><label for="lkPlace">Place</label><select id="lkPlace"></select></div>
+            <div class="row" id="lkCustom" hidden>
+              <div class="ctl" style="flex:1 1 90px"><label for="lkLat">Latitude</label><input type="text" id="lkLat" value="45.0" inputmode="decimal"></div>
+              <div class="ctl" style="flex:1 1 90px"><label for="lkLon">Longitude</label><input type="text" id="lkLon" value="-86.5" inputmode="decimal"></div>
+            </div>
+            <div class="ctl"><label for="lkYear">Year</label><select id="lkYear"></select></div>
+            <div class="btns"><button class="btn" id="lkGo">Gather the year</button><button class="btn ghost" id="lkStop" hidden>Stop</button></div>
+            <hr>
+            <h3>tune it</h3>
+            <div class="chips" id="lkStyles"></div>
+            <div class="ctl"><label for="lkClouds">Cloudy and icy days</label><select id="lkClouds"><option value="white">Show as white</option><option value="fill">Fill from nearby days</option></select></div>
+            <div class="ctl"><label for="lkTitle">Title</label><input type="text" id="lkTitle" value=""></div>
+            <label class="check"><input type="checkbox" id="lkMonths" checked> Month labels</label>
+            <hr>
+            <h3>save it</h3>
+            <div class="btns">
+              <button class="btn" id="lkPNG">Save image</button>
+              <button class="btn ghost" id="lkPal">Use as a palette</button>
+              <button class="btn ghost" id="lkCSV">Save the daily colors</button>
+              <button class="btn ghost" data-pin="lake">Pin to mood board</button>
+            </div>
+            <p class="hint">The daily colors file is a spreadsheet of every day's color, for your own projects. Satellite imagery courtesy of NASA's Global Imagery Browse Services (GIBS). Only the place and dates are sent to NASA.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- POCKET SCANNER -->
+      <section class="page" data-page="scanner" hidden>
+        <div class="page-head">
+          <h2>Pocket scanner</h2>
+          <p class="lede">Turn your phone into a scanner for Photoshop. Shoot a leaf, a pencil sketch, bark or a paper texture, and it lands in your open Photoshop document a few seconds later as its own layer. No cables, no AirDrop, no emailing yourself.</p>
+        </div>
+        <div class="tool">
+          <div class="stage">
+            <div class="canvas-box"><canvas id="scOut"></canvas></div>
+            <p class="hint" id="scStatus">Not paired yet.</p>
+          </div>
+          <aside class="panel">
+            <div id="scPairSteps">
+              <h3>pair your phone</h3>
+              <ol class="mini-steps">
+                <li>In Photoshop, open Plugins › Trailhead and press <b>Pair a phone</b> in the pocket scanner section.</li>
+                <li>Scan the code it shows with your phone's camera. This page opens on your phone, already paired.</li>
+                <li>Take a photo here. Photoshop picks it up on its own.</li>
+              </ol>
+              <p class="hint">Don't have the panel yet? Get it from Photoshop handoff. It's free.</p>
+            </div>
+            <div id="scPaired" hidden>
+              <h3>paired</h3>
+              <p class="hint" id="scPairName"></p>
+              <div class="btns"><button class="btn ghost" id="scUnpair">Unpair this phone</button></div>
+            </div>
+            <hr>
+            <h3>take a photo</h3>
+            <div class="btns"><label class="btn file-btn">Take a photo<input type="file" id="scFile" accept="image/*" capture="environment" aria-label="Take a photo"></label></div>
+            <div class="chips" id="scModes"></div>
+            <p class="hint" id="scModeHint"></p>
+            <hr>
+            <h3>send it</h3>
+            <div class="btns">
+              <button class="btn" id="scSend" disabled>Send to Photoshop</button>
+              <button class="btn ghost" id="scSave">Save to this phone</button>
+            </div>
+            <p class="hint">Your photo is locked with a key that only your phone and your Photoshop panel know, then passed through ntfy.sh, a free relay service. The relay can't see the picture and deletes it within three hours.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- CLIP LAB -->
+      <section class="page" data-page="clip" hidden>
+        <div class="page-head">
+          <h2>Clip lab</h2>
+          <p class="lede">Color looks and effects for short video clips. Trim it, crop it for a post, give it the feel of slide film or a riso print, and turn moving water silky with a long exposure. Everything plays live, and nothing leaves your device.</p>
+        </div>
+        <div class="tool">
+          <div class="stage">
+            <div class="canvas-box poster-box vl-box"><canvas id="vlOut" aria-label="Your clip with the look and effect applied"></canvas></div>
+            <div class="vl-transport" data-transport></div>
+            <p class="hint" id="vlStatus">Loading the example clip…</p>
+          </div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="ctl"><label for="vlSrc">Clip</label><select id="vlSrc" class="vid-src"></select></div>
+            <label class="btn ghost file-btn">Use my own clip<input type="file" id="vlUpload" class="vid-up" accept="video/*" aria-label="Choose a video clip"></label>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 100px"><label for="vlIn">Start <output></output></label><input type="range" id="vlIn" min="0" max="1000" value="0"></div>
+              <div class="ctl" style="flex:1 1 100px"><label for="vlOutPt">End <output></output></label><input type="range" id="vlOutPt" min="0" max="1000" value="1000"></div>
+            </div>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 100px"><label for="vlFrame">Frame</label><select id="vlFrame"><option>Original</option><option>Square</option><option>Vertical 9:16</option><option>Portrait 4:5</option><option>Wide 16:9</option></select></div>
+              <div class="ctl" style="flex:1 1 100px"><label for="vlSpeed">Speed</label><select id="vlSpeed"><option value="0.25">¼ slow motion</option><option value="0.5">½ slow motion</option><option value="1" selected>Normal</option><option value="1.5">1.5×</option><option value="2">2×</option></select></div>
+            </div>
+            <hr>
+            <h3>look</h3>
+            <div class="chips" id="vlLooks"></div>
+            <div class="ctl" id="vlPalWrap" hidden><label for="vlPal">Palette</label><select id="vlPal"></select></div>
+            <div class="ctl"><label for="vlLookAmt">Strength <output></output></label><input type="range" id="vlLookAmt" min="0" max="100" value="80"></div>
+            <hr>
+            <h3>effect</h3>
+            <div class="chips" id="vlFx"></div>
+            <p class="hint" id="vlFxHint"></p>
+            <div class="ctl" id="vlFxAmtWrap"><label for="vlFxAmt">Amount <output></output></label><input type="range" id="vlFxAmt" min="0" max="100" value="60"></div>
+            <hr>
+            <h3>finish</h3>
+            <div class="ctl"><label for="vlGrain">Film grain <output></output></label><input type="range" id="vlGrain" min="0" max="100" value="20"></div>
+            <div class="ctl"><label for="vlVig">Vignette <output></output></label><input type="range" id="vlVig" min="0" max="100" value="25"></div>
+            <div class="ctl"><label for="vlLeak">Light leaks <output></output></label><input type="range" id="vlLeak" min="0" max="100" value="0"></div>
+            <label class="check"><input type="checkbox" id="vlWeave"> Gate weave, the little wobble of a film projector</label>
+            <hr>
+            <h3>move to the sound</h3>
+            <div class="chips" id="vlPulse"></div>
+            <div class="ctl"><label for="vlSens">Sensitivity <output></output></label><input type="range" id="vlSens" min="10" max="100" value="60"></div>
+            <p class="hint">Makes the clip pulse with its own soundtrack: kicks, claps, voices. It hears the sound even when Sound is off. Steady noise like a waterfall's roar barely moves it, so try a clip with music.</p>
+            <hr>
+            <h3>save it</h3>
+            <div class="btns">
+              <button class="btn" id="vlSave">Save video</button>
+              <button class="btn ghost" id="vlGIF">Save GIF</button>
+              <button class="btn ghost" id="vlStill">Save this frame</button>
+              <button class="btn ghost" data-pin="clip">Pin to mood board</button>
+            </div>
+            <p class="hint" id="vlSaveHint">Save video records from Start to End as it plays, with sound if Sound is on. GIFs hold the first six seconds at 12 frames a second, good for sites and messages. Instagram and TikTok want the video.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- CINEMAGRAPH -->
+      <section class="page" data-page="cinemagraph" hidden>
+        <div class="page-head">
+          <h2>Cinemagraph</h2>
+          <p class="lede">A still photo where one thing keeps moving. Paint over the part that should move, like falling water, steam from a mug or a flag, and everything else freezes. The loop is crossfaded so it never jumps.</p>
+        </div>
+        <div class="tool">
+          <div class="stage">
+            <div class="canvas-box poster-box vl-box cg-box"><canvas id="cgOut" aria-label="Your cinemagraph. Drag on it to paint the area that moves."></canvas></div>
+            <div class="vl-transport" data-transport></div>
+            <p class="hint" id="cgStatus">Finding the motion in the clip…</p>
+          </div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="ctl"><label for="cgSrc">Clip</label><select id="cgSrc" class="vid-src"></select></div>
+            <label class="btn ghost file-btn">Use my own clip<input type="file" id="cgUpload" class="vid-up" accept="video/*" aria-label="Choose a video clip"></label>
+            <p class="hint">Shoot on a tripod or rest your phone on something. A steady camera makes the still part look truly still.</p>
+            <div class="ctl"><label for="cgHoldAt">Still frame from <output></output></label><input type="range" id="cgHoldAt" min="0" max="1000" value="200"></div>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 100px"><label for="cgIn">Loop start <output></output></label><input type="range" id="cgIn" min="0" max="1000" value="0"></div>
+              <div class="ctl" style="flex:1 1 100px"><label for="cgEnd">Loop end <output></output></label><input type="range" id="cgEnd" min="0" max="1000" value="1000"></div>
+            </div>
+            <div class="ctl"><label for="cgFade">Crossfade <output></output></label><input type="range" id="cgFade" min="0" max="20" value="8"></div>
+            <hr>
+            <h3>paint the motion</h3>
+            <div class="chips" id="cgTools"></div>
+            <div class="ctl"><label for="cgBrush">Brush size <output></output></label><input type="range" id="cgBrush" min="10" max="160" value="50"></div>
+            <label class="check"><input type="checkbox" id="cgShow" checked> Show the moving area</label>
+            <div class="btns"><button class="btn ghost" id="cgAuto">Find the motion for me</button><button class="btn ghost" id="cgClear">Clear</button></div>
+            <div class="ctl"><label for="cgLook">Look</label><select id="cgLook"><option>Natural</option><option>Faded print</option><option>Warm film</option><option>Silver</option><option>Deep greens</option></select></div>
+            <hr>
+            <h3>save it</h3>
+            <div class="btns">
+              <button class="btn" id="cgGIF">Save GIF</button>
+              <button class="btn ghost" id="cgSave">Save video</button>
+              <button class="btn ghost" id="cgStill">Save the still</button>
+              <button class="btn ghost" data-pin="cinemagraph">Pin to mood board</button>
+            </div>
+            <p class="hint">GIFs loop on their own, which is what cinemagraphs are made for. The video saves one loop. Set it to repeat when you post it.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- TITLES -->
+      <section class="page" data-page="titles" hidden>
+        <div class="page-head">
+          <h2>Titles</h2>
+          <p class="lede">Animated titles and name bars in the Trailhead fonts, laid over your clip. Good for the start of a trip video, a reel or a class project.</p>
+        </div>
+        <div class="tool">
+          <div class="stage">
+            <div class="canvas-box poster-box vl-box"><canvas id="ttOut" aria-label="Your clip with the title"></canvas></div>
+            <div class="vl-transport" data-transport></div>
+            <p class="hint" id="ttStatus"></p>
+          </div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="ctl"><label for="ttSrc">Clip</label><select id="ttSrc" class="vid-src"></select></div>
+            <label class="btn ghost file-btn">Use my own clip<input type="file" id="ttUpload" class="vid-up" accept="video/*" aria-label="Choose a video clip"></label>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 100px"><label for="ttIn">Start <output></output></label><input type="range" id="ttIn" min="0" max="1000" value="0"></div>
+              <div class="ctl" style="flex:1 1 100px"><label for="ttOutPt">End <output></output></label><input type="range" id="ttOutPt" min="0" max="1000" value="1000"></div>
+            </div>
+            <div class="ctl"><label for="ttFrame">Frame</label><select id="ttFrame"><option>Original</option><option>Square</option><option>Vertical 9:16</option><option>Portrait 4:5</option><option>Wide 16:9</option></select></div>
+            <hr>
+            <h3>words</h3>
+            <div class="ctl"><label for="ttTitle">Title</label><input type="text" id="ttTitle" value="Silver Falls"></div>
+            <div class="ctl"><label for="ttSub">Second line</label><input type="text" id="ttSub" value="a morning on the canyon trail"></div>
+            <h3>style</h3>
+            <div class="chips" id="ttStyles"></div>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 100px"><label for="ttPos">Place</label><select id="ttPos"><option>Center</option><option>Lower left</option><option>Upper left</option><option>Bottom center</option></select></div>
+              <div class="ctl" style="flex:1 1 100px"><label for="ttPal">Colors</label><select id="ttPal"></select></div>
+            </div>
+            <div class="ctl"><label for="ttSize">Size <output></output></label><input type="range" id="ttSize" min="50" max="160" value="100"></div>
+            <div class="ctl"><label for="ttDim">Darken the clip behind <output></output></label><input type="range" id="ttDim" min="0" max="80" value="25"></div>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 100px"><label for="ttShow">Comes in at <output></output></label><input type="range" id="ttShow" min="0" max="100" value="5"></div>
+              <div class="ctl" style="flex:1 1 100px"><label for="ttHide">Leaves at <output></output></label><input type="range" id="ttHide" min="0" max="100" value="80"></div>
+            </div>
+            <label class="check"><input type="checkbox" id="ttBoil"> Hand-drawn boil on the letters</label>
+            <hr>
+            <h3>save it</h3>
+            <div class="btns">
+              <button class="btn" id="ttSave">Save video</button>
+              <button class="btn ghost" id="ttGIF">Save GIF</button>
+              <button class="btn ghost" id="ttStill">Save this frame</button>
+            </div>
+            <p class="hint">The video records from Start to End with sound if Sound is on. Titles come in and leave at the times you set, measured through the clip.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ROTOSCOPE -->
+      <section class="page" data-page="rotoscope" hidden>
+        <div class="page-head">
+          <h2>Rotoscope sketch</h2>
+          <p class="lede">Turns a clip into a hand-drawn animation. Every frame is traced as ink lines on paper, the lines boil like a sketchbook flip-book, and you can add a watercolor wash or flat colors from a palette.</p>
+        </div>
+        <div class="tool">
+          <div class="stage">
+            <div class="canvas-box poster-box vl-box"><canvas id="rtOut" aria-label="Your clip drawn as a sketch"></canvas></div>
+            <div class="vl-transport" data-transport></div>
+          </div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="ctl"><label for="rtSrc">Clip</label><select id="rtSrc" class="vid-src"></select></div>
+            <label class="btn ghost file-btn">Use my own clip<input type="file" id="rtUpload" class="vid-up" accept="video/*" aria-label="Choose a video clip"></label>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 100px"><label for="rtIn">Start <output></output></label><input type="range" id="rtIn" min="0" max="1000" value="0"></div>
+              <div class="ctl" style="flex:1 1 100px"><label for="rtOutPt">End <output></output></label><input type="range" id="rtOutPt" min="0" max="1000" value="1000"></div>
+            </div>
+            <div class="ctl"><label for="rtFrame">Frame</label><select id="rtFrame"><option>Original</option><option>Square</option><option>Vertical 9:16</option><option>Portrait 4:5</option><option>Wide 16:9</option></select></div>
+            <hr>
+            <h3>drawing</h3>
+            <div class="chips" id="rtFills"></div>
+            <div class="ctl" id="rtPalWrap"><label for="rtPal">Palette</label><select id="rtPal"></select></div>
+            <div class="ctl"><label for="rtDetail">Detail <output></output></label><input type="range" id="rtDetail" min="1" max="10" value="5"></div>
+            <div class="ctl"><label for="rtWeight">Line weight <output></output></label><input type="range" id="rtWeight" min="1" max="10" value="5"></div>
+            <div class="ctl"><label for="rtBoil">Boil <output></output></label><input type="range" id="rtBoil" min="0" max="10" value="4"></div>
+            <div class="ctl"><label for="rtRate">Drawings a second</label><select id="rtRate"><option value="12">12, smooth (on twos)</option><option value="8" selected>8, classic (on threes)</option><option value="6">6, choppy</option></select></div>
+            <div class="ctl"><label for="rtPaper">Paper</label><select id="rtPaper"><option>Cream</option><option>White</option><option>Kraft</option><option>Notebook</option></select></div>
+            <hr>
+            <h3>save it</h3>
+            <div class="btns">
+              <button class="btn" id="rtSave">Save video</button>
+              <button class="btn ghost" id="rtGIF">Save GIF</button>
+              <button class="btn ghost" id="rtStill">Save this frame</button>
+              <button class="btn ghost" data-pin="rotoscope">Pin to mood board</button>
+            </div>
+            <p class="hint">Real hand-drawn animation runs at 8 to 12 drawings a second, so a little choppiness is part of the look.</p>
+          </aside>
+        </div>
+      </section>
+
       <!-- GOLDEN HOUR -->
       <section class="page" data-page="relight" hidden>
         <div class="page-head">
@@ -1732,6 +2106,7 @@ Pine cone prints</textarea></div>
             <div class="chips" id="grKinds"></div>
             <hr>
             <h3>tune it</h3>
+            <input type="hidden" id="grSeedVal" value="">
             <div class="ctl"><label for="grSpeed">Growth speed <output></output></label><input type="range" id="grSpeed" min="1" max="40" value="14"></div>
             <div class="ctl"><label for="grBrush">Brush size <output></output></label><input type="range" id="grBrush" min="2" max="30" value="8"></div>
             <div class="ctl"><label for="grPal">Colors</label><select id="grPal"></select></div>
@@ -2163,19 +2538,25 @@ Upper Peninsula</textarea></div>
       <section class="page" data-page="privacy" hidden>
         <div class="page-head">
           <h2>Privacy</h2>
-          <p class="lede">Last updated October 12, 2026.</p>
+          <p class="lede">Last updated October 14, 2026.</p>
         </div>
         <div class="legal">
           <h3>Your photos and files stay with you</h3>
           <p>Every tool on this site runs inside your browser. When you open a photo, draw letters or build a poster, the work happens on your own device. The site does not upload your photos, drawings or designs to any server.</p>
           <h3>What gets saved on your device</h3>
-          <p>To pick up where you left off, the site keeps four things in your browser's local storage: your mood board, the letters you've drawn in Letter maker, your trail map, and the last tool you had open. They stay in this browser on this device. Nobody else can see them, including us.</p>
+          <p>To pick up where you left off, the site keeps a few things in your browser's local storage: your mood board, the letters you've drawn in Letter maker, your trail map, the last tool you had open, whether you picked light or dark mode, and your Pocket scanner pairing. They stay in this browser on this device. Nobody else can see them, including us.</p>
           <p>To remove them, use Clear the board, Start over or Clear the map in each tool, or clear this site's data in your browser settings.</p>
           <h3>Downloads</h3>
           <p>Nothing saves to your computer until you press a save button and confirm the download.</p>
           <h3>Outside services</h3>
           <p>Two open-source code libraries load from the jsDelivr network when the page opens: ag-psd, which writes Photoshop files, and opentype.js, which builds fonts. Like any request on the web, jsDelivr receives your IP address and basic browser details when it sends them. Its practices are described in the <a href="https://www.jsdelivr.com/terms/privacy-policy" target="_blank" rel="noopener">jsDelivr privacy policy</a>.</p>
           <p>This page is hosted by Anthropic on claude.ai. Anthropic's handling of visits to claude.ai is covered by the <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic privacy policy</a>.</p>
+          <h3>Video</h3>
+          <p>The Video tools play and edit your clip inside your browser. Clips aren't uploaded anywhere, and a saved video or GIF is made on your device.</p>
+          <h3>Three tools that talk to other services</h3>
+          <p><b>Living prints</b> uses your phone's camera to find the print. The video stays on your phone and is never recorded or sent anywhere. The QR code on a living print holds the tool settings needed to rebuild the animation, and nothing else. The tracking library (MindAR) and the QR code library load from jsDelivr when you use the tool.</p>
+          <p><b>Lake color year</b> asks NASA's Global Imagery Browse Services for small satellite images of the place and dates you pick. NASA receives those requests along with your IP address, as with any website. No photo of yours is involved.</p>
+          <p><b>Pocket scanner</b> sends the photos you choose to send from your phone to your Photoshop panel. Before a photo leaves your phone it's encrypted with a key that only your phone and your panel have, then passed through <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy.sh</a>, a free relay service, which stores the locked file for up to three hours. Neither ntfy.sh nor this site can see the picture. The pairing is saved in your phone's browser until you press Unpair.</p>
           <h3>What the site doesn't do</h3>
           <p>No accounts, no ads, no analytics and no tracking cookies.</p>
           <h3>Changes and questions</h3>
@@ -2218,10 +2599,16 @@ Upper Peninsula</textarea></div>
           <h3>Open-source libraries</h3>
           <p><a href="https://github.com/Agamnentzar/ag-psd" target="_blank" rel="noopener">ag-psd</a> by Agamnentzar, MIT License. It writes the layered Photoshop files.</p>
           <p><a href="https://github.com/opentypejs/opentype.js" target="_blank" rel="noopener">opentype.js</a> by Frederik De Bleser and contributors, MIT License. It builds the fonts in Letter maker.</p>
+          <p><a href="https://github.com/hiukim/mind-ar-js" target="_blank" rel="noopener">MindAR</a> by HiuKim Yuen, MIT License. It finds a living print in the camera view.</p>
+          <p><a href="https://github.com/kazuhikoarase/qrcode-generator" target="_blank" rel="noopener">qrcode-generator</a> by Kazuhiko Arase, MIT License. It draws the QR codes. QR Code is a registered trademark of DENSO WAVE.</p>
+          <p><a href="https://github.com/ricmoo/aes-js" target="_blank" rel="noopener">aes-js</a> by Richard Moore, MIT License. It locks Pocket scanner photos so only your Photoshop panel can open them.</p>
           <h3>Data</h3>
+          <p>We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS). Lake color year reads VIIRS and MODIS corrected reflectance imagery. Pocket scanner photos travel through <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy.sh</a> by Philipp Heckel.</p>
           <p>Star positions and constellation lines in Sky print come from <a href="https://github.com/ofrohn/d3-celestial" target="_blank" rel="noopener">d3-celestial</a> by Olaf Frohn, BSD 3-Clause License, which draws on the Hipparcos star catalog.</p>
           <p>Embroidery floss colors in Stitch pattern: color data from craft-color-codes by <a href="https://makebead.com/" target="_blank" rel="noopener">MakeBead</a>, CC BY 4.0. DMC is a trademark of DMC, and the screen colors are approximations of the real threads.</p>
           <p>Riso ink colors are screen approximations of spot inks, as published by riso studios. Riso and Risograph are trademarks of Riso Kagaku Corporation.</p>
+          <h3>Example clip</h3>
+          <p>The waterfall clip in the Video tools is free-to-use stock footage supplied by the site owner.</p>
           <h3>Everything else</h3>
           <p>The example photos are the site owner's own. The textures, topo lines, icons, mockup scenes and example sounds are made in code for this site. The colors come from the Trailhead Studio design system. Built with help from Claude by Anthropic.</p>
         </div>
@@ -2270,6 +2657,7 @@ Upper Peninsula</textarea></div>
         <div class="markers">
           <button class="marker" data-go="color"><span class="script">find your colors</span><b>Color &amp; type</b><span>Palettes, gradients and shadows, type sizes, the colors in your photos, and a font made from your own handwriting.</span></button>
           <button class="marker" data-go="photo"><span class="script">set the mood</span><b>Photo lab</b><span>Light and color, blend modes, print effects, golden-hour light and a live camera.</span></button>
+          <button class="marker" data-go="video"><span class="script">roll the tape</span><b>Video</b><span>Looks and effects for short clips, cinemagraphs, animated titles and hand-drawn rotoscope sketches.</span></button>
           <button class="marker" data-go="print"><span class="script">ink and paper</span><b>Printmaking</b><span>Linocuts you can carve, cyanotype negatives, screen print and riso separations, line art and topo maps.</span></button>
           <button class="marker" data-go="handmade"><span class="script">by hand</span><b>Handmade</b><span>Stitch, knit and quilt patterns, layered paper cuts, stamps and patches, zines and booklets.</span></button>
           <button class="marker" data-go="layouts"><span class="script">say it big</span><b>Layouts</b><span>Posters, badges, field guide cards, trail maps, patterns, a mood board and mockups.</span></button>
@@ -2298,6 +2686,12 @@ Upper Peninsula</textarea></div>
   <p id="dockText"></p>
   <div class="btns"><button class="btn ghost" id="dockBack">Back</button><button class="btn" id="dockNext">Next step</button></div>
 </aside>
+<div class="ar-view" id="arView" hidden role="dialog" aria-label="Living print camera">
+  <canvas id="arOut"></canvas>
+  <div class="ar-top"><span id="arStatus">Starting the camera…</span><button class="btn ghost" id="arSound" hidden>Sound on</button><button class="btn" id="arClose">Close</button></div>
+</div>
+
+<button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode"></button>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/ag-psd@31.0.2/dist/bundle.js"></script>
@@ -2576,19 +2970,20 @@ const SECTIONS = {
   home: { name: "Home", tabs: [["home", "Home"]] },
   color: { name: "Color & type", tabs: [["palette", "Palette"], ["gradient", "Gradient & shadow"], ["type", "Type scale"], ["extract", "Image colors"], ["colorway", "Colorway grid"], ["letters", "Letter maker"]] },
   photo: { name: "Photo lab", tabs: [["adjust", "Adjust"], ["blend", "Blend modes"], ["effects", "Print effects"], ["relight", "Golden hour"], ["camera", "Live camera"]] },
+  video: { name: "Video", tabs: [["clip", "Clip lab"], ["cinemagraph", "Cinemagraph"], ["titles", "Titles"], ["rotoscope", "Rotoscope sketch"]] },
   print: { name: "Printmaking", tabs: [["linocut", "Linocut"], ["cyanotype", "Cyanotype"], ["screenprint", "Screen print"], ["riso", "Riso print shop"], ["lineart", "Line art"], ["topo", "Photo to topo"]] },
   handmade: { name: "Handmade", tabs: [["stitch", "Stitch pattern"], ["knit", "Knit & quilt chart"], ["papercut", "Paper-cut layers"], ["stamp", "Stamps & patches"], ["zine", "Zine maker"], ["booklet", "Booklet maker"]] },
-  layouts: { name: "Layouts", tabs: [["poster", "Poster maker"], ["badge", "Badge maker"], ["fieldguide", "Field guide card"], ["trailmap", "Trail map"], ["pattern", "Pattern maker"], ["moodboard", "Mood board"], ["mockups", "Mockups"], ["letterpress", "Letterpress"], ["wiggle", "Hand-drawn wiggle"]] },
-  field: { name: "Field kit", tabs: [["sound", "Sound print"], ["sky", "Sky print"], ["leaf", "Leaf print"], ["growth", "Growth patterns"], ["textures", "Texture maker"]] },
+  layouts: { name: "Layouts", tabs: [["poster", "Poster maker"], ["badge", "Badge maker"], ["fieldguide", "Field guide card"], ["trailmap", "Trail map"], ["pattern", "Pattern maker"], ["moodboard", "Mood board"], ["mockups", "Mockups"], ["letterpress", "Letterpress"], ["wiggle", "Hand-drawn wiggle"], ["living", "Living prints"]] },
+  field: { name: "Field kit", tabs: [["sound", "Sound print"], ["sky", "Sky print"], ["leaf", "Leaf print"], ["growth", "Growth patterns"], ["textures", "Texture maker"], ["lake", "Lake color year"]] },
   check: { name: "Check it", tabs: [["director", "Art director"], ["printcheck", "Print check"]] },
-  handoff: { name: "Photoshop handoff", tabs: [["handoff", "Photoshop handoff"]] },
+  handoff: { name: "Photoshop", tabs: [["handoff", "Photoshop handoff"], ["scanner", "Pocket scanner"]] },
   about: { name: "About", tabs: [["about", "About"]] },
   projects: { name: "Projects", tabs: [["projects", "Projects"]] },
   shelf: { name: "Your shelf", tabs: [["shelf", "Your shelf"]] },
   fine: { name: "The fine print", tabs: [["privacy", "Privacy"], ["terms", "Terms of use"], ["credits", "Credits"]] }
 };
 const PHOTO = new Set(["extract", "adjust", "blend", "effects", "lineart", "screenprint", "topo", "linocut", "cyanotype", "relight", "riso", "stitch", "papercut", "knit"]);
-const lastTab = { projects: "projects", shelf: "shelf", home: "home", color: "palette", photo: "adjust", print: "linocut", handmade: "stitch", layouts: "poster", field: "sound", check: "director", handoff: "handoff", about: "about", fine: "privacy" };
+const lastTab = { projects: "projects", shelf: "shelf", home: "home", color: "palette", photo: "adjust", video: "clip", print: "linocut", handmade: "stitch", layouts: "poster", field: "sound", check: "director", handoff: "handoff", about: "about", fine: "privacy" };
 let current = "palette";
 const rendered = {};
 const secOf = tab => Object.keys(SECTIONS).find(k => SECTIONS[k].tabs.some(t => t[0] === tab));
@@ -2619,6 +3014,10 @@ function show(tab) {
   if (tab === "stamp") stShow();
   if (tab === "fieldguide") fgShow();
   if (tab === "home") homeDemo();
+  vidSetTab(tab);
+  if (tab === "living") lvShow();
+  if (tab === "lake") lkShow();
+  if (tab === "scanner") scShow();
   if (tab === "home") shelfHome();
   if (tab === "shelf") shelfRender();
   document.title = tab === "home" ? "Trailhead · tools for making things by hand" : tabName(tab) + " · Trailhead";
@@ -2646,7 +3045,7 @@ $("#homePluginDl").addEventListener("click", async () => {
     // A web host can serve the ready-made zip. Claude artifacts can't host .zip files, so build it from the plugin files instead.
     try { const z = await fetch("downloads/trailhead-for-photoshop.zip"); if (z.ok && !/html|text/.test(z.headers.get("content-type") || "")) { saveFile("trailhead-for-photoshop.zip", await z.blob()); return; } } catch (e) {}
     const get = async p => { const r = await fetch("plugin/" + p); if (!r.ok) throw new Error(p); return new Uint8Array(await r.arrayBuffer()); };
-    const parts = [["manifest.json", "manifest.json"], ["index.html", "index.html.txt"], ["main.js", "main.js"], ["icons/plugin.png", "icons/plugin.png"], ["icons/plugin@2x.png", "icons/plugin@2x.png"], ["icons/panel.png", "icons/panel.png"], ["icons/panel@2x.png", "icons/panel@2x.png"]];
+    const parts = [["manifest.json", "manifest.json"], ["index.html", "index.html.txt"], ["main.js", "main.js"], ["aes.js", "aes.js"], ["qrcode.js", "qrcode.js"], ["icons/plugin.png", "icons/plugin.png"], ["icons/plugin@2x.png", "icons/plugin@2x.png"], ["icons/panel.png", "icons/panel.png"], ["icons/panel@2x.png", "icons/panel@2x.png"]];
     const ccx = await Promise.all(parts.map(async ([name, src]) => ({ name, data: await get(src) })));
     const ccxBytes = new Uint8Array(await makeZip(ccx).arrayBuffer());
     const outer = makeZip([{ name: "Trailhead.ccx", data: ccxBytes }, { name: "README.txt", data: await get("README.txt") }]);
@@ -5633,9 +6032,9 @@ function skMilkyWay(lst, lat, st, W, H, cx, cy, R) {
   x.putImageData(id, 0, 0); return c;
 }
 function skPhaseName(m) { const k = m.illum; if (k < .03) return "New moon"; if (k > .97) return "Full moon"; if (Math.abs(k - .5) < .06) return m.waxing ? "First quarter moon" : "Last quarter moon"; return (m.waxing ? "Waxing " : "Waning ") + (k < .5 ? "crescent" : "gibbous"); }
-function renderSky(scale = 1) {
+function renderSky(scale = 1, offsetMin = 0) {
   const st = SK_STYLES[skStyle], u = scale, W = Math.round(1200 * u), H = Math.round(1600 * u), cx = W / 2, cy = 640 * u, R = 470 * u;
-  const jd = skJD(), [lat, lon] = skPlace(), gmst = (280.46061837 + 360.98564736629 * (jd - 2451545)) % 360, lst = (gmst + lon + 360) % 360;
+  const jd = skJD() + offsetMin / 1440, [lat, lon] = skPlace(), gmst = (280.46061837 + 360.98564736629 * (jd - 2451545)) % 360, lst = (gmst + lon + 360) % 360;
   const proj = (ra, dec) => { const [alt, az] = skAltAz(ra, dec, lst, lat), a = Math.max(alt, -85), r = R * Math.tan((90 - a) / 2 * D2R); return [cx - r * Math.sin(az * D2R), cy - r * Math.cos(az * D2R), alt]; };
   const bgL = mkLayer(W, H, "Background", x => { x.fillStyle = st.bg; x.fillRect(0, 0, W, H); x.fillStyle = st.disk; x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.fill(); });
   const sky = newCanvas(W, H), x = sky.getContext("2d"); x.save(); x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.clip();
@@ -5702,9 +6101,11 @@ const GN = 256;
 let grKind = "Coral", grA = new Float32Array(GN * GN), grB = new Float32Array(GN * GN), grA2 = new Float32Array(GN * GN), grB2 = new Float32Array(GN * GN), grRun = true, grRAF = 0, grDrawing = false, grSteps = 0;
 $("#grKinds").innerHTML = Object.keys(GR_KINDS).map(k => `<button class="chip" data-gr="${k}" aria-pressed="${k === grKind}">${k}</button>`).join("");
 fillPalSelect($("#grPal"), GR_KINDS[grKind].pal);
-function grSeed(empty) {
+let grSeedNum = 0;
+function grSeed(empty, seed) {
   grA.fill(1); grB.fill(0); grSteps = 0; if (empty) return;
-  const r = rng(Math.floor(Math.random() * 1e6) + 1);
+  grSeedNum = seed || Math.floor(Math.random() * 1e6) + 1; const sv = document.getElementById("grSeedVal"); if (sv) sv.value = String(grSeedNum);
+  const r = rng(grSeedNum);
   const count = GR_KINDS[grKind].seeds || 18;
   for (let s = 0; s < count; s++) { const cx = Math.floor(r() * GN), cy = Math.floor(r() * GN), rad = 2 + Math.floor(r() * 5); for (let y = -rad; y <= rad; y++) for (let x = -rad; x <= rad; x++) if (x * x + y * y <= rad * rad) { const i = ((cy + y + GN) % GN) * GN + (cx + x + GN) % GN; grB[i] = 1; grA[i] = .5; } }
 }
@@ -5754,6 +6155,7 @@ $("#grPlay").addEventListener("click", () => { grRun = !grRun; $("#grPlay").text
 $("#grReset").addEventListener("click", () => { grSeed(false); grRun = true; $("#grPlay").textContent = "Pause"; grStart(); });
 $("#grClear").addEventListener("click", () => { grSeed(true); grRun = true; $("#grPlay").textContent = "Pause"; grRender(); grStart(); toast("Draw on the square to plant growth."); });
 ["grPal", "grCrisp", "grInvert"].forEach(id => $("#" + id).addEventListener("input", grRender));
+$("#grSeedVal").addEventListener("input", () => { const v = parseInt($("#grSeedVal").value, 10); if (v && v !== grSeedNum) { grSeed(false, v); grRun = true; grStart(); } });
 ["grSpeed", "grBrush"].forEach(id => $("#" + id).addEventListener("input", () => showOutputs(["grSpeed", "grBrush"])));
 showOutputs(["grSpeed", "grBrush"]);
 function grPaint(e) {
@@ -6270,6 +6672,996 @@ $("#lfUse").addEventListener("click", () => { const r = lfResult || renderLeaf()
 function lfShow() { if (!lfResult) drawLF(); }
 
 /* =========================================================
+   LIVING PRINTS
+   A print carries a QR code that rebuilds the same design (and its animation) on any phone from settings in the link.
+   MindAR (MIT) learns the print in the browser, then finds it in the camera feed; the animation is drawn
+   over the print with a perspective warp. Nothing from the camera leaves the device.
+   ========================================================= */
+const SITE_URL = inFrame ? "https://harastiaj-star.github.io/cautious-fishstick/" : location.origin + location.pathname;
+const LV_KINDS = {
+  "Moving sky": { tab: "sky", how: "Uses your Sky print. In the camera the sky turns through the night, a few minutes every second." },
+  "Sound that plays": { tab: "sound", how: "Uses your Sound print. A playhead sweeps across the print and the sound plays from the phone. Codes only work with the example sounds, since your own recording stays on your device." },
+  "Growing pattern": { tab: "growth", how: "Uses Growth patterns. The print shows the grown pattern, and in the camera it grows again from the first few spots." },
+  "Hand-drawn boil": { tab: null, how: "Any design, shimmering like hand-drawn animation. Uses the Hand-drawn wiggle settings." }
+};
+const LV_BOIL = { "Badge": "badge", "Poster": "poster", "Linocut": "linocut", "Riso": "riso", "Photo to topo": "topo", "Line art": "lineart", "Cyanotype": "cyanotype", "Leaf print": "leaf", "Letterpress": "letterpress", "Stitch pattern": "stitch", "Paper cut": "papercut" };
+let lvKind = "Moving sky", lvPrint = null, lvT = 0;
+$("#lvKinds").innerHTML = Object.keys(LV_KINDS).map(k => `<button class="chip" data-lv="${k}" aria-pressed="${k === lvKind}">${k}</button>`).join("");
+$("#lvSrc").innerHTML = Object.keys(LV_BOIL).map(k => `<option>${k}</option>`).join("");
+$("#lvKinds").addEventListener("click", e => { const b = e.target.closest("[data-lv]"); if (!b) return; lvKind = b.dataset.lv; $$("#lvKinds .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); scheduleLV(); });
+$("#lvSrc").addEventListener("input", scheduleLV);
+function lvLoadScript(src) { return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = () => rej(new Error("couldn't load " + src)); document.head.appendChild(s); }); }
+async function lvQR(text) { if (!window.qrcode) await lvLoadScript("https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"); const q = window.qrcode(0, "M"); q.addData(text); q.make(); return q; }
+/* Which tab holds the design's settings, and can a phone rebuild it from a link? */
+function lvSourceInfo() {
+  const k = LV_KINDS[lvKind]; let tab = k.tab, name = null;
+  if (!tab) { name = $("#lvSrc").value; tab = LV_BOIL[name]; }
+  const photoTools = ["linocut", "riso", "topo", "lineart", "cyanotype", "stitch", "papercut"];
+  let portable = true, why = "";
+  if (photoTools.includes(tab) && !imgInfo.example) { portable = false; why = "This design uses your own photo, so the code can't rebuild it on another phone. Bring it to life on this device instead, or switch to an example photo."; }
+  if (tab === "sound" && snLabel === "Your recording") { portable = false; why = "This uses your own recording, which stays on your device, so the code can't rebuild it elsewhere. Bring it to life on this device, or use an example sound."; }
+  if (tab === "leaf" && !$$("#lfExamples .chip").some(c => c.getAttribute("aria-pressed") === "true")) { portable = false; why = "This leaf is your own photo, so the code can't rebuild it elsewhere. Bring it to life on this device."; }
+  if (["poster", "letterpress"].includes(tab)) { why = "If this design includes your own uploaded art, the code will show the default art instead."; }
+  return { tab, name, portable, why };
+}
+async function lvArt() {
+  const info = lvSourceInfo();
+  if (lvKind === "Moving sky") return (renderSky(1)).composite;
+  if (lvKind === "Sound that plays") return renderSound(1).composite;
+  if (lvKind === "Growing pattern") { if (!grSeedNum) grSeed(false); const keep = [grA.slice(), grB.slice(), grSteps]; grSeed(false, grSeedNum); const { f, k } = GR_KINDS[grKind]; for (let i = 0; i < 2600; i++) grStepOnce(f, k); const img = grImage(1200); grA.set(keep[0]); grB.set(keep[1]); grSteps = keep[2]; return img; }
+  return await getArt(info.name, "living", { preview: false });
+}
+function lvLink() {
+  const info = lvSourceInfo(), q = new URLSearchParams(); q.set("k", lvKind); if (info.name) q.set("src", info.name);
+  if (imgInfo.example) q.set("ex", imgInfo.name);
+  const st = pageState(info.tab).toString(); if (st) q.set("s", st);
+  if (info.tab !== "wiggle") { const w = pageState("wiggle").toString(); if (lvKind === "Hand-drawn boil" && w) q.set("w", w); }
+  return SITE_URL + "#living?" + q.toString();
+}
+/* The print: the design, then a band with the code and a line of instructions. Returns the canvas and where the art sits. */
+async function lvBuild(scale = 1) {
+  await fontsReady;
+  const art = await lvArt(); if (!art) throw new Error("Make something in that tool first.");
+  const info = lvSourceInfo(), W = Math.round(1200 * scale), artW = W, artH = Math.round(art.height * artW / art.width), band = Math.round(190 * scale), H = artH + band;
+  const c = newCanvas(W, H), x = c.getContext("2d"); x.fillStyle = "#f7f0dd"; x.fillRect(0, 0, W, H); x.drawImage(art, 0, 0, artW, artH);
+  const pad = Math.round(36 * scale), qs = band - pad * 1.3;
+  if (info.portable) {
+    let q = null; try { q = await lvQR(lvLink()); } catch (e) { toast("The QR code couldn't load, so this print has no code. Check your connection."); }
+    if (q) { const n = q.getModuleCount(), cell = qs / (n + 2), qx = W - pad - qs, qy = artH + (band - qs) / 2;
+    x.fillStyle = "#fff"; x.fillRect(qx, qy, qs, qs); x.fillStyle = "#141210";
+    for (let r = 0; r < n; r++) for (let col = 0; col < n; col++) if (q.isDark(r, col)) x.fillRect(qx + (col + 1) * cell, qy + (r + 1) * cell, Math.ceil(cell), Math.ceil(cell)); }
+  }
+  x.fillStyle = "#6b402d"; x.textAlign = "left"; x.textBaseline = "alphabetic";
+  x.font = `${Math.round(30 * scale)}px "TAY Sundae"`; x.fillText("a living print", pad, artH + band * .42);
+  x.font = `${Math.round(17 * scale)}px "TAY Dumpling"`; setTrack(x, .12, 17 * scale);
+  x.fillText((info.portable ? "Scan the code with your phone, then point it at the print" : "Open Trailhead on this phone and point it at the print").toUpperCase(), pad, artH + band * .66);
+  x.fillText("TRAILHEAD · TOOLS FOR MAKING THINGS BY HAND", pad, artH + band * .82); setTrack(x, 0, 17);
+  return { canvas: c, art: { x: 0, y: 0, w: artW, h: artH }, info, artCanvas: art };
+}
+function scheduleLV() { clearTimeout(lvT); lvT = setTimeout(drawLV, 120); }
+async function drawLV() {
+  const k = LV_KINDS[lvKind]; $("#lvSrcWrap").hidden = !!k.tab; $("#lvHow").textContent = k.how;
+  try { lvPrint = await lvBuild(.75); const o = $("#lvOut"); o.width = lvPrint.canvas.width; o.height = lvPrint.canvas.height; o.getContext("2d").drawImage(lvPrint.canvas, 0, 0); $("#lvNote").textContent = lvPrint.info.why || (inFrame ? "The code points to the Trailhead website, where the camera works." : ""); }
+  catch (e) { $("#lvNote").textContent = e.message; }
+}
+function lvShow() { drawLV(); }
+$("#lvSave").addEventListener("click", async () => { toast("Building the print…"); try { const p = await lvBuild(2); saveFile("trailhead-living-" + slug(lvKind) + ".png", await pngWithDpi(p.canvas, 300)); } catch (e) { toast(e.message); } });
+/* ---------- the animation for each kind: returns frame(t) drawing into a canvas the size of the art ---------- */
+async function lvAnimator(p) {
+  const A = p.art, base = p.artCanvas, out = newCanvas(Math.round(Math.min(900, A.w)), Math.round(Math.min(900, A.w) * A.h / A.w)), ox = out.getContext("2d");
+  if (lvKind === "Moving sky") {
+    const keep = skResult; let last = -1, img = null;
+    return { canvas: out, frame: t => { const step = Math.floor(t * 8); if (step !== last) { last = step; img = renderSky(.5, (t * 6) % 720).composite; skResult = keep; ox.drawImage(img, 0, 0, out.width, out.height); } } };
+  }
+  if (lvKind === "Sound that plays") {
+    const u = out.width / 1200, m = 110 * u, aw = out.width - m * 2, top = 120 * u, ah = out.height * .62, rings = snStyle === "Tree rings", dur = snSpectrogram().seconds;
+    return { canvas: out, audio: true, frame: t => { ox.drawImage(base, 0, 0, out.width, out.height); const f = (t % dur) / dur; ox.save(); if (rings) { const R = Math.min(aw, ah) / 2, r = R * (.06 + .94 * Math.sqrt(f)); ox.strokeStyle = "rgba(232,163,61,.95)"; ox.lineWidth = 5 * u; ox.beginPath(); ox.arc(out.width / 2, top + ah / 2, r, 0, Math.PI * 2); ox.stroke(); } else { const X = m + f * aw, g = ox.createLinearGradient(X - 40 * u, 0, X, 0); g.addColorStop(0, "rgba(232,163,61,0)"); g.addColorStop(1, "rgba(232,163,61,.55)"); ox.fillStyle = g; ox.fillRect(X - 40 * u, top, 40 * u, ah); ox.fillStyle = "#c4572b"; ox.fillRect(X - 2 * u, top - 10 * u, 4 * u, ah + 20 * u); } ox.restore(); }, duration: dur };
+  }
+  if (lvKind === "Growing pattern") {
+    const keep = [grA.slice(), grB.slice(), grSteps], frames = [], { f, k } = GR_KINDS[grKind]; grSeed(false, grSeedNum);
+    for (let s = 0; s < 52; s++) { for (let i = 0; i < 50; i++) grStepOnce(f, k); frames.push(grImage(Math.min(600, out.width))); }
+    grA.set(keep[0]); grB.set(keep[1]); grSteps = keep[2];
+    return { canvas: out, frame: t => { const i = Math.min(frames.length - 1, Math.floor((t % 9) / 9 * frames.length * 1.15)); ox.drawImage(frames[i], 0, 0, out.width, out.height); } };
+  }
+  const frames = wgMakeFrames(base, out.width), fps = +$("#wgFps").value || 8;
+  return { canvas: out, frame: t => ox.drawImage(frames[Math.floor(t * fps) % frames.length], 0, 0, out.width, out.height) };
+}
+/* ---------- the camera view ---------- */
+let ar = null;
+function mat4mul(M, v) { return [0, 1, 2, 3].map(r => M[r] * v[0] + M[4 + r] * v[1] + M[8 + r] * v[2] + M[12 + r] * v[3]); }
+function affineFrom(s, d) { /* maps triangle s to triangle d: returns [a,b,c,d,e,f] for ctx.setTransform */
+  const [x0, y0, x1, y1, x2, y2] = s, [u0, v0, u1, v1, u2, v2] = d, den = x0 * (y1 - y2) + x1 * (y2 - y0) + x2 * (y0 - y1); if (Math.abs(den) < 1e-9) return null;
+  const a = (u0 * (y1 - y2) + u1 * (y2 - y0) + u2 * (y0 - y1)) / den, c = (u0 * (x2 - x1) + u1 * (x0 - x2) + u2 * (x1 - x0)) / den, e = (u0 * (x1 * y2 - x2 * y1) + u1 * (x2 * y0 - x0 * y2) + u2 * (x0 * y1 - x1 * y0)) / den;
+  const b = (v0 * (y1 - y2) + v1 * (y2 - y0) + v2 * (y0 - y1)) / den, dd = (v0 * (x2 - x1) + v1 * (x0 - x2) + v2 * (x1 - x0)) / den, f = (v0 * (x1 * y2 - x2 * y1) + v1 * (x2 * y0 - x0 * y2) + v2 * (x0 * y1 - x1 * y0)) / den;
+  return [a, b, c, dd, e, f];
+}
+/* Draws img into the quad (TL, TR, BR, BL) using a grid of small triangles, which approximates the perspective. */
+function drawQuad(x, img, Q, n = 8) {
+  const w = img.width, h = img.height, P = (u, v) => { const tx = Q[0][0] + (Q[1][0] - Q[0][0]) * u, ty = Q[0][1] + (Q[1][1] - Q[0][1]) * u, bx = Q[3][0] + (Q[2][0] - Q[3][0]) * u, by = Q[3][1] + (Q[2][1] - Q[3][1]) * u; return [tx + (bx - tx) * v, ty + (by - ty) * v]; };
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+    const u0 = i / n, u1 = (i + 1) / n, v0 = j / n, v1 = (j + 1) / n, p00 = P(u0, v0), p10 = P(u1, v0), p11 = P(u1, v1), p01 = P(u0, v1);
+    [[[u0, v0, u1, v0, u1, v1], [p00, p10, p11]], [[u0, v0, u1, v1, u0, v1], [p00, p11, p01]]].forEach(([uv, pts]) => {
+      const s = [uv[0] * w, uv[1] * h, uv[2] * w, uv[3] * h, uv[4] * w, uv[5] * h], dpts = [pts[0][0], pts[0][1], pts[1][0], pts[1][1], pts[2][0], pts[2][1]], T = affineFrom(s, dpts); if (!T) return;
+      const cx = (dpts[0] + dpts[2] + dpts[4]) / 3, cy = (dpts[1] + dpts[3] + dpts[5]) / 3, grow = q => [q[0] + (q[0] - cx) * .02, q[1] + (q[1] - cy) * .02];
+      x.save(); x.beginPath(); const a = grow([dpts[0], dpts[1]]), b2 = grow([dpts[2], dpts[3]]), c2 = grow([dpts[4], dpts[5]]); x.moveTo(a[0], a[1]); x.lineTo(b2[0], b2[1]); x.lineTo(c2[0], c2[1]); x.closePath(); x.clip();
+      x.setTransform(T[0], T[1], T[2], T[3], T[4], T[5]); x.drawImage(img, 0, 0); x.restore();
+    });
+  }
+}
+function arStatus(t) { $("#arStatus").textContent = t; }
+async function arStop() {
+  if (!ar) { $("#arView").hidden = true; return; }
+  cancelAnimationFrame(ar.raf); try { ar.ctrl && ar.ctrl.stopProcessVideo(); } catch (e) {} if (ar.stream) ar.stream.getTracks().forEach(t => t.stop()); if (ar.src) try { ar.src.stop(); } catch (e) {}
+  ar = null; $("#arView").hidden = true; document.body.style.overflow = "";
+}
+$("#arClose").addEventListener("click", arStop);
+async function arStart() {
+  if (ar) return;
+  $("#arView").hidden = false; document.body.style.overflow = "hidden"; arStatus("Starting the camera…"); $("#arSound").hidden = true;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { arStatus(inFrame ? "This preview can't use the camera. Open Trailhead on its website on your phone." : "This browser can't use the camera here."); return; }
+  ar = { raf: 0 };
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false });
+    if (!ar) { stream.getTracks().forEach(t => t.stop()); return; } ar.stream = stream;
+    const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.srcObject = stream; await v.play(); v.setAttribute("width", v.videoWidth); v.setAttribute("height", v.videoHeight); ar.video = v;
+    const out = $("#arOut"), ctx = out.getContext("2d"), draw0 = () => { if (!ar) return; out.width = innerWidth * (devicePixelRatio > 1 ? 1.5 : 1); out.height = innerHeight * (devicePixelRatio > 1 ? 1.5 : 1); };
+    draw0(); addEventListener("resize", draw0);
+    const p = lvPrint && lvPrint.scale === 1 ? lvPrint : await lvBuild(1); p.scale = 1; lvPrint = p;
+    const anim = await lvAnimator(p); ar.anim = anim;
+    const cover = () => { const s = Math.max(out.width / v.videoWidth, out.height / v.videoHeight); return { s, ox: (out.width - v.videoWidth * s) / 2, oy: (out.height - v.videoHeight * s) / 2 }; };
+    const preview = () => { if (!ar) return; const c = cover(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(v, c.ox, c.oy, v.videoWidth * c.s, v.videoHeight * c.s); ar.raf = requestAnimationFrame(preview); };
+    preview();
+    arStatus("Loading the tracker. The first time takes a moment…");
+    if (!window.MINDAR || !window.MINDAR.IMAGE) await import("https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image.prod.js");
+    if (!ar) return;
+    const { Compiler, Controller } = window.MINDAR.IMAGE, tgt = newCanvas(Math.round(p.canvas.width * .55), Math.round(p.canvas.height * .55)); tgt.getContext("2d").drawImage(p.canvas, 0, 0, tgt.width, tgt.height);
+    const img = new Image(); img.src = tgt.toDataURL("image/jpeg", .92); await img.decode();
+    const comp = new Compiler(); await comp.compileImageTargets([img], pr => arStatus(`Learning your print… ${Math.round(pr)}%`)); const buf = await comp.exportData(); if (!ar) return;
+    let wm = null, lostAt = 0;
+    const ctrl = new Controller({ inputWidth: v.videoWidth, inputHeight: v.videoHeight, maxTrack: 1, filterMinCF: .0005, filterBeta: 8, onUpdate: d => { if (d.type === "updateMatrix") { wm = d.worldMatrix; if (!wm) lostAt = performance.now(); } } }); ar.ctrl = ctrl;
+    const { dimensions } = await ctrl.addImageTargetsFromBuffer(buf), [dw, dh] = dimensions[0], P = ctrl.getProjectionMatrix();
+    await ctrl.dummyRun(v); if (!ar) return; ctrl.processVideo(v);
+    arStatus("Point your phone at the print"); cancelAnimationFrame(ar.raf);
+    if (anim.audio && snSamples) { $("#arSound").hidden = false; }
+    const sx = dw / p.canvas.width, sy = dh / p.canvas.height, A = p.art, corners = [[A.x, A.y], [A.x + A.w, A.y], [A.x + A.w, A.y + A.h], [A.x, A.y + A.h]].map(([X, Y]) => [X * sx, dh - Y * sy]);
+    const t0 = performance.now();
+    const loop = () => {
+      if (!ar) return; const c = cover(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(v, c.ox, c.oy, v.videoWidth * c.s, v.videoHeight * c.s);
+      if (wm) {
+        const Q = corners.map(([X, Y]) => { const cl = mat4mul(P, mat4mul(wm, [X, Y, 0, 1])), nx = cl[0] / cl[3], ny = cl[1] / cl[3]; return [c.ox + (nx + 1) / 2 * v.videoWidth * c.s, c.oy + (1 - ny) / 2 * v.videoHeight * c.s]; });
+        anim.frame((performance.now() - t0) / 1000); drawQuad(ctx, anim.canvas, Q, 8); arStatus("");
+      } else if (performance.now() - lostAt > 600) arStatus("Point your phone at the print");
+      ar.raf = requestAnimationFrame(loop);
+    };
+    loop();
+  } catch (e) {
+    const n = e && e.name; arStatus(n === "NotAllowedError" || n === "SecurityError" ? (inFrame ? "This preview can't use the camera. Open Trailhead on its website on your phone." : "Camera access was blocked. Allow it for this site, then try again.") : "Something went wrong: " + ((e && e.message) || e));
+  }
+}
+$("#arSound").addEventListener("click", () => {
+  if (!ar || !snSamples) return; const ctx = snCtx(); ctx.resume && ctx.resume(); if (ar.src) { try { ar.src.stop(); } catch (e) {} ar.src = null; $("#arSound").textContent = "Sound on"; return; }
+  const a = Math.floor(snSamples.length * +$("#snStart").value / 100), b = Math.floor(snSamples.length * +$("#snEnd").value / 100), seg = snSamples.subarray(a, Math.max(a + 1, b)), buf = ctx.createBuffer(1, seg.length, snRate); buf.getChannelData(0).set(seg);
+  const node = ctx.createBufferSource(); node.buffer = buf; node.loop = true; node.connect(ctx.destination); node.start(); ar.src = node; $("#arSound").textContent = "Sound off";
+});
+$("#lvLive").addEventListener("click", arStart);
+/* Opening a living print link: rebuild the design from the link, then wait for a tap (cameras need one). */
+function lvFromLink(q) {
+  const k = q.get("k"); if (!LV_KINDS[k]) return;
+  lvKind = k; $$("#lvKinds .chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.lv === k)));
+  if (q.get("src")) $("#lvSrc").value = q.get("src");
+  const ex = q.get("ex"); if (ex && EXAMPLES[ex]) setImage(EXAMPLES[ex](1200, 800), { name: ex, example: true });
+  const info = lvSourceInfo(); if (q.get("s")) applyState(info.tab, new URLSearchParams(q.get("s"))); if (q.get("w")) applyState("wiggle", new URLSearchParams(q.get("w")));
+  if (k === "Sound that plays") { const chip = $$("#snExamples .chip").find(c => c.getAttribute("aria-pressed") === "true"); if (chip) chip.click(); }
+  setTimeout(() => { drawLV(); toast("This is a living print. Tap Bring it to life, then point your phone at it."); $("#lvLive").scrollIntoView({ behavior: "smooth", block: "center" }); }, 700);
+}
+
+/* =========================================================
+   LAKE COLOR YEAR
+   One tiny true-color image a day from NASA GIBS (VIIRS and MODIS), sampled over open water.
+   Cloud and ice show up white and low in saturation; when a satellite's view is mostly white,
+   the next satellite gets a try before the day is marked white.
+   ========================================================= */
+const LK_PLACES = {
+  "Lake Michigan, off Sleeping Bear": [44.98, -86.42, .12], "Lake Superior, off Pictured Rocks": [46.68, -86.45, .12], "Grand Traverse Bay": [44.9, -85.585, .04], "Lake Huron, Thunder Bay": [45.05, -83.25, .07], "Lake Erie, western basin": [41.78, -83.0, .1], "Lake St. Clair": [42.45, -82.7, .08],
+  "Crater Lake": [42.94, -122.1, .03], "Yellowstone Lake": [44.45, -110.36, .06], "Lake Tahoe": [39.1, -120.03, .06], "Great Salt Lake": [41.4, -112.5, .12], "Lake Okeechobee": [26.95, -80.82, .1], "Somewhere else": null
+};
+const LK_LAYERS = ["VIIRS_NOAA20_CorrectedReflectance_TrueColor", "VIIRS_SNPP_CorrectedReflectance_TrueColor", "VIIRS_NOAA21_CorrectedReflectance_TrueColor", "MODIS_Aqua_CorrectedReflectance_TrueColor"];
+let lkStyle = "Stripes", lkDays = null, lkMeta = null, lkAbort = null, lkResult = null;
+$("#lkPlace").innerHTML = Object.keys(LK_PLACES).map(k => `<option>${esc(k)}</option>`).join("");
+(() => { const y = new Date().getFullYear(); $("#lkYear").innerHTML = `<option value="last">Last 12 months</option>` + Array.from({ length: 10 }, (_, i) => y - 1 - i).map(v => `<option>${v}</option>`).join(""); $("#lkYear").value = String(y - 1); })();
+$("#lkStyles").innerHTML = ["Stripes", "Ring", "Calendar"].map(k => `<button class="chip" data-lk="${k}" aria-pressed="${k === lkStyle}">${k}</button>`).join("");
+$("#lkStyles").addEventListener("click", e => { const b = e.target.closest("[data-lk]"); if (!b) return; lkStyle = b.dataset.lk; $$("#lkStyles .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); lkDraw(); });
+$("#lkPlace").addEventListener("input", () => { $("#lkCustom").hidden = !!LK_PLACES[$("#lkPlace").value]; });
+["lkClouds", "lkTitle", "lkMonths"].forEach(id => $("#" + id).addEventListener("input", lkDraw));
+const lkISO = d => d.toISOString().slice(0, 10);
+function lkRange() { const v = $("#lkYear").value; if (v === "last") { const end = new Date(); end.setUTCDate(end.getUTCDate() - 2); const start = new Date(end); start.setUTCDate(start.getUTCDate() - 364); return [start, end, "the last 12 months"]; } const y = +v; return [new Date(Date.UTC(y, 0, 1)), new Date(Date.UTC(y, 11, 31)), String(y)]; }
+function lkBox() { const p = LK_PLACES[$("#lkPlace").value]; if (p) return p; return [clamp(parseFloat($("#lkLat").value) || 0, -80, 80), clamp(parseFloat($("#lkLon").value) || 0, -180, 180), .06]; }
+function lkImage(url) { return new Promise((res, rej) => { const i = new Image(); i.crossOrigin = "anonymous"; i.onload = () => res(i); i.onerror = () => rej(new Error("load")); i.src = url; }); }
+/* Reads one day: median color of the pixels that aren't cloud, ice or missing data. Returns {rgb, clear} */
+async function lkDay(date, box) {
+  const [lat, lon, h] = box, bbox = [lat - h / 2, lon - h / 2, lat + h / 2, lon + h / 2].map(v => v.toFixed(4)).join(",");
+  let best = null;
+  for (const layer of LK_LAYERS) {
+    const url = `https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=${layer}&STYLES=&CRS=EPSG:4326&BBOX=${bbox}&WIDTH=16&HEIGHT=16&FORMAT=image/jpeg&TIME=${lkISO(date)}`;
+    let img; try { img = await lkImage(url); } catch (e) { continue; }
+    const c = newCanvas(16, 16), x = c.getContext("2d", { willReadFrequently: true }); x.drawImage(img, 0, 0, 16, 16);
+    let d; try { d = x.getImageData(0, 0, 16, 16).data; } catch (e) { throw new Error("cors"); }
+    const clear = [], white = []; let empty = 0;
+    for (let i = 0; i < d.length; i += 4) { const r = d[i], g = d[i + 1], b = d[i + 2], mx = Math.max(r, g, b), mn = Math.min(r, g, b); if (mx < 6) { empty++; continue; } if (mx > 175 && (mx - mn) < 40) white.push([r, g, b]); else clear.push([r, g, b]); }
+    const n = 256 - empty; if (n < 40) continue;
+    const med = arr => [0, 1, 2].map(k => arr.map(p => p[k]).sort((a, b) => a - b)[arr.length >> 1]);
+    if (clear.length >= n * .45) return { rgb: med(clear), clear: true, layer };
+    if (!best && white.length) best = { rgb: med(white), clear: false, layer };
+  }
+  return best || { rgb: null, clear: false };
+}
+$("#lkGo").addEventListener("click", async () => {
+  if (lkAbort) return;
+  const [start, end, label] = lkRange(), box = lkBox(), days = [], total = Math.round((end - start) / 864e5) + 1;
+  for (let i = 0; i < total; i++) { const d = new Date(start); d.setUTCDate(d.getUTCDate() + i); days.push({ date: d, rgb: null, clear: false, done: false }); }
+  lkDays = days; lkMeta = { place: $("#lkPlace").value === "Somewhere else" ? `${box[0].toFixed(2)}°, ${box[1].toFixed(2)}°` : $("#lkPlace").value, label, box };
+  if (!$("#lkTitle").value.trim() || $("#lkTitle").dataset.auto === "1") { $("#lkTitle").value = lkMeta.place.split(",")[0]; $("#lkTitle").dataset.auto = "1"; }
+  const ctrl = { stop: false }; lkAbort = ctrl; $("#lkGo").disabled = true; $("#lkStop").hidden = false; $("#lkProg").hidden = false;
+  let next = 0, done = 0, failed = 0, corsHit = false;
+  const worker = async () => { while (!ctrl.stop && next < days.length) { const i = next++; try { Object.assign(days[i], await lkDay(days[i].date, box)); } catch (e) { if (e.message === "cors") { corsHit = true; ctrl.stop = true; } failed++; } days[i].done = true; done++; $("#lkBar").style.width = (done / days.length * 100) + "%"; $("#lkStatus").textContent = `Reading ${lkISO(days[i].date)} · ${done} of ${days.length} days`; if (done % 8 === 0) lkDraw(); } };
+  await Promise.all(Array.from({ length: 6 }, worker));
+  lkAbort = null; $("#lkGo").disabled = false; $("#lkStop").hidden = true; $("#lkProg").hidden = true;
+  const got = days.filter(d => d.rgb).length, clear = days.filter(d => d.clear).length;
+  if (corsHit) $("#lkStatus").textContent = inFrame ? "This preview can't read NASA's images. Open Trailhead on its website to gather a year." : "NASA's images loaded but this browser wouldn't let the page read their colors. Try another browser.";
+  else if (!got) $("#lkStatus").textContent = "Couldn't reach NASA's image service. Check your connection and try again.";
+  else $("#lkStatus").textContent = `Done. ${clear} clear days, ${got - clear} cloudy or icy, ${days.length - got} with no picture.` + (ctrl.stop && !corsHit ? " Stopped early." : "");
+  lkDraw();
+});
+$("#lkStop").addEventListener("click", () => { if (lkAbort) lkAbort.stop = true; });
+function lkColors() {
+  if (!lkDays) return [];
+  const fill = $("#lkClouds").value === "fill", out = lkDays.map(d => d.rgb && (d.clear || !fill) ? d.rgb : null);
+  if (fill) for (let i = 0; i < out.length; i++) if (!out[i] && lkDays[i].done) { for (let k = 1; k < 20; k++) { const a = lkDays[i - k], b = lkDays[i + k]; if (a && a.clear) { out[i] = a.rgb; break; } if (b && b.clear) { out[i] = b.rgb; break; } } }
+  return out;
+}
+function lkDraw() {
+  const o = $("#lkOut"), W = 1200, H = 1600, c = newCanvas(W, H), x = c.getContext("2d"), cols = lkColors(), n = cols.length || 365, MONTHS = "JFMAMJJASOND";
+  x.fillStyle = "#f4ecd8"; x.fillRect(0, 0, W, H); const m = 100, ink = "#2b2722", pend = "#e6dcc6", color = (i) => cols[i] ? `rgb(${cols[i].join(",")})` : (lkDays && lkDays[i] && lkDays[i].done ? "#f8f6f1" : pend);
+  const monthStarts = lkDays ? lkDays.map((d, i) => d.date.getUTCDate() === 1 ? i : -1).filter(i => i >= 0) : [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  const monthOf = i => lkDays ? lkDays[i].date.getUTCMonth() : monthStarts.filter(s => s <= i).length - 1;
+  x.font = '22px "TAY Dumpling"'; x.textBaseline = "middle"; x.fillStyle = ink;
+  if (lkStyle === "Stripes") {
+    const top = 140, h = 980, sw = (W - m * 2) / n;
+    for (let i = 0; i < n; i++) { x.fillStyle = color(i); x.fillRect(m + i * sw, top, Math.ceil(sw) + .5, h); }
+    if ($("#lkMonths").checked) { x.fillStyle = ink; x.textAlign = "center"; monthStarts.forEach(i => { x.fillRect(m + i * sw, top + h + 6, 2, 16); x.fillText(MONTHS[monthOf(i)], m + i * sw + 15 * 30 / 31 * sw, top + h + 40); }); }
+  } else if (lkStyle === "Ring") {
+    const cx = W / 2, cy = 640, R1 = 470, R0 = 250;
+    for (let i = 0; i < n; i++) { const a0 = -Math.PI / 2 + i / n * Math.PI * 2, a1 = -Math.PI / 2 + (i + 1.15) / n * Math.PI * 2; x.fillStyle = color(i); x.beginPath(); x.arc(cx, cy, R1, a0, a1); x.arc(cx, cy, R0, a1, a0, true); x.closePath(); x.fill(); }
+    if ($("#lkMonths").checked) { x.fillStyle = ink; x.textAlign = "center"; monthStarts.forEach(i => { const a = -Math.PI / 2 + (i + 15) / n * Math.PI * 2; x.fillText(MONTHS[monthOf(i)], cx + Math.cos(a) * (R1 + 34), cy + Math.sin(a) * (R1 + 34)); }); }
+  } else {
+    /* twelve small month calendars, four across */
+    const cols = 4, gap = 34, mw = (W - m * 2 - gap * (cols - 1)) / cols, cell = mw / 7, rowH = cell * 6 + 62, top = Math.max(120, (1200 - rowH * 3) / 2);
+    const days = lkDays || Array.from({ length: 365 }, (_, i) => ({ date: new Date(Date.UTC(2025, 0, 1 + i)) }));
+    let mi = -1, first = 0;
+    days.forEach((d, i) => {
+      if (i === 0 || d.date.getUTCDate() === 1) { mi++; first = new Date(Date.UTC(d.date.getUTCFullYear(), d.date.getUTCMonth(), 1)).getUTCDay(); if (mi < 12 && $("#lkMonths").checked) { x.fillStyle = ink; x.textAlign = "left"; x.fillText("JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC".substr(d.date.getUTCMonth() * 3, 3), m + (mi % cols) * (mw + gap), top + Math.floor(mi / cols) * rowH + 12); } }
+      if (mi > 11) return;
+      const k = d.date.getUTCDate() - 1 + first, ox = m + (mi % cols) * (mw + gap), oy = top + Math.floor(mi / cols) * rowH + 34;
+      x.fillStyle = color(i); x.fillRect(ox + (k % 7) * cell + 2, oy + Math.floor(k / 7) * cell + 2, cell - 4, cell - 4);
+    });
+  }
+  const title = ($("#lkTitle").value || (lkMeta ? lkMeta.place.split(",")[0] : "A year of a lake")).toUpperCase(), ty = 1300;
+  x.fillStyle = ink; x.textAlign = "center"; x.textBaseline = "alphabetic"; const ts = fitSize(x, title, W - 200, 84, '"TAY Dumpling"', 30); x.font = `${ts}px "TAY Dumpling"`; setTrack(x, .05, ts); x.fillText(title, W / 2, ty);
+  x.font = '44px "TAY Sundae"'; setTrack(x, 0, 44); x.fillStyle = "#3f6e86"; x.fillText(lkMeta ? `every day of ${lkMeta.label}` : "every day of a year", W / 2, ty + 68);
+  x.font = '19px "TAY Dumpling"'; setTrack(x, .14, 19); x.fillStyle = ink;
+  if (lkMeta) x.fillText(lkMeta.place.toUpperCase(), W / 2, ty + 124);
+  x.fillText("COLORS READ FROM NASA SATELLITE IMAGES · WHITE DAYS ARE CLOUDS OR ICE", W / 2, ty + (lkMeta ? 156 : 124));
+  setTrack(x, 0, 19);
+  lkResult = c; o.width = W; o.height = H; o.getContext("2d").drawImage(c, 0, 0);
+}
+function lkShow() { if (!lkResult) lkDraw(); }
+$("#lkPNG").addEventListener("click", async () => { lkDraw(); saveFile("trailhead-lake-year-" + slug(lkMeta ? lkMeta.place : "lake") + ".png", await pngWithDpi(lkResult, 150)); });
+$("#lkCSV").addEventListener("click", () => { if (!lkDays) { toast("Gather a year first."); return; } const rows = ["date,hex,clear,satellite"].concat(lkDays.map(d => `${lkISO(d.date)},${d.rgb ? rgbToHex(...d.rgb) : ""},${d.clear ? "yes" : "no"},${d.layer || ""}`)); saveFileAny("trailhead-lake-colors-" + slug(lkMeta.place) + ".csv", new TextEncoder().encode(rows.join("\n") + "\n")); });
+$("#lkPal").addEventListener("click", () => {
+  const pts = lkDays ? lkDays.filter(d => d.clear && d.rgb).map(d => d.rgb) : []; if (pts.length < 6) { toast("Gather a year with some clear days first."); return; }
+  const K = 6, cents = [pts[0].slice()]; while (cents.length < K) { let best = pts[0], bd = -1; pts.forEach(p => { let md = Infinity; cents.forEach(c => md = Math.min(md, (p[0] - c[0]) ** 2 + (p[1] - c[1]) ** 2 + (p[2] - c[2]) ** 2)); if (md > bd) { bd = md; best = p; } }); cents.push(best.slice()); }
+  for (let it = 0; it < 8; it++) { const sum = cents.map(() => [0, 0, 0, 0]); pts.forEach(p => { let bi = 0, bd = Infinity; cents.forEach((c, j) => { const v = (p[0] - c[0]) ** 2 + (p[1] - c[1]) ** 2 + (p[2] - c[2]) ** 2; if (v < bd) { bd = v; bi = j; } }); const s = sum[bi]; s[0] += p[0]; s[1] += p[1]; s[2] += p[2]; s[3]++; }); sum.forEach((s, j) => { if (s[3]) cents[j] = [s[0] / s[3], s[1] / s[3], s[2] / s[3]]; }); }
+  lkUsePalette(cents.map(c => rgbToHex(...c)), lkMeta.place.split(",")[0]);
+});
+function lkUsePalette(hexes, name) {
+  const sorted = hexes.map(h => ({ h, l: hexToRgb(h).reduce((a, v) => a + v, 0) })).sort((a, b) => a.l - b.l);
+  palette = sorted.map(o => ({ name: earthName(o.h), hex: o.h })); palSource = null; renderPalette(); show("palette"); window.scrollTo({ top: 0 }); toast("Palette pulled from a year of " + name);
+}
+PIN_MAKERS.lake = () => [(lkResult || (lkDraw(), lkResult)), "Lake year · " + (lkMeta ? lkMeta.place : "")];
+
+/* =========================================================
+   POCKET SCANNER
+   Phone side. The Photoshop panel makes a random topic and key and shows them as a QR code
+   pointing here (#scanner?t=topic&k=key). Photos are cleaned up on the phone, encrypted with
+   AES-CTR (aes-js), and PUT to ntfy.sh/<topic> as an attachment. The panel polls the topic,
+   decrypts, and places the image. Format: "THS1" + 16-byte counter + ciphertext.
+   ========================================================= */
+const SC_MODES = {
+  "As is": "Straight from the camera, just resized for Photoshop.",
+  "Paper scan": "Evens out shadows and whitens the paper, like a flatbed scan. Good for sketches and notes.",
+  "Ink texture": "Keeps only the dark marks as ink on a clear background. Good for brush strokes, stamps and bark.",
+  "Seamless texture": "Crops a square and blends the edges so it tiles with no seams. Good for pattern fills."
+};
+let scMode = "As is", scPhoto = null, scResult = null, scPair = null, scSending = false;
+$("#scModes").innerHTML = Object.keys(SC_MODES).map(k => `<button class="chip" data-sc="${k}" aria-pressed="${k === scMode}">${k}</button>`).join("");
+$("#scModeHint").textContent = SC_MODES[scMode];
+$("#scModes").addEventListener("click", e => { const b = e.target.closest("[data-sc]"); if (!b) return; scMode = b.dataset.sc; $$("#scModes .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); $("#scModeHint").textContent = SC_MODES[scMode]; scProcess(); });
+try { const s = JSON.parse(localStorage.getItem("trailhead-scanner") || "null"); if (s && s.t && s.k) scPair = s; } catch (e) {}
+function scUI() {
+  $("#scPairSteps").hidden = !!scPair; $("#scPaired").hidden = !scPair;
+  if (scPair) $("#scPairName").textContent = "This phone sends to the Photoshop panel it paired with" + (scPair.at ? " on " + new Date(scPair.at).toLocaleDateString() : "") + ".";
+  $("#scSend").disabled = !scPair || !scResult || scSending;
+  if (!scResult) $("#scStatus").textContent = scPair ? "Paired. Take a photo to start." : "Not paired yet. The pairing steps are with the buttons. You can still take photos and save them to this phone.";
+}
+function scPairFrom(q) {
+  const t = q.get("t"), k = q.get("k"); if (!t || !k || !/^[A-Za-z0-9_-]{8,64}$/.test(t) || !/^[0-9a-f]{32}$/.test(k)) return false;
+  scPair = { t, k, at: Date.now() }; try { localStorage.setItem("trailhead-scanner", JSON.stringify(scPair)); } catch (e) {}
+  try { history.replaceState(null, "", location.pathname + location.search + "#scanner"); } catch (e) {}
+  scUI(); toast("Paired with Photoshop. Take a photo."); return true;
+}
+$("#scUnpair").addEventListener("click", () => { scPair = null; try { localStorage.removeItem("trailhead-scanner"); } catch (e) {} scUI(); });
+$("#scFile").addEventListener("change", async e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return; e.target.value = "";
+  try { const bmp = await createImageBitmap(f, { imageOrientation: "from-image" }).catch(() => createImageBitmap(f)); const s = Math.min(1, 3000 / Math.max(bmp.width, bmp.height)), c = newCanvas(Math.round(bmp.width * s), Math.round(bmp.height * s)); c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height); scPhoto = c; scProcess(); }
+  catch (err) { toast("That photo wouldn't open. Try a JPEG or PNG."); }
+});
+/* separable box blur on a Float32 channel, three passes for a near-gaussian */
+function scBlur(a, W, H, r) {
+  const t = new Float32Array(a.length), pass = (src, dst, w, h, sx, sy) => { for (let j = 0; j < h; j++) { let acc = 0; const base = j * sy, get = i => src[base + clamp(i, 0, w - 1) * sx]; for (let i = -r; i <= r; i++) acc += get(i); for (let i = 0; i < w; i++) { dst[base + i * sx] = acc / (2 * r + 1); acc += get(i + r + 1) - get(i - r); } } };
+  for (let k = 0; k < 3; k++) { pass(a, t, W, H, 1, W); pass(t, a, H, W, W, 1); } return a;
+}
+function scFlatten(c) {
+  /* divide each pixel by a heavily blurred copy of the brightness: removes shadows and uneven light */
+  const W = c.width, H = c.height, s = Math.min(1, 400 / Math.max(W, H)), sw = Math.max(1, Math.round(W * s)), sh = Math.max(1, Math.round(H * s));
+  const small = newCanvas(sw, sh), sx = small.getContext("2d", { willReadFrequently: true }); sx.drawImage(c, 0, 0, sw, sh);
+  const sd = sx.getImageData(0, 0, sw, sh).data, L = new Float32Array(sw * sh); for (let i = 0; i < L.length; i++) L[i] = Math.max(sd[i * 4], sd[i * 4 + 1], sd[i * 4 + 2]);
+  /* a max filter first so dark marks don't drag the paper estimate down */
+  const M = new Float32Array(L.length), rr = Math.max(2, Math.round(sw / 60)); for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { let m = 0; for (let dy = -rr; dy <= rr; dy += 2) for (let dx = -rr; dx <= rr; dx += 2) { const xx = clamp(x + dx, 0, sw - 1), yy = clamp(y + dy, 0, sh - 1); m = Math.max(m, L[yy * sw + xx]); } M[y * sw + x] = m; }
+  scBlur(M, sw, sh, Math.max(2, Math.round(sw / 25)));
+  const bg = newCanvas(sw, sh), bx = bg.getContext("2d"), bi = bx.createImageData(sw, sh); for (let i = 0; i < M.length; i++) { bi.data[i * 4] = bi.data[i * 4 + 1] = bi.data[i * 4 + 2] = M[i]; bi.data[i * 4 + 3] = 255; } bx.putImageData(bi, 0, 0);
+  const big = newCanvas(W, H), gx = big.getContext("2d", { willReadFrequently: true }); gx.imageSmoothingQuality = "high"; gx.drawImage(bg, 0, 0, W, H);
+  const B = gx.getImageData(0, 0, W, H).data, x = c.getContext("2d", { willReadFrequently: true }), img = x.getImageData(0, 0, W, H), d = img.data;
+  return { img, d, B, x, W, H };
+}
+function scProcess() {
+  if (!scPhoto) { scResult = null; scUI(); return; }
+  const src = newCanvas(scPhoto.width, scPhoto.height); src.getContext("2d").drawImage(scPhoto, 0, 0);
+  if (scMode === "Paper scan" || scMode === "Ink texture") {
+    const { img, d, B, x, W, H } = scFlatten(src);
+    for (let i = 0; i < d.length; i += 4) {
+      const b = Math.max(40, B[i]), r = d[i] / b, g = d[i + 1] / b, bl = d[i + 2] / b;
+      if (scMode === "Paper scan") { const k = v => clamp(Math.round(255 * Math.pow(clamp((v - .1) / .78, 0, 1), 1.35)), 0, 255); d[i] = k(r); d[i + 1] = k(g); d[i + 2] = k(bl); }
+      else { const lum = .3 * r + .59 * g + .11 * bl, a = clamp((0.88 - lum) / 0.5, 0, 1); d[i] = d[i + 1] = d[i + 2] = 20; d[i + 3] = Math.round(255 * Math.pow(a, .85)); }
+    }
+    x.putImageData(img, 0, 0); scResult = src;
+  } else if (scMode === "Seamless texture") {
+    const S = Math.min(src.width, src.height, 2048), cut = newCanvas(S, S), cx = cut.getContext("2d", { willReadFrequently: true });
+    const side = Math.min(src.width, src.height); cx.drawImage(src, (src.width - side) / 2, (src.height - side) / 2, side, side, 0, 0, S, S);
+    const a = cx.getImageData(0, 0, S, S).data, out = cx.createImageData(S, S), o = out.data, h = S >> 1, tent = v => 1 - Math.abs(2 * ((v % S) + .5) / S - 1);
+    const tx = new Float32Array(S); for (let i = 0; i < S; i++) tx[i] = tent(i);
+    for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
+      let r = 0, g = 0, b = 0; const oi = (y * S + x) * 4;
+      for (const [sx, sy] of [[0, 0], [h, 0], [0, h], [h, h]]) { const xx = (x + sx) % S, yy = (y + sy) % S, w = tx[xx] * tx[yy], si = (yy * S + xx) * 4; r += a[si] * w; g += a[si + 1] * w; b += a[si + 2] * w; }
+      o[oi] = r; o[oi + 1] = g; o[oi + 2] = b; o[oi + 3] = 255;
+    }
+    cx.putImageData(out, 0, 0); scResult = cut;
+  } else scResult = src;
+  const o = $("#scOut"); if (scMode === "Seamless texture") { o.width = scResult.width; o.height = scResult.height; const ox = o.getContext("2d"), p = ox.createPattern(scResult, "repeat"); ox.save(); ox.scale(.5, .5); ox.fillStyle = p; ox.fillRect(0, 0, o.width * 2, o.height * 2); ox.restore(); }
+  else { o.width = scResult.width; o.height = scResult.height; const ox = o.getContext("2d"); ox.clearRect(0, 0, o.width, o.height); if (scMode === "Ink texture") { ox.fillStyle = "#f4ecd8"; ox.fillRect(0, 0, o.width, o.height); } ox.drawImage(scResult, 0, 0); }
+  $("#scStatus").textContent = scMode === "Seamless texture" ? "Shown tiled 2 × 2 so you can check the seams." : scPair ? "Looks good? Press Send to Photoshop." : "Pair with Photoshop to send it, or save it to this phone.";
+  scUI();
+}
+const scBlob = () => new Promise(res => scResult.toBlob(res, scMode === "Ink texture" ? "image/png" : "image/jpeg", .92));
+async function scEncrypt(bytes, keyHex) {
+  if (!window.aesjs) await lvLoadScript("https://cdn.jsdelivr.net/npm/aes-js@3.1.2/index.js");
+  const key = aesjs.utils.hex.toBytes(keyHex), iv = crypto.getRandomValues(new Uint8Array(16));
+  const ct = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(iv)).encrypt(bytes), out = new Uint8Array(4 + 16 + ct.length);
+  out.set([84, 72, 83, 49]); out.set(iv, 4); out.set(ct, 20); return out;
+}
+$("#scSend").addEventListener("click", async () => {
+  if (!scPair || !scResult || scSending) return; scSending = true; scUI();
+  try {
+    $("#scStatus").textContent = "Locking the photo…"; const blob = await scBlob(), bytes = new Uint8Array(await blob.arrayBuffer());
+    if (bytes.length > 14e6) throw new Error("big");
+    const enc = await scEncrypt(bytes, scPair.k), name = "scan-" + slug(scMode) + "-" + Date.now().toString(36) + (scMode === "Ink texture" ? ".png" : ".jpg");
+    $("#scStatus").textContent = "Sending…";
+    const r = await fetch(`https://ntfy.sh/${encodeURIComponent(scPair.t)}?filename=${encodeURIComponent(name + ".ths")}`, { method: "PUT", body: enc });
+    if (!r.ok) throw new Error("relay " + r.status);
+    $("#scStatus").textContent = "Sent. It shows up in Photoshop in a few seconds, as long as the Trailhead panel is open."; toast("Sent to Photoshop");
+  } catch (e) {
+    $("#scStatus").textContent = e.message === "big" ? "That photo is too big to send. Try As is or Ink texture." : inFrame ? "This preview can't reach the relay. Open Trailhead on its website on your phone." : "Couldn't send it. Check your connection and try again. (" + (e.message || "error") + ")";
+  }
+  scSending = false; scUI();
+});
+$("#scSave").addEventListener("click", async () => { if (!scResult) { toast("Take a photo first."); return; } const blob = await scBlob(); saveFileAny("trailhead-" + slug(scMode) + (scMode === "Ink texture" ? ".png" : ".jpg"), new Uint8Array(await blob.arrayBuffer())); });
+function scShow() { scUI(); }
+
+/* =========================================================
+   VIDEO: one shared <video>, a transport bar per page, one render loop,
+   and shared saving (real-time video recording, stepped GIFs, stills).
+   Each video page registers VTAB[tab] = { canvas, range(), speed(), frame(now, opts), reset(), prepare(t) }.
+   ========================================================= */
+const VIDEO_TABS = new Set(["clip", "cinemagraph", "titles", "rotoscope"]);
+/* the example ships as MP4 (H.264, plays everywhere with the usual codecs) and WebM (for browsers built without them) */
+const VID_SOURCES = { "Waterfall": document.createElement("video").canPlayType('video/mp4; codecs="avc1.42E01E"') ? "videos/waterfall.mp4" : "videos/waterfall.webm" };
+const VTAB = {};
+const mkVid = () => { const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.preload = "auto"; v.crossOrigin = "anonymous"; return v; };
+const vidEl = mkVid(), vidEl2 = mkVid();
+let vidName = "", vidReady = null, vidTab = null, vidPlaying = true, vidAudio = null, vidSoundOn = false, vidRec = null, vidStepping = false, vidUiT = 0;
+const fmtT = t => { t = Math.max(0, t || 0); const m = Math.floor(t / 60), s = t - m * 60; return m + ":" + (s < 10 ? "0" : "") + s.toFixed(1); };
+function vidLoad(name) {
+  if (!VID_SOURCES[name]) name = "Waterfall";
+  if (name === vidName && vidReady) return vidReady;
+  vidName = name; const url = VID_SOURCES[name];
+  vidReady = new Promise((res, rej) => {
+    const done = ok => () => { vidEl.removeEventListener("loadeddata", okH); vidEl.removeEventListener("error", badH); ok ? res(vidEl) : rej(new Error("load")); };
+    const okH = done(true), badH = done(false);
+    vidEl.addEventListener("loadeddata", okH); vidEl.addEventListener("error", badH);
+    vidEl.src = url; vidEl.load();
+  });
+  vidEl2.src = url; vidEl2.load();
+  vidReady.catch(() => {});
+  return vidReady;
+}
+function vidSeek(t, el = vidEl) {
+  return new Promise(res => {
+    if (Math.abs(el.currentTime - t) < 0.002 && el.readyState >= 2) return res();
+    let fin = false; const h = () => { if (fin) return; fin = true; el.removeEventListener("seeked", h); res(); };
+    el.addEventListener("seeked", h); el.currentTime = t; setTimeout(h, 4000);
+  });
+}
+function vidFillSelects() {
+  $$("select.vid-src").forEach(sel => { const v = sel.value; sel.innerHTML = Object.keys(VID_SOURCES).map(n => `<option>${esc(n)}</option>`).join(""); sel.value = VID_SOURCES[v] ? v : "Waterfall"; });
+}
+vidFillSelects();
+/* time sliders are 0–1000 of the clip length */
+const vidAt = id => (+$("#" + id).value / 1000) * (vidEl.duration || 0);
+function vidTimeOutputs(ids) { ids.forEach(id => { const el = $("#" + id), o = el && el.parentElement.querySelector("output"); if (o) o.textContent = fmtT(vidAt(id)); }); }
+/* crop rectangle for a frame shape, in video pixels */
+function vidCrop(shape, vw = vidEl.videoWidth || 640, vh = vidEl.videoHeight || 360) {
+  const a = { "Square": 1, "Vertical 9:16": 9 / 16, "Portrait 4:5": .8, "Wide 16:9": 16 / 9 }[shape] || vw / vh;
+  let cw = vw, ch = vw / a; if (ch > vh) { ch = vh; cw = vh * a; }
+  const long = Math.max(cw, ch), target = clamp(long, 540, 1280), s = target / long;
+  return { x: (vw - cw) / 2, y: (vh - ch) / 2, w: cw, h: ch, W: Math.round(cw * s / 2) * 2, H: Math.round(ch * s / 2) * 2 };
+}
+/* ---------- transport bar on each video page ---------- */
+$$("[data-transport]").forEach(el => {
+  el.innerHTML = `<button class="btn vt-play" aria-label="Pause">Pause</button><input type="range" class="vt-seek" min="0" max="1000" value="0" step="1" aria-label="Position in the clip"><span class="vl-time vt-time">0:00</span><button class="btn ghost vt-sound" aria-pressed="false">Sound off</button>`;
+  $(".vt-play", el).addEventListener("click", () => { vidPlaying = !vidPlaying; if (vidPlaying) vidEl.play().catch(() => {}); else { vidEl.pause(); vidEl2.pause(); } vidSyncUI(); });
+  $(".vt-seek", el).addEventListener("input", e => { const T = VTAB[vidTab]; if (!T || vidRec) return; const [s, en] = T.range(); vidEl.currentTime = clamp(+e.target.value / 1000 * (vidEl.duration || 0), s, en); T.reset && T.reset(); });
+  $(".vt-sound", el).addEventListener("click", () => { vidSoundOn = !vidSoundOn; const a = vidAudioGraph(); if (a) { a.ctx.resume(); a.mon.gain.value = vidSoundOn ? 1 : 0; } else { vidEl.muted = !vidSoundOn; } vidSyncUI(); });
+});
+function vidSyncUI() {
+  $$("[data-transport]").forEach(el => {
+    const p = $(".vt-play", el); p.textContent = vidPlaying ? "Pause" : "Play"; p.setAttribute("aria-label", vidPlaying ? "Pause" : "Play");
+    const s = $(".vt-sound", el); s.textContent = vidSoundOn ? "Sound on" : "Sound off"; s.setAttribute("aria-pressed", String(vidSoundOn));
+  });
+}
+function vidAudioGraph() {
+  if (vidAudio) return vidAudio;
+  const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null;
+  try {
+    const ctx = new AC(), src = ctx.createMediaElementSource(vidEl), mon = ctx.createGain(), an = ctx.createAnalyser(), dest = ctx.createMediaStreamDestination();
+    an.fftSize = 1024; mon.gain.value = vidSoundOn ? 1 : 0;
+    src.connect(mon); mon.connect(ctx.destination); src.connect(an); src.connect(dest);
+    vidEl.muted = false;
+    vidAudio = { ctx, mon, an, dest, buf: new Uint8Array(an.fftSize), env: 0, avg: 0, peak: .02 };
+  } catch (e) { return null; }
+  return vidAudio;
+}
+/* how loud the soundtrack is right now compared with its recent average, 0–1 */
+function vidPulse(sens) {
+  const a = vidAudio; if (!a) return 0;
+  a.an.getByteTimeDomainData(a.buf); let s = 0; for (let i = 0; i < a.buf.length; i++) { const d = (a.buf[i] - 128) / 128; s += d * d; }
+  const lvl = Math.sqrt(s / a.buf.length);
+  a.env = lvl > a.env ? a.env + (lvl - a.env) * .6 : a.env + (lvl - a.env) * .12;
+  a.avg += (lvl - a.avg) * .02; a.peak = Math.max(a.peak * .995, a.env, .02);
+  const p = clamp((a.env - a.avg) / Math.max(.02, a.peak - a.avg), 0, 1);
+  return clamp(p * (.4 + sens * 1.6), 0, 1);
+}
+/* ---------- the loop ---------- */
+function vidSetTab(tab) {
+  if (!VIDEO_TABS.has(tab)) { vidTab = null; vidEl.pause(); vidEl2.pause(); return; }
+  vidTab = tab; const T = VTAB[tab], sel = $(`section[data-page="${tab}"] select.vid-src`);
+  const want = sel ? sel.value : "Waterfall";
+  const st = $(`section[data-page="${tab}"] .hint[id$="Status"]`);
+  vidLoad(want).then(() => { if (vidTab !== tab) return; T.loaded && T.loaded(); vidEl.playbackRate = T.speed ? T.speed() : 1; const [s] = T.range(); if (vidEl.currentTime < s || vidEl.currentTime > T.range()[1]) vidEl.currentTime = s; T.reset && T.reset(); if (vidPlaying) vidEl.play().catch(() => { vidPlaying = false; vidSyncUI(); }); })
+    .catch(() => { if (st) st.textContent = "That clip wouldn't play in this browser. Try an MP4 or WebM file."; });
+  vidSyncUI();
+}
+function vidChangeSource(tab, name) { if (VTAB[tab] && VTAB[tab].unload) VTAB[tab].unload(); vidName = ""; vidSetTab(tab); }
+$$("select.vid-src").forEach(sel => sel.addEventListener("input", () => { $$("select.vid-src").forEach(o => o.value = sel.value); vidChangeSource(vidTab, sel.value); }));
+$$("input.vid-up").forEach(inp => inp.addEventListener("change", e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return; e.target.value = "";
+  const name = "My clip · " + f.name.replace(/\.[^.]+$/, "").slice(0, 28); VID_SOURCES[name] = URL.createObjectURL(f);
+  vidFillSelects(); $$("select.vid-src").forEach(o => o.value = name); vidChangeSource(vidTab, name);
+  vidReady.then(() => { if (vidEl.duration > 60) toast("Long clip. Trim it with Start and End, since saving records in real time."); });
+}));
+function vidTick(now) {
+  requestAnimationFrame(vidTick);
+  const T = VTAB[vidTab]; if (!T || vidStepping || !vidReady || vidEl.readyState < 2 || !vidEl.videoWidth) return;
+  const [s, e] = T.range();
+  if (vidEl.currentTime >= e - 0.02 || vidEl.ended) {
+    if (vidRec) vidRecStop();
+    else if (vidPlaying) { vidEl.currentTime = s; T.reset && T.reset(); if (vidEl.paused) vidEl.play().catch(() => {}); }
+  }
+  T.frame(now, {});
+  if (vidRec && vidRec.vtrack && vidRec.vtrack.requestFrame) vidRec.vtrack.requestFrame();
+  if (now - vidUiT > 120) {
+    vidUiT = now; const pg = $(`section[data-page="${vidTab}"]`), d = vidEl.duration || 1;
+    const sk = $(".vt-seek", pg); if (sk && document.activeElement !== sk) sk.value = Math.round(vidEl.currentTime / d * 1000);
+    const tm = $(".vt-time", pg); if (tm) tm.textContent = fmtT(vidEl.currentTime) + " / " + fmtT(d);
+  }
+}
+requestAnimationFrame(vidTick);
+/* ---------- saving ---------- */
+function vidRecType() { if (typeof MediaRecorder === "undefined") return null; return ["video/mp4;codecs=avc1", "video/mp4", "video/webm;codecs=vp9", "video/webm"].find(t => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) || null; }
+async function vidRecord(tab, name, statusEl) {
+  const T = VTAB[tab]; if (vidRec || vidStepping || !T) return;
+  const type = vidRecType(); if (!T.canvas.captureStream || !type) { toast("This browser can't record video. Try Save GIF."); return; }
+  await vidReady;
+  /* frame rate 0 plus requestFrame after each draw keeps the timestamps on the wall clock even when drawing runs slow */
+  const stream = T.canvas.captureStream(0), vtrack = stream.getVideoTracks()[0];
+  if (vidSoundOn) { const a = vidAudioGraph(); if (a) { try { await a.ctx.resume(); } catch (e) {} a.dest.stream.getAudioTracks().forEach(t => stream.addTrack(t)); } }
+  const [s, e] = T.range(); vidEl.pause(); await vidSeek(s); T.reset && T.reset();
+  const rec = new MediaRecorder(stream, { mimeType: type, videoBitsPerSecond: 8e6 }), chunks = [];
+  rec.ondataavailable = ev => ev.data.size && chunks.push(ev.data);
+  const done = new Promise(r => rec.onstop = r); vidRec = { rec, vtrack };
+  const len = (e - s) / (T.speed ? T.speed() : 1);
+  if (statusEl) statusEl.textContent = `Recording ${len.toFixed(1)} seconds. It plays through once in real time.`;
+  rec.start(250); vidEl.play().catch(() => {}); const guard = setTimeout(vidRecStop, (len + 3) * 1000);
+  await done; clearTimeout(guard); vidRec = null; stream.getVideoTracks().forEach(t => t.stop());
+  const blob = new Blob(chunks, { type: type.split(";")[0] });
+  if (statusEl) statusEl.textContent = "Saved. " + (type.includes("mp4") ? "It's an MP4." : "It's a WebM, which most sites and editors accept.");
+  saveFileAny(name + (type.includes("mp4") ? ".mp4" : ".webm"), blob);
+  vidEl.currentTime = s; T.reset && T.reset(); if (vidPlaying) vidEl.play().catch(() => {});
+}
+function vidRecStop() { if (vidRec && vidRec.rec.state !== "inactive") vidRec.rec.stop(); vidEl.pause(); }
+async function vidGIF(tab, name, statusEl, { fps = 12, maxSec = 6, width = 480 } = {}) {
+  const T = VTAB[tab]; if (vidRec || vidStepping || !T) return;
+  await vidReady; vidStepping = true; vidEl.pause(); vidEl2.pause();
+  try {
+    const [s, e] = T.range(), sp = T.speed ? T.speed() : 1, end = Math.min(e, s + maxSec * sp), times = [];
+    for (let t = s; t < end - 1e-3; t += sp / fps) times.push(t);
+    const w = Math.min(width, T.canvas.width), h = Math.round(T.canvas.height * w / T.canvas.width / 2) * 2, frames = [];
+    T.reset && T.reset();
+    for (let i = 0; i < times.length; i++) {
+      await vidSeek(times[i]); if (T.prepare) await T.prepare(times[i]);
+      T.frame(performance.now(), { clock: i / fps, step: true });
+      const c = newCanvas(w, h); c.getContext("2d").drawImage(T.canvas, 0, 0, w, h); frames.push(c);
+      if (statusEl && i % 6 === 0) statusEl.textContent = `Making the GIF… frame ${i + 1} of ${times.length}`;
+      await new Promise(r => setTimeout(r, 0));
+    }
+    if (statusEl) statusEl.textContent = "Packing the GIF…"; await new Promise(r => setTimeout(r, 30));
+    saveFileAny(name + ".gif", gifEncode(frames, Math.round(100 / fps)));
+    if (statusEl) statusEl.textContent = `Saved a ${frames.length}-frame GIF.`;
+  } catch (err) { toast("Couldn't make the GIF: " + err.message); }
+  vidStepping = false; const [s] = T.range(); vidEl.currentTime = s; T.reset && T.reset(); if (vidPlaying) vidEl.play().catch(() => {});
+}
+async function vidStill(tab, name) { const T = VTAB[tab]; if (!T) return; saveFile(name + ".png", await pngWithDpi(T.canvas, 72)); }
+const vidCopy = c => { const o = newCanvas(c.width, c.height); o.getContext("2d").drawImage(c, 0, 0); return o; };
+
+/* =========================================================
+   CLIP LAB: WebGL2. Pass 1 blends the new frame with the last result
+   (long exposure, echo), pass 2 keeps a ring of small frames for Time slice,
+   pass 3 does the look, the effect and the finishing.
+   ========================================================= */
+const VL_LOOKS = ["Natural", "Golden hour", "Slide film", "Faded print", "Super 8", "Silver", "Cyanotype", "Lake blue", "Duotone"];
+const VL_FX = {
+  "None": "Just the look and finish.",
+  "Long exposure": "Blends frames together like a slow shutter, so moving water turns silky and still things stay sharp. Amount sets how long the shutter stays open.",
+  "Echo trails": "Bright moving things leave fading trails behind them. Amount sets how long the trails last.",
+  "Time slice": "Each column of the picture comes from a slightly different moment, so anything moving bends and stretches across the frame.",
+  "Soft glow": "Highlights bloom into a soft haze, like mist or a dirty lens.",
+  "Halftone": "Turns the clip into moving print dots. Amount sets the dot size.",
+  "Riso": "Two riso inks, blue and fluorescent orange, with grainy coverage and slightly off registration.",
+  "Ink lines": "Ink outlines over a flat paper wash, like a moving illustration.",
+  "Topo lines": "Contour lines follow the light and dark in the clip and slowly drift.",
+  "Stop motion": "Drops the frame rate and nudges each frame, like stop-motion animation. Amount sets the frames a second."
+};
+const VL_FX_ID = { "None": 0, "Long exposure": 0, "Echo trails": 0, "Time slice": 3, "Soft glow": 4, "Halftone": 5, "Riso": 6, "Ink lines": 7, "Topo lines": 8, "Stop motion": 0 };
+const VL_PULSE = ["Off", "Glow", "Zoom", "Effect", "Grain"];
+let vlLook = "Slide film", vlFx = "None", vlPulseTo = "Off", vlGL = null, vlStep = -1, vlJit = [0, 0], vlNeedInit = true, vlLastUpload = -1;
+$("#vlLooks").innerHTML = VL_LOOKS.map(k => `<button class="chip" data-vl="${k}" aria-pressed="${k === vlLook}">${k}</button>`).join("");
+$("#vlFx").innerHTML = Object.keys(VL_FX).map(k => `<button class="chip" data-vfx="${k}" aria-pressed="${k === vlFx}">${k}</button>`).join("");
+$("#vlPulse").innerHTML = VL_PULSE.map(k => `<button class="chip" data-vp="${k}" aria-pressed="${k === vlPulseTo}">${k}</button>`).join("");
+$("#vlPal").innerHTML = Object.keys(NATURE).map(k => `<option>${esc(k)}</option>`).join("");
+$("#vlFxHint").textContent = VL_FX[vlFx]; $("#vlFxAmtWrap").hidden = vlFx === "None";
+$("#vlLooks").addEventListener("click", e => { const b = e.target.closest("[data-vl]"); if (!b) return; vlLook = b.dataset.vl; $$("#vlLooks .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); $("#vlPalWrap").hidden = vlLook !== "Duotone"; });
+$("#vlFx").addEventListener("click", e => { const b = e.target.closest("[data-vfx]"); if (!b) return; vlFx = b.dataset.vfx; $$("#vlFx .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); $("#vlFxHint").textContent = VL_FX[vlFx]; $("#vlFxAmtWrap").hidden = vlFx === "None"; vlReset(); });
+$("#vlPulse").addEventListener("click", e => { const b = e.target.closest("[data-vp]"); if (!b) return; vlPulseTo = b.dataset.vp; $$("#vlPulse .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); if (vlPulseTo !== "Off") { const a = vidAudioGraph(); if (a) a.ctx.resume(); else toast("This browser can't listen to the clip's sound."); } });
+["vlLookAmt", "vlFxAmt", "vlGrain", "vlVig", "vlLeak", "vlSens"].forEach(id => $("#" + id).addEventListener("input", () => showOutputs([id])));
+["vlIn", "vlOutPt"].forEach(id => $("#" + id).addEventListener("input", () => { vidTimeOutputs([id]); vlReset(); }));
+$("#vlFrame").addEventListener("input", () => { vlSize(); vlReset(); });
+$("#vlSpeed").addEventListener("input", () => { if (vidTab === "clip") vidEl.playbackRate = +$("#vlSpeed").value; });
+showOutputs(["vlLookAmt", "vlFxAmt", "vlGrain", "vlVig", "vlLeak", "vlSens"]);
+const VL_VS = `#version 300 es
+in vec2 p; out vec2 uv; void main(){ uv = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }`;
+const VL_ACC = `#version 300 es
+precision highp float; in vec2 uv; out vec4 o;
+uniform sampler2D u_frame, u_prev; uniform vec4 u_crop; uniform int u_mode; uniform float u_k; uniform vec2 u_jit;
+void main(){
+  vec3 c = texture(u_frame, u_crop.xy + clamp(uv + u_jit, 0., 1.) * u_crop.zw).rgb, p = texture(u_prev, uv).rgb;
+  if (u_mode == 1) c = mix(p, c, u_k); else if (u_mode == 2) c = max(c, p * u_k);
+  o = vec4(c, 1.);
+}`;
+const VL_FIN = `#version 300 es
+precision highp float; precision highp sampler2DArray; in vec2 uv; out vec4 o;
+uniform sampler2D u_src; uniform sampler2DArray u_slit; uniform float u_head, u_layers;
+uniform vec2 u_res; uniform float u_time, u_amt, u_lookAmt, u_grain, u_vig, u_leak, u_pulse; uniform int u_fx, u_look, u_pulseTo; uniform vec3 u_dark, u_light;
+float lum(vec3 c){ return dot(c, vec3(.2126, .7152, .0722)); }
+float hash(vec2 p){ p = fract(p * vec2(443.897, 441.423)); p += dot(p, p.yx + 19.19); return fract((p.x + p.y) * p.x); }
+vec3 sat(vec3 c, float s){ return mix(vec3(lum(c)), c, s); }
+vec3 grade(vec3 c){
+  vec3 g = c; float l = lum(c);
+  if (u_look == 1) { g = c * vec3(1.08, 1., .82) + vec3(.03, .015, 0.); g = sat(g, 1.12); g = mix(g, g * vec3(1.05, .95, .8), smoothstep(.5, 1., l) * .3); }
+  else if (u_look == 2) { g = sat(c, 1.35); g = smoothstep(0., 1., g * 1.05 - .02); g = mix(g, g * vec3(.9, 1., 1.08), 1. - smoothstep(0., .4, l)); }
+  else if (u_look == 3) { g = sat(c, .72); g = g * .8 + vec3(.12, .1, .11); g *= vec3(1.03, .98, .96); }
+  else if (u_look == 4) { g = sat(c, .8); g = g * vec3(1.1, 1., .78) + vec3(.02, .03, 0.); g = smoothstep(-.05, 1.05, g); }
+  else if (u_look == 5) { float m = smoothstep(.03, .97, l); m = mix(m, m * m * (3. - 2. * m), .6); g = vec3(m) * vec3(1.02, 1., .95); }
+  else if (u_look == 6) { float t = clamp(l * 1.1, 0., 1.); vec3 a = vec3(.059, .208, .376), b = vec3(.184, .416, .604), d = vec3(.561, .702, .812), e = vec3(.953, .937, .894);
+    g = t < .33 ? mix(a, b, t / .33) : t < .66 ? mix(b, d, (t - .33) / .33) : mix(d, e, (t - .66) / .34); }
+  else if (u_look == 7) { g = mix(c, c * vec3(.85, 1., 1.12), .8); g = mix(g, g + vec3(-.02, .02, .05), 1. - smoothstep(0., .5, l)); g = sat(g, .95); }
+  else if (u_look == 8) { g = mix(u_dark, u_light, smoothstep(.05, .95, l)); }
+  return mix(c, clamp(g, 0., 1.), u_lookAmt);
+}
+vec3 srcAt(vec2 p){ return texture(u_src, p).rgb; }
+void main(){
+  vec2 px = 1. / u_res, p = uv; float amt = u_amt;
+  if (u_pulseTo == 2) p = (p - .5) / (1. + .07 * u_pulse) + .5;
+  if (u_pulseTo == 3) amt = clamp(amt + u_pulse * .6, 0., 1.);
+  vec3 c;
+  if (u_fx == 3) { float lag = (1. - p.x) * (u_layers - 1.) * amt; float L = mod(u_head - floor(lag) + u_layers, u_layers); c = texture(u_slit, vec3(p, L)).rgb; }
+  else c = srcAt(p);
+  if (u_fx == 4) { vec3 b = vec3(0.); float tot = 0.;
+    for (int i = -3; i <= 3; i++) for (int j = -3; j <= 3; j++) { vec2 q = vec2(i, j); float w = exp(-dot(q, q) / 8.); b += max(srcAt(p + q * px * 5.) - .5, 0.) * w; tot += w; }
+    c += b / tot * (1.5 + 3. * amt); }
+  c = grade(c);
+  vec3 paper = vec3(.957, .925, .847);
+  if (u_fx == 5) {
+    float cell = mix(4., 12., amt); vec2 fp = p * u_res; float a = .785; mat2 R = mat2(cos(a), -sin(a), sin(a), cos(a));
+    vec2 rp = R * fp, ctr = (floor(rp / cell) + .5) * cell; vec3 cc = grade(srcAt((transpose(R) * ctr) / u_res));
+    float r = sqrt(1. - lum(cc)) * cell * .64, ink = 1. - smoothstep(r - .8, r + .8, length(rp - ctr));
+    c = mix(paper, cc * .85, ink);
+  } else if (u_fx == 6) {
+    vec3 ink1 = vec3(.11, .32, .55), ink2 = vec3(1., .42, .18); float d1 = smoothstep(.3, .92, 1. - lum(c)) * .95;
+    vec3 c2 = grade(srcAt(p + vec2(2., -1.5) * px * (1. + amt * 3.))); float warm = clamp((max(c2.r, c2.g) - c2.b) * 2.4, 0., 1.) * smoothstep(.15, .7, 1. - lum(c2));
+    vec2 cellp = floor(p * u_res / 1.5); float fr = floor(u_time * 12.);
+    float a1 = step(hash(cellp + fr), d1), a2 = step(hash(cellp + 7.3 + fr), warm * .75);
+    c = vec3(.965, .94, .875) * mix(vec3(1.), ink1, a1 * .92) * mix(vec3(1.), ink2, a2 * .85);
+  } else if (u_fx == 7) {
+    float gx = 0., gy = 0., s = 2. + amt * 2.;
+    for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) { vec2 q = p + vec2(i, j) * px * s; float l = (lum(srcAt(q)) * 2. + lum(srcAt(q + px)) + lum(srcAt(q - px))) * .25; gx += l * float(i) * (j == 0 ? 2. : 1.); gy += l * float(j) * (i == 0 ? 2. : 1.); }
+    float e = smoothstep(mix(.42, .22, amt), mix(.62, .42, amt), length(vec2(gx, gy))), post = floor(lum(c) * 4.) / 3.;
+    c = mix(mix(mix(paper * .8, paper, post), c * .4 + paper * .6, .35), vec3(.165, .137, .118), e);
+  } else if (u_fx == 8) {
+    float l = 0.; for (int i = -3; i <= 3; i++) for (int j = -3; j <= 3; j++) l += lum(srcAt(p + vec2(i, j) * px * 4.)); l /= 49.;
+    float bands = mix(4., 14., amt), f = fract(l * bands - u_time * .12), w = clamp(fwidth(l * bands) * 1.1, .035, .14);
+    c = mix(c * .78, paper, (1. - smoothstep(w * .5, w * 1.5, min(f, 1. - f))) * .9);
+  }
+  float g = u_grain + (u_pulseTo == 4 ? u_pulse * .6 : 0.);
+  if (g > 0.) c += (hash(floor(uv * u_res * .75) + fract(u_time * 7.31) * 97.) - .5) * g * .35;
+  if (u_leak > 0.) { float t = u_time * .23; vec2 a = vec2(.1 + .35 * sin(t), .8 + .2 * cos(t * 1.3)), b = vec2(.95, .2 + .3 * sin(t * .7 + 1.));
+    vec3 leak = vec3(1., .45, .15) * exp(-dot(uv - a, uv - a) * 6.) + vec3(1., .75, .3) * exp(-dot(uv - b, uv - b) * 9.) * .8;
+    c = 1. - (1. - c) * (1. - leak * u_leak * (.6 + .4 * sin(t * 3.))); }
+  if (u_pulseTo == 1) c += c * u_pulse * .35 + max(c - .55, 0.) * u_pulse * .9;
+  if (u_vig > 0.) { vec2 q = (uv - .5) * vec2(u_res.x / max(u_res.x, u_res.y), u_res.y / max(u_res.x, u_res.y)); c *= 1. - u_vig * smoothstep(.2, .75, length(q) * 1.15); }
+  o = vec4(clamp(c, 0., 1.), 1.);
+}`;
+function vlInit() {
+  if (vlGL !== null) return vlGL;
+  const cv = $("#vlOut"), gl = cv.getContext("webgl2", { preserveDrawingBuffer: true, antialias: false, premultipliedAlpha: false });
+  if (!gl) { vlGL = false; $("#vlStatus").textContent = "This browser doesn't have WebGL 2, which Clip lab needs. Try a current Chrome, Edge, Firefox or Safari."; return false; }
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+  const prog = fs => { const p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, VL_VS)); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs)); gl.bindAttribLocation(p, 0, "p"); gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); const u = {}; const n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS); for (let i = 0; i < n; i++) { const a = gl.getActiveUniform(p, i); u[a.name] = gl.getUniformLocation(p, a.name); } return { p, u }; };
+  try {
+    const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    const float = !!gl.getExtension("EXT_color_buffer_float");
+    const tex = () => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]].forEach(([k, v]) => gl.texParameteri(gl.TEXTURE_2D, k, v)); return t; };
+    vlGL = { gl, acc: prog(VL_ACC), fin: prog(VL_FIN), frame: tex(), fbo: [], cur: 0, float, tex, w: 0, h: 0, slit: null, slitFb: gl.createFramebuffer(), N: 64, head: 0, sw: 0, sh: 0 };
+  } catch (e) { vlGL = false; $("#vlStatus").textContent = "Clip lab couldn't start its graphics: " + e.message; }
+  return vlGL;
+}
+function vlSize() {
+  const G = vlInit(); if (!G || !vidEl.videoWidth) return; const gl = G.gl, cr = vidCrop($("#vlFrame").value), cv = $("#vlOut");
+  if (G.w === cr.W && G.h === cr.H) return;
+  cv.width = G.w = cr.W; cv.height = G.h = cr.H;
+  G.fbo.forEach(f => { gl.deleteTexture(f.t); gl.deleteFramebuffer(f.f); });
+  G.fbo = [0, 1].map(() => { const t = G.tex(); if (G.float) gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, G.w, G.h, 0, gl.RGBA, gl.HALF_FLOAT, null); else gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, G.w, G.h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null); const f = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, f); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, t, 0); return { t, f }; });
+  if (G.slit) gl.deleteTexture(G.slit);
+  const s = 360 / Math.max(G.w, G.h); G.sw = Math.max(2, Math.round(G.w * s)); G.sh = Math.max(2, Math.round(G.h * s));
+  G.slit = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D_ARRAY, G.slit); gl.texStorage3D(gl.TEXTURE_2D_ARRAY, 1, gl.RGBA8, G.sw, G.sh, G.N);
+  [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]].forEach(([k, v]) => gl.texParameteri(gl.TEXTURE_2D_ARRAY, k, v));
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null); vlNeedInit = true;
+}
+function vlReset() { vlNeedInit = true; vlStep = -1; }
+function vlFrame(now, opts = {}) {
+  const G = vlInit(); if (!G) return; vlSize(); const gl = G.gl;
+  const clock = opts.clock != null ? opts.clock : now / 1000, amt = +$("#vlFxAmt").value / 100, cr = vidCrop($("#vlFrame").value), vw = vidEl.videoWidth, vh = vidEl.videoHeight;
+  let fresh = true;
+  if (vlFx === "Stop motion") { const fps = 4 + Math.round(amt * 8), st = Math.floor(clock * fps); if (st === vlStep && !opts.step) fresh = false; else { vlStep = st; const r = rng(st * 7919 + 13); vlJit = [(r() - .5) * 4 / G.w, (r() - .5) * 4 / G.h]; } }
+  else if ($("#vlWeave").checked) vlJit = [(Math.sin(clock * 13.1) * .5 + Math.sin(clock * 31.7) * .3) / G.w, (Math.sin(clock * 7.3) * 1.2 + Math.sin(clock * 23.9) * .4) / G.h];
+  else vlJit = [0, 0];
+  if (fresh) {
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); gl.bindTexture(gl.TEXTURE_2D, G.frame);
+    try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, vidEl); } catch (e) { return; }
+    const A = G.acc, nx = 1 - G.cur, mode = vlFx === "Long exposure" ? 1 : vlFx === "Echo trails" ? 2 : 0;
+    let k = mode === 1 ? (G.float ? .25 - amt * .23 : .3 - amt * .2) : mode === 2 ? .8 + amt * .17 : 1;
+    if (vlNeedInit && mode === 1) k = 1;
+    gl.useProgram(A.p); gl.uniform1i(A.u.u_frame, 0); gl.uniform1i(A.u.u_prev, 1);
+    gl.uniform4f(A.u.u_crop, cr.x / vw, 1 - (cr.y + cr.h) / vh, cr.w / vw, cr.h / vh); gl.uniform2f(A.u.u_jit, vlJit[0], vlJit[1]);
+    gl.uniform1i(A.u.u_mode, vlNeedInit && mode === 2 ? 0 : mode); gl.uniform1f(A.u.u_k, k);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.frame); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, G.fbo[G.cur].t);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, G.fbo[nx].f); gl.viewport(0, 0, G.w, G.h); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); G.cur = nx;
+    if (vlFx === "Time slice") {
+      const fill = vlNeedInit ? G.N : 1;
+      gl.uniform1i(A.u.u_mode, 0); gl.uniform2f(A.u.u_jit, 0, 0); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.frame);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, G.slitFb); gl.viewport(0, 0, G.sw, G.sh);
+      for (let i = 0; i < fill; i++) { G.head = (G.head + 1) % G.N; gl.framebufferTextureLayer(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, G.slit, 0, G.head); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
+    }
+    vlNeedInit = false;
+  }
+  const F = G.fin, pal = NATURE[$("#vlPal").value] || NATURE["Pine Forest"], byL = pal.map(c => c[1]).sort((a, b) => lum(a) - lum(b)), dk = hexToRgb(byL[0]).map(v => v / 255), lt = hexToRgb(byL[byL.length - 1]).map(v => v / 255);
+  const pulse = vlPulseTo !== "Off" ? vidPulse(+$("#vlSens").value / 100) : 0;
+  gl.useProgram(F.p); gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, G.w, G.h);
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.fbo[G.cur].t); gl.uniform1i(F.u.u_src, 0);
+  gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D_ARRAY, G.slit); gl.uniform1i(F.u.u_slit, 2);
+  gl.uniform1f(F.u.u_head, G.head); gl.uniform1f(F.u.u_layers, G.N); gl.uniform2f(F.u.u_res, G.w, G.h);
+  gl.uniform1f(F.u.u_time, clock); gl.uniform1f(F.u.u_amt, amt); gl.uniform1f(F.u.u_lookAmt, +$("#vlLookAmt").value / 100);
+  gl.uniform1f(F.u.u_grain, +$("#vlGrain").value / 100); gl.uniform1f(F.u.u_vig, +$("#vlVig").value / 100 * .8); gl.uniform1f(F.u.u_leak, +$("#vlLeak").value / 100);
+  gl.uniform1f(F.u.u_pulse, pulse); gl.uniform1i(F.u.u_fx, VL_FX_ID[vlFx]); gl.uniform1i(F.u.u_look, VL_LOOKS.indexOf(vlLook)); gl.uniform1i(F.u.u_pulseTo, VL_PULSE.indexOf(vlPulseTo));
+  gl.uniform3f(F.u.u_dark, dk[0], dk[1], dk[2]); gl.uniform3f(F.u.u_light, lt[0], lt[1], lt[2]);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+}
+VTAB.clip = {
+  canvas: $("#vlOut"),
+  range: () => { const a = vidAt("vlIn"), b = vidAt("vlOutPt"); return b - a > .3 ? [a, b] : [0, vidEl.duration || 1]; },
+  speed: () => +$("#vlSpeed").value,
+  frame: vlFrame, reset: vlReset,
+  loaded: () => { vidTimeOutputs(["vlIn", "vlOutPt"]); vlSize(); $("#vlStatus").textContent = vidName === "Waterfall" ? "The example waterfall. Try Riso, Ink lines or Stop motion, or use your own clip. It was filmed handheld, so Long exposure smears the whole scene. On a tripod clip only the water goes silky." : "Your clip stays on this device."; }
+};
+$("#vlSave").addEventListener("click", () => vidRecord("clip", "trailhead-clip-" + slug(vlLook + " " + vlFx), $("#vlStatus")));
+$("#vlGIF").addEventListener("click", () => vidGIF("clip", "trailhead-clip-" + slug(vlLook + " " + vlFx), $("#vlStatus")));
+$("#vlStill").addEventListener("click", () => vidStill("clip", "trailhead-frame-" + slug(vlLook)));
+PIN_MAKERS.clip = () => [vidCopy($("#vlOut")), "Clip · " + vlLook + (vlFx !== "None" ? " · " + vlFx : "")];
+
+/* =========================================================
+   CINEMAGRAPH: a held still, with the live clip showing through a painted mask.
+   The loop runs from Loop start + fade to Loop end; over its last `fade` seconds a second
+   copy of the clip, running `fade` seconds before the loop start, is blended in so the
+   end flows straight into the beginning.
+   ========================================================= */
+let cgBusy = false, cgTool = "Paint", cgHold = null, cgMask = null, cgW = 0, cgH = 0, cgPaint = null, cgAutoDone = "", cgB = { want: -1 };
+$("#cgTools").innerHTML = ["Paint", "Erase"].map(k => `<button class="chip" data-cg="${k}" aria-pressed="${k === cgTool}">${k}</button>`).join("");
+$("#cgTools").addEventListener("click", e => { const b = e.target.closest("[data-cg]"); if (!b) return; cgTool = b.dataset.cg; $$("#cgTools .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); });
+const cgFade = () => +$("#cgFade").value / 10;
+function cgLoop() { let s = vidAt("cgIn"), e = vidAt("cgEnd"); if (e - s < 1) { s = 0; e = vidEl.duration || 1; } const f = Math.min(cgFade(), (e - s) / 3); return { s, e, f, L: e - s - f }; }
+const CG_LOOKS = { "Natural": "none", "Faded print": "saturate(0.75) contrast(0.85) brightness(1.06) sepia(0.12)", "Warm film": "sepia(0.25) saturate(1.2) contrast(1.05)", "Silver": "grayscale(1) contrast(1.15)", "Deep greens": "saturate(1.3) contrast(1.1) hue-rotate(-6deg) brightness(0.95)" };
+function cgSize() {
+  const vw = vidEl.videoWidth, vh = vidEl.videoHeight, s = clamp(Math.max(vw, vh), 540, 1280) / Math.max(vw, vh), W = Math.round(vw * s / 2) * 2, H = Math.round(vh * s / 2) * 2;
+  if (W === cgW && H === cgH && cgMask) return false;
+  cgW = W; cgH = H; const o = $("#cgOut"); o.width = W; o.height = H; cgMask = newCanvas(W, H); cgHold = newCanvas(W, H); return true;
+}
+async function cgCaptureHold() {
+  cgBusy = true; const t = vidAt("cgHoldAt"); vidEl2.pause(); await vidSeek(t, vidEl2); cgHold.getContext("2d").drawImage(vidEl2, 0, 0, cgW, cgH); cgB.want = -1; cgBusy = false;
+}
+async function cgAutoMask() {
+  $("#cgStatus").textContent = "Finding what moves…"; cgBusy = true;
+  const { s, e } = cgLoop(), w = 160, h = Math.max(2, Math.round(160 * cgH / cgW)), n = 14, c = newCanvas(w, h), x = c.getContext("2d", { willReadFrequently: true });
+  const mean = new Float32Array(w * h), m2 = new Float32Array(w * h); vidEl2.pause();
+  for (let i = 0; i < n; i++) {
+    await vidSeek(s + (e - s) * (i + .5) / n, vidEl2); x.drawImage(vidEl2, 0, 0, w, h); const d = x.getImageData(0, 0, w, h).data;
+    for (let p = 0; p < w * h; p++) { const l = .3 * d[p * 4] + .59 * d[p * 4 + 1] + .11 * d[p * 4 + 2], dl = l - mean[p]; mean[p] += dl / (i + 1); m2[p] += dl * (l - mean[p]); }
+  }
+  const sd = m2.map(v => Math.sqrt(v / n)), sorted = Array.from(sd).sort((a, b) => a - b), med = sorted[sorted.length >> 1], hi = sorted[Math.floor(sorted.length * .97)];
+  const th = Math.max(6, med + (hi - med) * .3);
+  const motion = new Float32Array(w * h); for (let p = 0; p < w * h; p++) motion[p] = sd[p] > th ? 1 : 0;
+  scBlur(motion, w, h, 2);
+  const img = x.createImageData(w, h); for (let p = 0; p < w * h; p++) { img.data[p * 4] = img.data[p * 4 + 1] = img.data[p * 4 + 2] = 255; img.data[p * 4 + 3] = Math.round(255 * clamp((motion[p] - .15) / .35, 0, 1)); }
+  x.putImageData(img, 0, 0);
+  const mx = cgMask.getContext("2d"); mx.clearRect(0, 0, cgW, cgH); mx.imageSmoothingQuality = "high"; mx.drawImage(c, 0, 0, cgW, cgH);
+  cgBusy = false;
+  const share = motion.reduce((a, v) => a + (v > .5), 0) / (w * h);
+  $("#cgStatus").textContent = share < .01 ? "Couldn't find much movement. Paint the area that should move." : `Found the moving part (${Math.round(share * 100)}% of the frame). Paint to add to it, or Erase to keep something still.`;
+}
+/* the example was filmed handheld, so the whole frame drifts and the motion finder can't single out the water; this mask is drawn by hand over the falls and the spray */
+function cgExampleMask() {
+  const m = cgMask.getContext("2d"), sx = cgW / 640, sy = cgH / 320; m.clearRect(0, 0, cgW, cgH); m.save(); m.filter = `blur(${Math.round(10 * sx)}px)`; m.fillStyle = "#fff";
+  m.beginPath(); m.moveTo(236 * sx, 18 * sy); m.lineTo(308 * sx, 18 * sy); m.lineTo(322 * sx, 250 * sy); m.lineTo(242 * sx, 250 * sy); m.closePath(); m.fill();
+  m.beginPath(); m.ellipse(288 * sx, 292 * sy, 105 * sx, 52 * sy, 0, 0, Math.PI * 2); m.fill(); m.restore();
+  $("#cgStatus").textContent = "The falls and the spray keep moving and the forest holds still. Paint or Erase to change what moves.";
+}
+let cgLayer = null;
+function cgDrawLive(x, el, alpha) {
+  if (!cgLayer || cgLayer.width !== cgW || cgLayer.height !== cgH) cgLayer = newCanvas(cgW, cgH);
+  const l = cgLayer.getContext("2d"); l.globalCompositeOperation = "source-over"; l.clearRect(0, 0, cgW, cgH); l.drawImage(el, 0, 0, cgW, cgH);
+  l.globalCompositeOperation = "destination-in"; l.drawImage(cgMask, 0, 0); l.globalCompositeOperation = "source-over";
+  x.globalAlpha = alpha; x.drawImage(cgLayer, 0, 0); x.globalAlpha = 1;
+}
+function cgFrame(now, opts = {}) {
+  if (!cgMask) return; const o = $("#cgOut"), x = o.getContext("2d"), { s, f, L } = cgLoop(), tau = vidEl.currentTime - (s + f);
+  x.filter = CG_LOOKS[$("#cgLook").value] || "none";
+  x.drawImage(cgHold, 0, 0); cgDrawLive(x, vidEl, 1);
+  if (f > 0 && tau > L - f && !cgBusy) {
+    const w = clamp((tau - (L - f)) / f, 0, 1), target = vidEl.currentTime - L;
+    if (!opts.step) { if (Math.abs(vidEl2.currentTime - target) > .2 || vidEl2.paused !== vidEl.paused) { if (Math.abs(vidEl2.currentTime - target) > .2) vidEl2.currentTime = target; vidEl.paused ? vidEl2.pause() : vidEl2.play().catch(() => {}); } }
+    if (vidEl2.readyState >= 2) cgDrawLive(x, vidEl2, w);
+  } else if (!opts.step && !cgBusy && !vidEl2.paused) vidEl2.pause();
+  x.filter = "none";
+  if ($("#cgShow").checked && !vidRec && !vidStepping) { x.save(); x.globalAlpha = .32; x.globalCompositeOperation = "source-over"; const l = cgLayer.getContext("2d"); l.clearRect(0, 0, cgW, cgH); l.fillStyle = "#c07640"; l.fillRect(0, 0, cgW, cgH); l.globalCompositeOperation = "destination-in"; l.drawImage(cgMask, 0, 0); l.globalCompositeOperation = "source-over"; x.drawImage(cgLayer, 0, 0); x.restore(); }
+}
+VTAB.cinemagraph = {
+  canvas: $("#cgOut"),
+  range: () => { const { s, f, e } = cgLoop(); return [s + f, e]; },
+  speed: () => 1,
+  frame: cgFrame,
+  reset: () => { vidEl2.pause(); },
+  prepare: async t => { const { s, f, L } = cgLoop(); if (f > 0 && t - (s + f) > L - f) await vidSeek(t - L, vidEl2); },
+  unload: () => { cgAutoDone = ""; },
+  loaded: async () => {
+    vidTimeOutputs(["cgHoldAt", "cgIn", "cgEnd"]); showOutputs(["cgBrush"]); $("#cgFade").parentElement.querySelector("output").textContent = cgFade().toFixed(1) + " s";
+    const resized = cgSize();
+    if (cgAutoDone !== vidName) {
+      const d = vidEl.duration || 1, set = (id, t) => { $("#" + id).value = Math.round(clamp(t / d, 0, 1) * 1000); };
+      if (vidName === "Waterfall") { set("cgIn", 9.2); set("cgEnd", 11.95); set("cgHoldAt", 10.6); } else { set("cgIn", 0); set("cgEnd", d); set("cgHoldAt", d * .2); }
+      vidTimeOutputs(["cgHoldAt", "cgIn", "cgEnd"]); vidEl.currentTime = VTAB.cinemagraph.range()[0];
+    }
+    if (resized || cgAutoDone !== vidName) {
+      await vidSeek(0, vidEl2); await cgCaptureHold();
+      if (cgAutoDone !== vidName) { cgAutoDone = vidName; if (vidName === "Waterfall") cgExampleMask(); else await cgAutoMask(); }
+    }
+  }
+};
+$("#cgHoldAt").addEventListener("input", () => { vidTimeOutputs(["cgHoldAt"]); clearTimeout(cgB.t); cgB.t = setTimeout(cgCaptureHold, 150); });
+["cgIn", "cgEnd"].forEach(id => $("#" + id).addEventListener("input", () => vidTimeOutputs([id])));
+$("#cgFade").addEventListener("input", () => { $("#cgFade").parentElement.querySelector("output").textContent = cgFade().toFixed(1) + " s"; });
+$("#cgBrush").addEventListener("input", () => showOutputs(["cgBrush"]));
+$("#cgAuto").addEventListener("click", () => { if (cgMask) cgAutoMask(); });
+$("#cgClear").addEventListener("click", () => { if (cgMask) { cgMask.getContext("2d").clearRect(0, 0, cgW, cgH); $("#cgStatus").textContent = "Cleared. Paint the part that should move."; } });
+function cgBrushAt(e) {
+  const o = $("#cgOut"), r = o.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * cgW, y = (e.clientY - r.top) / r.height * cgH, rad = +$("#cgBrush").value * cgW / 1000;
+  const m = cgMask.getContext("2d"), g = m.createRadialGradient(x, y, 0, x, y, rad);
+  g.addColorStop(0, "rgba(255,255,255,1)"); g.addColorStop(.6, "rgba(255,255,255,.9)"); g.addColorStop(1, "rgba(255,255,255,0)");
+  m.globalCompositeOperation = cgTool === "Erase" ? "destination-out" : "source-over"; m.fillStyle = g; m.beginPath(); m.arc(x, y, rad, 0, Math.PI * 2); m.fill(); m.globalCompositeOperation = "source-over";
+}
+$("#cgOut").addEventListener("pointerdown", e => { if (!cgMask) return; cgPaint = e.pointerId; $("#cgOut").setPointerCapture(e.pointerId); $("#cgShow").checked = true; cgBrushAt(e); e.preventDefault(); });
+$("#cgOut").addEventListener("pointermove", e => { if (cgPaint === e.pointerId) cgBrushAt(e); });
+["pointerup", "pointercancel"].forEach(t => $("#cgOut").addEventListener(t, () => { cgPaint = null; }));
+$("#cgGIF").addEventListener("click", () => vidGIF("cinemagraph", "trailhead-cinemagraph", $("#cgStatus"), { maxSec: 8 }));
+$("#cgSave").addEventListener("click", () => vidRecord("cinemagraph", "trailhead-cinemagraph", $("#cgStatus")));
+$("#cgStill").addEventListener("click", async () => { if (!cgHold) return; const c = vidCopy(cgHold); saveFile("trailhead-cinemagraph-still.png", await pngWithDpi(c, 72)); });
+PIN_MAKERS.cinemagraph = () => { const c = newCanvas(cgW || 2, cgH || 2), x = c.getContext("2d"); x.filter = CG_LOOKS[$("#cgLook").value] || "none"; if (cgHold) x.drawImage(cgHold, 0, 0); return [c, "Cinemagraph"]; };
+
+/* =========================================================
+   TITLES: the clip, cropped, with animated type over it.
+   ========================================================= */
+const TT_STYLES = ["Trail sign", "Lower third", "Typewriter", "Handwritten"];
+let ttStyle = "Trail sign";
+$("#ttStyles").innerHTML = TT_STYLES.map(k => `<button class="chip" data-tt="${k}" aria-pressed="${k === ttStyle}">${k}</button>`).join("");
+$("#ttStyles").addEventListener("click", e => { const b = e.target.closest("[data-tt]"); if (!b) return; ttStyle = b.dataset.tt; $$("#ttStyles .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); const pos = { "Trail sign": "Center", "Lower third": "Lower left", "Typewriter": "Upper left", "Handwritten": "Center" }[ttStyle]; $("#ttPos").value = pos; });
+$("#ttPal").innerHTML = Object.keys(NATURE).map(k => `<option>${esc(k)}</option>`).join(""); $("#ttPal").value = "Pine Forest";
+["ttSize", "ttDim"].forEach(id => $("#" + id).addEventListener("input", () => showOutputs([id])));
+["ttIn", "ttOutPt"].forEach(id => $("#" + id).addEventListener("input", () => vidTimeOutputs([id])));
+function ttTimes() { const [s, e] = VTAB.titles.range(), a = s + (e - s) * +$("#ttShow").value / 100, b = Math.max(a + .6, s + (e - s) * +$("#ttHide").value / 100); return [a, b]; }
+["ttShow", "ttHide"].forEach(id => $("#" + id).addEventListener("input", () => { const [a, b] = ttTimes(); $("#ttShow").parentElement.querySelector("output").textContent = fmtT(a); $("#ttHide").parentElement.querySelector("output").textContent = fmtT(b); }));
+const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
+function ttFrame(now, opts = {}) {
+  const o = $("#ttOut"), cr = vidCrop($("#ttFrame").value); if (o.width !== cr.W || o.height !== cr.H) { o.width = cr.W; o.height = cr.H; }
+  const W = cr.W, H = cr.H, x = o.getContext("2d"), t = vidEl.currentTime, clock = opts.clock != null ? opts.clock : now / 1000;
+  x.drawImage(vidEl, cr.x, cr.y, cr.w, cr.h, 0, 0, W, H);
+  const [a, b] = ttTimes(), inP = ease((t - a) / .8), outP = ease((t - (b - .6)) / .6), vis = inP * (1 - outP); if (vis <= 0) return;
+  const pal = (NATURE[$("#ttPal").value] || NATURE["Pine Forest"]).map(c => c[1]).sort((p, q) => lum(p) - lum(q)), dark = pal[0], light = pal[pal.length - 1], accent = pal[Math.floor(pal.length / 2)];
+  const dim = +$("#ttDim").value / 100; if (dim) { x.fillStyle = `rgba(0,0,0,${dim * vis})`; x.fillRect(0, 0, W, H); }
+  const k = +$("#ttSize").value / 100 * Math.min(W, H) / 540, title = $("#ttTitle").value, sub = $("#ttSub").value, pos = $("#ttPos").value;
+  const boil = $("#ttBoil").checked ? (() => { const r = rng(Math.floor(clock * 8) * 101 + 7); return [(r() - .5) * 3 * k, (r() - .5) * 3 * k, (r() - .5) * .012]; })() : [0, 0, 0];
+  const pad = Math.round(Math.min(W, H) * .07), cx = pos === "Center" || pos === "Bottom center" ? W / 2 : pad, align = cx === W / 2 ? "center" : "left";
+  let cy = pos === "Center" ? H / 2 : pos === "Upper left" ? pad + 60 * k : H - pad - 50 * k;
+  x.save(); x.translate(boil[0], boil[1]); x.rotate(boil[2]); x.textAlign = align; x.textBaseline = "alphabetic";
+  const tSize = Math.round((ttStyle === "Handwritten" ? 92 : ttStyle === "Lower third" ? 46 : ttStyle === "Typewriter" ? 54 : 78) * k), sSize = Math.round((ttStyle === "Handwritten" ? 22 : ttStyle === "Lower third" ? 30 : 34) * k);
+  const tFont = ttStyle === "Handwritten" ? `${tSize}px "TAY Sundae"` : `${tSize}px "TAY Dumpling"`, sFont = ttStyle === "Handwritten" ? `${sSize}px "TAY Dumpling"` : `${sSize}px "TAY Sundae"`;
+  const T = ttStyle === "Handwritten" ? title : title.toUpperCase(), S = ttStyle === "Handwritten" ? sub.toUpperCase() : sub;
+  x.shadowColor = "rgba(0,0,0,.35)"; x.shadowBlur = 12 * k;
+  if (ttStyle === "Trail sign") {
+    x.globalAlpha = vis; const rise = (1 - inP) * 30 * k;
+    x.font = tFont; setTrack(x, .06, tSize); x.fillStyle = light; x.fillText(T, cx, cy + rise);
+    x.font = sFont; setTrack(x, 0, sSize); x.fillStyle = light; x.globalAlpha = vis * ease((t - a - .3) / .8); x.fillText(S, cx, cy + rise + sSize * 1.5);
+  } else if (ttStyle === "Lower third") {
+    x.shadowBlur = 0; x.font = tFont; setTrack(x, .05, tSize); const tw = x.measureText(T).width; x.font = sFont; const sw = x.measureText(S).width;
+    const bw = Math.max(tw, sw) + 44 * k, bh = tSize + sSize + 40 * k, slide = (1 - inP) * -(bw + pad) + outP * -(bw + pad), bx = (align === "center" ? cx - bw / 2 : cx) + slide, by = cy - bh + 12 * k;
+    x.globalAlpha = 1; x.fillStyle = dark; x.fillRect(bx, by, bw, bh); x.fillStyle = accent; x.fillRect(bx, by, 7 * k, bh);
+    x.textAlign = "left"; x.font = tFont; setTrack(x, .05, tSize); x.fillStyle = light; x.fillText(T, bx + 24 * k, by + tSize + 10 * k);
+    x.font = sFont; setTrack(x, 0, sSize); x.fillStyle = light; x.globalAlpha = .9; x.fillText(S, bx + 24 * k, by + tSize + sSize + 18 * k);
+  } else if (ttStyle === "Typewriter") {
+    const n = Math.floor(clamp((t - a) / .07, 0, T.length)), m = Math.floor(clamp((t - a - T.length * .07 - .2) / .05, 0, S.length));
+    x.globalAlpha = 1 - outP; x.font = tFont; setTrack(x, .04, tSize); x.fillStyle = light; const shown = T.slice(0, n); x.fillText(shown, cx, cy);
+    if (n < T.length || Math.floor(clock * 2) % 2 === 0) { const w = x.measureText(shown).width, cxp = align === "center" ? cx + w / 2 : cx + w; x.fillRect(cxp + 4 * k, cy - tSize * .8, Math.max(3, 5 * k), tSize * .85); }
+    x.font = sFont; setTrack(x, 0, sSize); x.fillText(S.slice(0, m), cx, cy + sSize * 1.6);
+  } else {
+    x.font = tFont; const tw = x.measureText(T).width, left = align === "center" ? cx - tw / 2 : cx, rev = ease((t - a) / 1.6);
+    x.save(); x.beginPath(); x.rect(left - 20 * k, cy - tSize * 1.2, (tw + 40 * k) * rev, tSize * 1.8); x.clip(); x.globalAlpha = 1 - outP; x.fillStyle = light; x.fillText(T, cx, cy); x.restore();
+    x.globalAlpha = (1 - outP) * ease((t - a - 1.2) / .6); x.font = sFont; setTrack(x, .16, sSize); x.fillStyle = light; x.fillText(S, cx, cy + sSize * 2.2);
+  }
+  setTrack(x, 0, 16); x.restore();
+}
+VTAB.titles = {
+  canvas: $("#ttOut"),
+  range: () => { const a = vidAt("ttIn"), b = vidAt("ttOutPt"); return b - a > .5 ? [a, b] : [0, vidEl.duration || 1]; },
+  speed: () => 1, frame: ttFrame, reset: () => {},
+  loaded: () => { vidTimeOutputs(["ttIn", "ttOutPt"]); showOutputs(["ttSize", "ttDim"]); $("#ttShow").dispatchEvent(new Event("input")); }
+};
+$("#ttSave").addEventListener("click", () => vidRecord("titles", "trailhead-titles-" + slug($("#ttTitle").value || "clip"), $("#ttStatus")));
+$("#ttGIF").addEventListener("click", () => vidGIF("titles", "trailhead-titles-" + slug($("#ttTitle").value || "clip"), $("#ttStatus"), { maxSec: 8 }));
+$("#ttStill").addEventListener("click", () => vidStill("titles", "trailhead-title-frame"));
+
+/* =========================================================
+   ROTOSCOPE: each drawing is a difference-of-blurs ink trace of the frame,
+   wobbled by a fresh noise field (the boil), on paper, with an optional wash.
+   Drawings only change 6–12 times a second.
+   ========================================================= */
+const RT_FILLS = ["Lines only", "Watercolor wash", "Palette flats"];
+let rtFill = "Watercolor wash", rtStepN = -1, rtPaperC = null, rtWork = null;
+$("#rtFills").innerHTML = RT_FILLS.map(k => `<button class="chip" data-rt="${k}" aria-pressed="${k === rtFill}">${k}</button>`).join("");
+$("#rtFills").addEventListener("click", e => { const b = e.target.closest("[data-rt]"); if (!b) return; rtFill = b.dataset.rt; $$("#rtFills .chip").forEach(c => c.setAttribute("aria-pressed", String(c === b))); $("#rtPalWrap").hidden = rtFill !== "Palette flats"; rtStepN = -1; });
+$("#rtPal").innerHTML = Object.keys(NATURE).map(k => `<option>${esc(k)}</option>`).join(""); $("#rtPal").value = "Alpine Lake"; $("#rtPalWrap").hidden = true;
+["rtDetail", "rtWeight", "rtBoil"].forEach(id => $("#" + id).addEventListener("input", () => { showOutputs([id]); rtStepN = -1; }));
+["rtPaper", "rtPal", "rtFrame", "rtRate"].forEach(id => $("#" + id).addEventListener("input", () => { rtStepN = -1; rtPaperC = null; }));
+["rtIn", "rtOutPt"].forEach(id => $("#" + id).addEventListener("input", () => vidTimeOutputs([id])));
+const RT_PAPER = { "Cream": "#f4ecd8", "White": "#fbfaf6", "Kraft": "#c9a67a", "Notebook": "#f7f5ee" };
+function rtPaper(W, H) {
+  if (rtPaperC && rtPaperC.width === W * 2 && rtPaperC.height === H * 2) return rtPaperC;
+  const c = newCanvas(W * 2, H * 2), x = c.getContext("2d"), img = x.createImageData(W * 2, H * 2), base = hexToRgb(RT_PAPER[$("#rtPaper").value] || "#f4ecd8"), r = rng(77);
+  for (let i = 0; i < img.data.length; i += 4) { const n = (r() - .5) * 14; img.data[i] = base[0] + n; img.data[i + 1] = base[1] + n; img.data[i + 2] = base[2] + n * .9; img.data[i + 3] = 255; }
+  x.putImageData(img, 0, 0);
+  if ($("#rtPaper").value === "Notebook") { x.strokeStyle = "rgba(90,130,190,.35)"; x.lineWidth = 1.5; for (let y = 40; y < H * 2; y += 34) { x.beginPath(); x.moveTo(0, y); x.lineTo(W * 2, y); x.stroke(); } }
+  return rtPaperC = c;
+}
+function rtFrame(now, opts = {}) {
+  const o = $("#rtOut"), cr = vidCrop($("#rtFrame").value), clock = opts.clock != null ? opts.clock : now / 1000, fps = +$("#rtRate").value, st = Math.floor(clock * fps);
+  if (o.width !== cr.W || o.height !== cr.H) { o.width = cr.W; o.height = cr.H; rtStepN = -1; }
+  if (st === rtStepN && !opts.step) return; rtStepN = st;
+  const s = Math.min(1, 560 / Math.max(cr.W, cr.H)), w = Math.max(2, Math.round(cr.W * s)), h = Math.max(2, Math.round(cr.H * s));
+  if (!rtWork || rtWork.width !== w || rtWork.height !== h) rtWork = newCanvas(w, h);
+  const wx = rtWork.getContext("2d", { willReadFrequently: true }); wx.drawImage(vidEl, cr.x, cr.y, cr.w, cr.h, 0, 0, w, h);
+  const d = wx.getImageData(0, 0, w, h).data, N = w * h, g = new Float32Array(N); for (let i = 0; i < N; i++) g[i] = (.3 * d[i * 4] + .59 * d[i * 4 + 1] + .11 * d[i * 4 + 2]) / 255;
+  /* contours where the simplified tones change, plus the strongest dark lines from a difference of blurs */
+  const detail = +$("#rtDetail").value, weight = +$("#rtWeight").value, lv = 3 + Math.round(detail / 2), b = scBlur(g.slice(), w, h, detail >= 7 ? 2 : 3);
+  const edge = new Float32Array(N); for (let y = 1; y < h; y++) for (let x = 1; x < w; x++) { const i = y * w + x, q = Math.floor(b[i] * lv); edge[i] = q !== Math.floor(b[i - 1] * lv) || q !== Math.floor(b[i - w] * lv) ? 1 : 0; }
+  scBlur(edge, w, h, weight > 6 ? 2 : 1); const gain = 1.6 + weight * .4;
+  const sm = scBlur(g.slice(), w, h, 1), d1 = scBlur(sm.slice(), w, h, 1), d3 = scBlur(sm.slice(), w, h, 3), ink = new Float32Array(N), dk = detail / 10;
+  for (let i = 0; i < N; i++) ink[i] = Math.max(clamp(edge[i] * gain, 0, 1), clamp((d3[i] - d1[i] - .028 + dk * .008) / .02, 0, 1) * (.4 + dk * .6));
+  /* the boil: a different smooth wobble for every drawing */
+  const boil = +$("#rtBoil").value * .45, rnd = rng(st * 7349 + 3), ph = Array.from({ length: 8 }, () => rnd() * 6.283), fq = Array.from({ length: 4 }, () => .02 + rnd() * .03);
+  const out = wx.createImageData(w, h), od = out.data, paperRGB = hexToRgb(RT_PAPER[$("#rtPaper").value] || "#f4ecd8");
+  const pal = (NATURE[$("#rtPal").value] || NATURE["Alpine Lake"]).map(c => hexToRgb(c[1])).sort((p, q) => (p[0] + p[1] + p[2]) - (q[0] + q[1] + q[2]));
+  const inkRGB = rtFill === "Palette flats" ? pal[0].map(v => v * .55) : [38, 30, 26];
+  let col = null; if (rtFill !== "Lines only") { col = [0, 1, 2].map(k => { const ch = new Float32Array(N); for (let i = 0; i < N; i++) ch[i] = d[i * 4 + k]; return scBlur(ch, w, h, 4); }); }
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const i = y * w + x, dx = boil * (Math.sin(y * fq[0] + ph[0]) + Math.sin((x + y) * fq[1] + ph[1]) * .6), dy = boil * (Math.sin(x * fq[2] + ph[2]) + Math.sin((x - y) * fq[3] + ph[3]) * .6);
+    const sx = clamp(Math.round(x + dx), 0, w - 1), sy = clamp(Math.round(y + dy), 0, h - 1), si = sy * w + sx, a = ink[si];
+    let r = 255, gg = 255, bb = 255;
+    if (rtFill === "Watercolor wash") { const pz = v => Math.round(v / 255 * 5) / 5 * 255, m = .62; r = 255 - (255 - pz(col[0][si])) * m; gg = 255 - (255 - pz(col[1][si])) * m; bb = 255 - (255 - pz(col[2][si])) * m; }
+    else if (rtFill === "Palette flats") { const l = (col[0][si] + col[1][si] + col[2][si]) / 765, c = pal[clamp(Math.floor(l * pal.length), 0, pal.length - 1)]; r = 255 * c[0] / Math.max(1, paperRGB[0]); gg = 255 * c[1] / Math.max(1, paperRGB[1]); bb = 255 * c[2] / Math.max(1, paperRGB[2]); }
+    /* stored as a multiply layer over paper: 255 = paper shows */
+    od[i * 4] = clamp(r * (1 - a) + inkRGB[0] / Math.max(1, paperRGB[0]) * 255 * a, 0, 255); od[i * 4 + 1] = clamp(gg * (1 - a) + inkRGB[1] / Math.max(1, paperRGB[1]) * 255 * a, 0, 255); od[i * 4 + 2] = clamp(bb * (1 - a) + inkRGB[2] / Math.max(1, paperRGB[2]) * 255 * a, 0, 255); od[i * 4 + 3] = 255;
+  }
+  wx.putImageData(out, 0, 0);
+  const x = o.getContext("2d"), P = rtPaper(cr.W, cr.H), off = rng(st + 5);
+  x.globalCompositeOperation = "source-over"; x.drawImage(P, -Math.floor(off() * cr.W), -Math.floor(off() * cr.H));
+  x.globalCompositeOperation = "multiply"; x.imageSmoothingQuality = "high"; x.drawImage(rtWork, 0, 0, cr.W, cr.H); x.globalCompositeOperation = "source-over";
+}
+VTAB.rotoscope = {
+  canvas: $("#rtOut"),
+  range: () => { const a = vidAt("rtIn"), b = vidAt("rtOutPt"); return b - a > .5 ? [a, b] : [0, vidEl.duration || 1]; },
+  speed: () => 1, frame: rtFrame, reset: () => { rtStepN = -1; },
+  loaded: () => { vidTimeOutputs(["rtIn", "rtOutPt"]); showOutputs(["rtDetail", "rtWeight", "rtBoil"]); }
+};
+$("#rtSave").addEventListener("click", () => vidRecord("rotoscope", "trailhead-rotoscope", null));
+$("#rtGIF").addEventListener("click", () => vidGIF("rotoscope", "trailhead-rotoscope", null, { fps: +$("#rtRate").value, maxSec: 6 }));
+$("#rtStill").addEventListener("click", () => vidStill("rotoscope", "trailhead-rotoscope-frame"));
+PIN_MAKERS.rotoscope = () => [vidCopy($("#rtOut")), "Rotoscope sketch"];
+
+/* =========================================================
    GOLDEN HOUR
    ========================================================= */
 const RE_MOODS = {
@@ -6707,6 +8099,13 @@ const TOOL_INFO = {
   pattern: ["Repeat patterns from your art", "repeat tile pattern wallpaper fabric seamless"],
   moodboard: ["Pin photos, colors and notes on a board", "mood board inspiration collage pin"],
   mockups: ["See your design on a tote, tee, frame or postcard", "mockup tote shirt tee frame postcard product"],
+  living: ["Prints that move when you point a phone at them", "ar augmented reality animation qr camera phone moving print"],
+  lake: ["A year of a lake's color from NASA satellite photos", "nasa satellite water lake michigan color year palette data"],
+  scanner: ["Send phone photos straight into Photoshop", "phone camera scan photoshop texture upload send plugin"],
+  clip: ["Color looks and effects for short video clips", "video film filter long exposure slow motion grain riso halftone glitch effect reel tiktok"],
+  cinemagraph: ["A still photo where one part keeps moving", "video loop gif motion still living photo cinemagraph"],
+  titles: ["Animated titles and name bars over a clip", "video text title lower third caption intro typewriter"],
+  rotoscope: ["Redraw a clip as hand-drawn line animation", "video sketch drawing animation cartoon line art boil flipbook"],
   wiggle: ["Make still art shimmer like hand-drawn animation", "animation gif video boil wiggle motion"],
   letterpress: ["Type pressed into thick cotton paper", "letterpress deboss emboss invitation card print"],
   sound: ["Prints made from a bird call, creek or song", "audio sound spectrogram bird song record music"],
@@ -6854,11 +8253,14 @@ function pageState(tab) {
   page.querySelectorAll("input[id], select[id], textarea[id]").forEach(el => {
     if (el.type === "file" || el.type === "color" && el.disabled) return;
     if (el.type === "checkbox") { if (el.checked !== el.defaultChecked) st.set(el.id, el.checked ? "1" : "0"); return; }
+    if (el.type === "hidden") { if (el.value) st.set(el.id, el.value); return; } /* a hidden input's value is its default, so it can't be compared */
     const def = el.tagName === "SELECT" ? ([...el.options].find(o => o.defaultSelected) || el.options[0] || {}).value : el.defaultValue;
     if (el.value !== def && String(el.value).length <= 300) st.set(el.id, el.value);
   });
   return st;
 }
+/* links into Living prints and the scanner carry their own data; everything else is page state */
+function routeQuery(tab, q) { if (tab === "living" && q.get("k")) return lvFromLink(q); if (tab === "scanner" && q.get("t")) return scPairFrom(q); return applyState(tab, q); }
 function applyState(tab, params) {
   const page = $(`section.page[data-page="${tab}"]`); if (!page) return;
   for (const [k, v] of params) if (k.startsWith("@")) { const c = page.querySelector("#" + CSS.escape(k.slice(1))), [dk, dv] = v.split(/:(.*)/s); if (!c || !dk) continue; const b = [...c.querySelectorAll("button")].find(b => b.dataset[dk] === dv); if (b && b.getAttribute("aria-pressed") !== "true") b.click(); }
@@ -6879,7 +8281,7 @@ document.addEventListener("click", async e => {
 
 /* ---------- before and after strips, and thumbnails in search ---------- */
 const BA_TOOLS = ["effects", "relight", "lineart", "screenprint", "topo", "linocut", "cyanotype", "riso", "stitch", "knit", "papercut"];
-const EX_TOOLS = ["poster", "badge", "stamp", "mockups", "sky", "sound", "growth", "leaf", "letterpress", "colorway", "booklet", "zine", "trailmap", "fieldguide", "pattern", "wiggle", "moodboard", "textures"];
+const EX_TOOLS = ["clip", "cinemagraph", "titles", "rotoscope", "living", "poster", "badge", "stamp", "mockups", "sky", "sound", "growth", "leaf", "letterpress", "colorway", "booklet", "zine", "trailmap", "fieldguide", "pattern", "wiggle", "moodboard", "textures"];
 const thumbOf = t => BA_TOOLS.includes(t) || EX_TOOLS.includes(t) ? "thumbs/" + t + ".webp" : null;
 $$("section.page").forEach(page => {
   const t = page.dataset.page, head = page.querySelector(".page-head"); if (!head || !thumbOf(t)) return;
@@ -6897,9 +8299,74 @@ $("#shelfLink").addEventListener("click", () => { show("shelf"); window.scrollTo
 /* a pasted link in an already-open tab only changes the hash, so read it then too */
 window.addEventListener("hashchange", () => {
   const [t, q] = (location.hash || "").slice(1).split("?"); if (!t || !secOf(t)) return;
-  show(t); window.scrollTo({ top: 0 }); if (q) setTimeout(() => { try { applyState(t, new URLSearchParams(q)); } catch (e) {} }, 300);
+  show(t); window.scrollTo({ top: 0 }); if (q) setTimeout(() => { try { routeQuery(t, new URLSearchParams(q)); } catch (e) {} }, 300);
 });
 
+
+/* ---------- light and dark ---------- */
+const THEME_ICONS = {
+  dark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
+  light: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>'
+};
+const darkQuery = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
+function themeNow() { const t = document.documentElement.dataset.theme; return t || (darkQuery && darkQuery.matches ? "dark" : "light"); }
+function themeUI() {
+  const t = themeNow(), b = $("#themeBtn"); b.innerHTML = t === "dark" ? THEME_ICONS.light : THEME_ICONS.dark;
+  b.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode"); b.title = b.getAttribute("aria-label");
+  const m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", t === "dark" ? "#1d1916" : "#894c29");
+}
+try { const saved = localStorage.getItem("trailhead-theme"); if (saved === "dark" || saved === "light") document.documentElement.dataset.theme = saved; } catch (e) {}
+$("#themeBtn").addEventListener("click", () => { const next = themeNow() === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = next; try { localStorage.setItem("trailhead-theme", next); } catch (e) {} themeUI(); });
+if (darkQuery && darkQuery.addEventListener) darkQuery.addEventListener("change", themeUI);
+themeUI();
+
+/* ---------- send to: hand the finished image from one tool to the next ----------
+   The result of the current tool, with everything done to it, becomes the input of the next one.
+   Photo tools get it as the working photo; layout and check tools get it as "My file". */
+const SEND_FROM = {
+  adjust: () => adjResult || (renderAdjust(), adjResult), blend: () => $("#blOut"), effects: () => fxResult || (renderFx(), fxResult),
+  relight: () => getSource("Golden hour"), lineart: () => getSource("Line art"), screenprint: () => getSource("Screen print"), topo: () => getSource("Photo to topo"),
+  linocut: () => getSource("Linocut"), cyanotype: () => getSource("Cyanotype"), riso: () => getSource("Riso"),
+  stitch: () => getSource("Stitch pattern"), papercut: () => getSource("Paper cut"), knit: () => $("#kqOut") || null, stamp: () => $("#stOut") || null,
+  poster: () => getSource("Poster"), badge: () => getSource("Badge"), fieldguide: () => fgResult ? fgResult.composite : $("#fgOut"), trailmap: () => getSource("Trail map"),
+  pattern: () => $("#paOut") || null, mockups: () => mkResult, letterpress: () => getSource("Letterpress")
+};
+const SEND_PHOTO = ["adjust", "blend", "effects", "relight", "extract", "linocut", "cyanotype", "screenprint", "riso", "lineart", "topo", "stitch", "knit", "papercut"];
+const SEND_ART = {
+  stamp: c => { uploads.stamp = c; fillArtSelect($("#stSrc"), "My file", "stamp"); },
+  poster: c => { uploads.poster = c; poArtOptions("Your own art"); },
+  fieldguide: c => { uploads.fieldguide = c; fillArtSelect($("#fgSrc"), "My file", "fieldguide"); fgPoints = []; fgPointsUI(); },
+  pattern: c => { uploads.pattern = c; const chip = $('#paModes [data-m="image"]'); if (chip && paMode !== "image") chip.click(); fillArtSelect($("#paSrc"), "My file", "pattern"); },
+  mockups: c => { uploads.mockups = c; fillSourceSelect($("#mkSrc"), "My file", "mockups"); },
+  wiggle: c => { uploads.wiggle = c; fillArtSelect($("#wgSrc"), "My file", "wiggle"); wgArt = null; wgFrames = []; },
+  colorway: c => { uploads.colorway = c; fillArtSelect($("#cwSrc"), "My file", "colorway"); cwArt = null; scheduleCW(); },
+  moodboard: (c, name) => { ensureBoard(); addPhotoCanvas(c, name); },
+  director: c => { uploads.director = c; fillSourceSelect($("#adSrc"), "My file", "director"); },
+  printcheck: c => { uploads.printcheck = c; pcSource = "My file"; }
+};
+function sendOptions(from) {
+  const groups = [["color", ["extract", "colorway"]], ["photo", ["adjust", "blend", "effects", "relight"]], ["print", ["linocut", "cyanotype", "screenprint", "riso", "lineart", "topo"]],
+    ["handmade", ["stitch", "knit", "papercut", "stamp"]], ["layouts", ["poster", "fieldguide", "pattern", "mockups", "moodboard", "wiggle"]], ["check", ["director", "printcheck"]]];
+  return `<option value="">Pick a tool…</option>` + groups.map(([sec, tabs]) => `<optgroup label="${esc(SECTIONS[sec].name)}">${tabs.filter(t => t !== from).map(t => `<option value="${t}">${esc(tabName(t))}</option>`).join("")}</optgroup>`).join("");
+}
+function fitCanvas(c, max = 2000, fill = true) { const s = Math.min(1, max / Math.max(c.width, c.height)), o = newCanvas(Math.max(1, Math.round(c.width * s)), Math.max(1, Math.round(c.height * s))), x = o.getContext("2d"); if (fill) { x.fillStyle = "#f7f0dd"; x.fillRect(0, 0, o.width, o.height); } x.drawImage(c, 0, 0, o.width, o.height); return o; }
+async function sendTo(from, to) {
+  let c = null; try { c = await SEND_FROM[from](); } catch (e) {}
+  if (!c || !c.width) { toast("Make something here first, then send it on."); return; }
+  const base = (imgInfo && imgInfo.name ? imgInfo.name.split(" · ")[0] : tabName(from)), name = PHOTO.has(from) || from === "relight" ? base + " · " + tabName(from) : tabName(from), img = fitCanvas(c, 2000, SEND_PHOTO.includes(to));
+  if (SEND_PHOTO.includes(to)) setImage(img, { name, example: false });
+  else if (SEND_ART[to]) SEND_ART[to](img, name);
+  else return;
+  show(to); window.scrollTo({ top: 0 });
+  toast(`Sent to ${tabName(to)}${to === "moodboard" ? " as a new photo" : " with your " + tabName(from) + " work in it"}`);
+}
+Object.keys(SEND_FROM).forEach(tab => {
+  const panel = $(`section.page[data-page="${tab}"] aside.panel`); if (!panel) return;
+  const wrap = document.createElement("div"); wrap.className = "send-block";
+  wrap.innerHTML = `<hr><h3>send it on</h3><div class="ctl send-to"><label for="sendTo-${tab}">Send to</label><select id="sendTo-${tab}" data-send-from="${tab}">${sendOptions(tab)}</select></div><p class="hint">Opens your result in another tool with everything you did here kept, so you can keep going.</p>`;
+  panel.appendChild(wrap);
+  $("select", wrap).addEventListener("change", e => { const to = e.target.value; e.target.value = ""; if (to) sendTo(tab, to); });
+});
 
 /* ---------- boot ---------- */
 const RENDER = { extract: renderExtract, adjust: renderAdjust, blend: () => renderBlend(true), effects: () => { renderFxControls(); renderFx(); }, lineart: renderLA, screenprint: renderSP, topo: drawTO, linocut: drawLI, cyanotype: drawCY, relight: drawRE, riso: drawRI, stitch: drawSX, papercut: drawPK, knit: drawKQ };
@@ -6909,7 +8376,7 @@ renderPalette(); renderGradient(); applyTPreset("Trail sign"); syncAdjUI();
 let start = "home";
 const [hashTab, hashQuery] = (location.hash || "").slice(1).split("?"); if (hashTab && secOf(hashTab)) start = hashTab;
 show(start);
-if (hashQuery) setTimeout(() => { try { applyState(start, new URLSearchParams(hashQuery)); } catch (e) {} }, 400);
+if (hashQuery) setTimeout(() => { try { routeQuery(start, new URLSearchParams(hashQuery)); } catch (e) {} }, 400);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (current === "type") renderType(); });
 });
 })();

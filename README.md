@@ -12,6 +12,7 @@ fonts/                  TAY Dumpling and TAY Sundae (see "Before you make this p
 photos/                 The four example photos used across the tools
 icons/                  App icons, tab icons and the social preview card (social-card.jpg)
 thumbs/                 Small before/after pictures shown on tool pages and in search
+videos/                 The example clip for the Video tools, as MP4 and WebM
 manifest.webmanifest    Lets phones and computers install Trailhead as an app
 sw.js                   Service worker: keeps a copy of the site so it works offline
 404.html                The "off the trail" page GitHub shows for broken links
@@ -20,7 +21,9 @@ photoshop-plugin/       Source for the Photoshop panel (UXP, manifest v5)
 scripts/build-plugin.sh Rebuilds the plugin zip after you change the plugin
 ```
 
-The site loads two libraries from jsDelivr: [ag-psd](https://github.com/Agamnentzar/ag-psd) 31.0.2 writes the layered .psd files and [opentype.js](https://github.com/opentypejs/opentype.js) 1.3.4 builds the fonts in Letter maker. Both are MIT licensed. Everything else is plain JavaScript in `index.html`.
+The site loads two libraries from jsDelivr: [ag-psd](https://github.com/Agamnentzar/ag-psd) 31.0.2 writes the layered .psd files and [opentype.js](https://github.com/opentypejs/opentype.js) 1.3.4 builds the fonts in Letter maker. Both are MIT licensed. Some tools load more when you open them: [MindAR](https://github.com/hiukim/mind-ar-js) 1.2.5 for Living prints, [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) 1.4.4 for QR codes and [aes-js](https://github.com/ricmoo/aes-js) 3.1.2 for the Pocket scanner, all MIT licensed. Lake color year reads NASA GIBS satellite images and the Pocket scanner passes encrypted photos through [ntfy.sh](https://ntfy.sh). Everything else is plain JavaScript in `index.html`.
+
+The site follows the visitor's light or dark setting, and the round button in the bottom-left corner switches between them.
 
 ## Run it on your computer
 
