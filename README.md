@@ -51,7 +51,7 @@ After someone visits once, `sw.js` keeps a copy of the page, fonts, photos and l
 
 ## Share previews
 
-The preview image for links shared on social media and in texts is set in the `<head>` of `index.html` (`og:image`). It points at `https://harastiaj-star.github.io/cautious-fishstick/icons/social-card.jpg`. If you rename the repository or add a custom domain, update that address.
+The preview image for links shared on social media and in texts is set in the `<head>` of `index.html` (`og:image`). It points at `https://harastiaj-star.github.io/trailheadtools/icons/social-card.jpg`. If you rename the repository or add a custom domain, update that address.
 
 ## Updating the plugin
 

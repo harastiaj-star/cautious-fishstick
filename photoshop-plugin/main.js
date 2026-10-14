@@ -340,7 +340,7 @@ const TEX_ITEMS = [["Topo lines", "Topo lines"], ["Paper grain", "Paper grain"],
    Pocket scanner page on a phone. The phone encrypts each photo with AES-CTR and sends it to
    ntfy.sh/<topic>. Here we poll that topic, decrypt, and place the photo.
    Format: "THS1" + 16-byte counter + ciphertext. */
-const SITE = "https://harastiaj-star.github.io/cautious-fishstick/";
+const SITE = "https://harastiaj-star.github.io/trailheadtools/";
 const libAES = () => { try { if (typeof aesjs !== "undefined") return aesjs; } catch (e) {} try { return require("./aes.js"); } catch (e) { return null; } };
 const libQR = () => { try { if (typeof qrcode !== "undefined") return qrcode; } catch (e) {} try { return require("./qrcode.js"); } catch (e) { return null; } };
 function randomBytes(n) {
