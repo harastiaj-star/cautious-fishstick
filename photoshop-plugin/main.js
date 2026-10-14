@@ -1,7 +1,7 @@
 /* Trailhead for Photoshop
    A UXP panel that picks up where the Trailhead site leaves off:
    opens Trailhead downloads (zipped or not), adds trail palettes as swatches,
-   runs Trailhead photo filters, paints Trailhead textures onto new layers, and receives
+   runs Trailhead photo filters and dithering, paints Trailhead textures onto new layers, and receives
    photos from a phone through the pocket scanner. */
 
 let ps = null, uxp = null;
@@ -269,6 +269,133 @@ async function applyFilter(kind, inkHex, detail, paperHex) {
   });
 }
 
+/* ---------- dither ----------
+   The document is read at one sample per cell, cleaned up (brightness, contrast, blur, denoise,
+   sharpen, noise), then turned into 1 to 3 inks plus a background with one of twelve methods.
+   Error diffusion, ordered and pixel methods fill whole cells, so the result stays crisp at any size;
+   halftone and line methods are drawn at full resolution with soft edges. */
+const DITHER_ALGOS = ["Atkinson", "Floyd–Steinberg", "Jarvis", "Stucki", "Sierra", "Bayer 4×4", "Bayer 8×8", "Blue noise", "Halftone", "Line screen", "Crosshatch", "Pixel grid"];
+const DIFFUSION = {
+  "Floyd–Steinberg": [16, [[1, 0, 7], [-1, 1, 3], [0, 1, 5], [1, 1, 1]]],
+  "Atkinson": [8, [[1, 0, 1], [2, 0, 1], [-1, 1, 1], [0, 1, 1], [1, 1, 1], [0, 2, 1]]],
+  "Jarvis": [48, [[1, 0, 7], [2, 0, 5], [-2, 1, 3], [-1, 1, 5], [0, 1, 7], [1, 1, 5], [2, 1, 3], [-2, 2, 1], [-1, 2, 3], [0, 2, 5], [1, 2, 3], [2, 2, 1]]],
+  "Stucki": [42, [[1, 0, 8], [2, 0, 4], [-2, 1, 2], [-1, 1, 4], [0, 1, 8], [1, 1, 4], [2, 1, 2], [-2, 2, 1], [-1, 2, 2], [0, 2, 4], [1, 2, 2], [2, 2, 1]]],
+  "Sierra": [32, [[1, 0, 5], [2, 0, 3], [-2, 1, 2], [-1, 1, 4], [0, 1, 5], [1, 1, 4], [2, 1, 2], [-1, 2, 2], [0, 2, 3], [1, 2, 2]]]
+};
+function bayer(n) { let m = [[0]]; while (m.length < n) { const s = m.length, o = []; for (let y = 0; y < s * 2; y++) { o.push([]); for (let x = 0; x < s * 2; x++) { const q = m[y % s][x % s] * 4; o[y].push(q + [[0, 2], [3, 1]][y >= s ? 1 : 0][x >= s ? 1 : 0]); } } m = o; } return m.map(r => r.map(v => (v + .5) / (n * n))); }
+const BAYER4 = bayer(4), BAYER8 = bayer(8);
+const DITHER_PRESETS = {
+  "1-bit Mac": { algo: "Atkinson", cell: 2, tones: 1, ink1: "#141210", bg: "#f4f1ea", contrast: 20, sharpen: 80 },
+  "Newsprint": { algo: "Halftone", cell: 10, tones: 1, ink1: "#1c1a18", bg: "#ece4d2", angle: 45, contrast: 15, sharpen: 60, noise: 8 },
+  "Night screen": { algo: "Halftone", cell: 14, tones: 1, ink1: "#b6c2e6", bg: "#0d0f16", angle: 45, contrast: 30, sharpen: 200, invert: true },
+  "Pocket console": { algo: "Bayer 4×4", cell: 4, tones: 3, ink1: "#0f380f", ink2: "#306230", ink3: "#8bac0f", bg: "#9bbc0f", contrast: 10 },
+  "Riso two-tone": { algo: "Blue noise", cell: 2, tones: 2, ink1: "#1f3b8a", ink2: "#ff6c2f", bg: "#f7f0dd", contrast: 20, noise: 6 },
+  "Engraving": { algo: "Line screen", cell: 8, tones: 1, ink1: "#2a1d14", bg: "#f2e8d2", angle: 30, contrast: 25, sharpen: 120 },
+  "Etched hatch": { algo: "Crosshatch", cell: 7, tones: 1, ink1: "#1f2a1c", bg: "#efe9d6", angle: 45, contrast: 20 },
+  "Big pixels": { algo: "Pixel grid", cell: 16, tones: 3, ink1: "#2f3d2c", ink2: "#7d9466", ink3: "#e0a85a", bg: "#f7f0dd" }
+};
+const DITHER_DEFAULTS = { algo: "Atkinson", cell: 3, tones: 1, ink1: "#141210", ink2: "#894c29", ink3: "#e0a85a", bg: "#f4f1ea", angle: 45, brightness: 0, contrast: 0, blur: 0, denoise: 0, sharpen: 0, radius: 2, noise: 0, invert: false };
+/* Cleans up the gray grid in place. g is 0 (black) to 1 (white). */
+function ditherPrep(g, w, h, o) {
+  let a = g;
+  if (o.denoise > 0) { const b = blur3(a, w, h, 1), t = o.denoise / 100; for (let i = 0; i < a.length; i++) { const d = Math.abs(a[i] - b[i]); const k = t * clamp(1 - d * 6, 0, 1); a[i] = a[i] * (1 - k) + b[i] * k; } }
+  if (o.blur > 0) a = blur3(a, w, h, Math.round(o.blur));
+  if (o.sharpen > 0) { const b = blur3(a, w, h, Math.max(1, Math.round(o.radius))), s = o.sharpen / 100; for (let i = 0; i < a.length; i++) a[i] = a[i] + (a[i] - b[i]) * s; }
+  const f = Math.tan((clamp(o.contrast, -99, 99) / 100 + 1) * Math.PI / 4), br = o.brightness / 200, r = rng(97);
+  for (let i = 0; i < a.length; i++) { let v = (a[i] - .5) * f + .5 + br; if (o.noise > 0) v += (r() - .5) * o.noise / 100 * .5; if (o.invert) v = 1 - v; a[i] = clamp(v, 0, 1); }
+  return a;
+}
+/* Returns level per grid cell: 0 = darkest ink ... L = background, for the cell-filling methods. */
+function ditherLevels(g, w, h, algo, L) {
+  const lv = new Uint8Array(w * h);
+  if (DIFFUSION[algo]) {
+    const [div, taps] = DIFFUSION[algo], e = Float32Array.from(g);
+    for (let y = 0; y < h; y++) {
+      const ltr = y % 2 === 0;   /* serpentine scan avoids diagonal worms */
+      for (let k = 0; k < w; k++) {
+        const x = ltr ? k : w - 1 - k, i = y * w + x, v = clamp(e[i], 0, 1), q = Math.round(v * L), err = v - q / L;
+        lv[i] = q;
+        for (const [dx, dy, wt] of taps) { const xx = x + (ltr ? dx : -dx), yy = y + dy; if (xx >= 0 && xx < w && yy < h) e[yy * w + xx] += err * wt / div; }
+      }
+    }
+  } else {
+    const M = algo === "Bayer 8×8" ? BAYER8 : algo === "Bayer 4×4" ? BAYER4 : null, n = M ? M.length : 0;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const i = y * w + x, t = M ? M[y % n][x % n] : algo === "Blue noise" ? (x * .7548776662 + y * .56984029) % 1 : .5;
+      lv[i] = clamp(Math.floor(g[i] * L + t), 0, L);
+    }
+  }
+  return lv;
+}
+/* g: prepped gray grid gw x gh, one sample per cell of size `cell` document pixels. Returns RGBA at W x H. */
+function ditherRGBA(g, gw, gh, W, H, o) {
+  const inks = [o.ink1, o.ink2, o.ink3].slice(0, o.tones).map(hexToRgb), L = inks.length, bgT = !o.bg || o.bg === "transparent", bg = bgT ? [0, 0, 0] : hexToRgb(o.bg);
+  const out = new Uint8Array(W * H * 4), cell = W / gw, cellY = H / gh;
+  const put = (p, c, a) => { /* a: ink coverage 0..1 over the background */ const q = p * 4; if (bgT) { out[q] = c[0]; out[q + 1] = c[1]; out[q + 2] = c[2]; out[q + 3] = a * 255; } else { out[q] = bg[0] + (c[0] - bg[0]) * a; out[q + 1] = bg[1] + (c[1] - bg[1]) * a; out[q + 2] = bg[2] + (c[2] - bg[2]) * a; out[q + 3] = 255; } };
+  if (o.algo === "Halftone" || o.algo === "Line screen" || o.algo === "Crosshatch") {
+    const ang = (o.angle || 0) * Math.PI / 180, ca = Math.cos(ang), sa = Math.sin(ang), S = Math.max(2, cell);
+    const sample = (x, y) => { const fx = clamp(x / cell - .5, 0, gw - 1), fy = clamp(y / cellY - .5, 0, gh - 1), x0 = Math.floor(fx), y0 = Math.floor(fy), x1 = Math.min(gw - 1, x0 + 1), y1 = Math.min(gh - 1, y0 + 1), vx = fx - x0, vy = fy - y0; return (g[y0 * gw + x0] * (1 - vx) + g[y0 * gw + x1] * vx) * (1 - vy) + (g[y1 * gw + x0] * (1 - vx) + g[y1 * gw + x1] * vx) * vy; };
+    const inkFor = d => inks[clamp(L - 1 - Math.floor(d * L * .999), 0, L - 1)];
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const u = (x * ca + y * sa) / S, v = (-x * sa + y * ca) / S, p = y * W + x;
+      if (o.algo === "Halftone") {
+        const cu = Math.floor(u) + .5, cv = Math.floor(v) + .5, cx = (cu * ca - cv * sa) * S, cy = (cu * sa + cv * ca) * S;
+        const d = 1 - sample(cx, cy), r = Math.sqrt(d) * .72, dist = Math.hypot(u - cu, v - cv), aa = .8 / S;
+        put(p, inkFor(d), clamp((r - dist) / aa + .5, 0, 1));
+      } else {
+        const d = 1 - sample(x, y), aa = .9 / S, line = f => { const t = Math.abs((f % 1 + 1) % 1 - .5) * 2; return clamp(((d * (o.algo === "Crosshatch" ? 1.4 : 1)) - t) / aa * .5 + .5, 0, 1); };
+        let a = line(v);
+        if (o.algo === "Crosshatch") { const d2 = clamp((d - .45) / .55, 0, 1), t2 = Math.abs((u % 1 + 1) % 1 - .5) * 2; a = Math.max(a * clamp(d / .35, 0, 1), clamp((d2 * 1.2 - t2) / aa * .5 + .5, 0, 1)); }
+        put(p, inkFor(d), a);
+      }
+    }
+    return out;
+  }
+  const lv = ditherLevels(g, gw, gh, o.algo === "Pixel grid" ? "Pixel grid" : o.algo, L), gap = o.algo === "Pixel grid" && cell >= 6 ? Math.max(1, Math.round(cell * .08)) : 0;
+  for (let y = 0; y < H; y++) {
+    const gy = Math.min(gh - 1, Math.floor(y / cellY)), iy = (y / cellY - gy) * cellY;
+    for (let x = 0; x < W; x++) {
+      const gx = Math.min(gw - 1, Math.floor(x / cell)), l = lv[gy * gw + gx], p = y * W + x;
+      if (gap && ((x / cell - gx) * cell < gap || iy < gap)) { put(p, [0, 0, 0], 0); continue; }
+      if (l >= L) put(p, [0, 0, 0], 0); else put(p, inks[l], 1);
+    }
+  }
+  return out;
+}
+/* Reads the document (or one area of it) at one sample per cell. */
+async function ditherGray(doc, cell, bounds) {
+  const W = bounds ? bounds.right - bounds.left : Math.round(doc.width), H = bounds ? bounds.bottom - bounds.top : Math.round(doc.height);
+  const gw = Math.max(1, Math.round(W / cell)), gh = Math.max(1, Math.round(H / cell)), opts = { documentID: doc.id, targetSize: { width: gw, height: gh }, componentSize: 8, applyAlpha: false, colorSpace: "RGB" };
+  if (bounds) opts.sourceBounds = bounds;
+  const res = await ps.imaging.getPixels(opts), img = res.imageData;
+  try { const data = await img.getData({ chunky: true }), w = img.width, h = img.height; return { g: grayFromPixels(data, img.components || Math.round(data.length / (w * h)), w, h), gw: w, gh: h, W, H }; }
+  finally { try { img.dispose(); } catch (e) {} }
+}
+function ditherCheckDoc() {
+  const app = ps.app, C = ps.constants; if (!app.activeDocument) throw new Error("Open a photo first.");
+  const doc = app.activeDocument;
+  try { if (C && C.DocumentMode && doc.mode !== C.DocumentMode.RGB) throw new Error("Dither needs an RGB document. Switch with Image › Mode › RGB Color."); } catch (e) { if (/RGB/.test(e.message)) throw e; }
+  if (!ps.imaging) throw new Error("This version of Photoshop can't read pixels from a plugin. Photoshop 2024 or newer can.");
+  return doc;
+}
+async function applyDither(o) {
+  const doc = ditherCheckDoc(), W = Math.round(doc.width), H = Math.round(doc.height);
+  if (W * H > 40e6) throw new Error("That document is very large. Try dither on a copy under 40 megapixels.");
+  await modal("Trailhead dither", async () => {
+    const r = await ditherGray(doc, o.cell, null), g = ditherPrep(r.g, r.gw, r.gh, o);
+    await putLayer(doc, `Trailhead · Dither (${o.algo})`, ditherRGBA(g, r.gw, r.gh, W, H, o), W, H);
+  });
+}
+/* A 1:1 preview of a square from the middle of the document, so the dots look exactly as they will. */
+async function ditherPreview(o, size) {
+  const doc = ditherCheckDoc(), W = Math.round(doc.width), H = Math.round(doc.height), s = Math.min(size, W, H);
+  const b = { left: Math.round((W - s) / 2), top: Math.round((H - s) / 2) }; b.right = b.left + s; b.bottom = b.top + s;
+  let out;
+  await modal("Trailhead dither preview", async () => { const r = await ditherGray(doc, o.cell, b); out = ditherRGBA(ditherPrep(r.g, r.gw, r.gh, o), r.gw, r.gh, s, s, o); });
+  const img = await ps.imaging.createImageDataFromBuffer(out, { width: s, height: s, components: 4, chunky: true, colorSpace: "RGB", colorProfile: "sRGB IEC61966-2.1" });
+  try { return await ps.imaging.encodeImageData({ imageData: img, base64: true }); } finally { img.dispose(); }
+}
+
 /* ---------- colors from the open document ---------- */
 function rgbToHex(r, g, b) { return "#" + [r, g, b].map(v => clamp(Math.round(v), 0, 255).toString(16).padStart(2, "0")).join(""); }
 function rgbToHsl(r, g, b) { r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2; if (mx !== mn) { const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; } return [h, s, l]; }
@@ -425,6 +552,55 @@ function setupScanner() {
   stopBtn.addEventListener("click", () => { pair = null; try { localStorage.removeItem("trailhead-scanner"); } catch (e) {} if (timer) clearInterval(timer); timer = null; render(); status("Unpaired. Photos from that phone won't arrive anymore."); });
   render(); start();
 }
+
+function setupDither() {
+  const $i = id => document.getElementById(id);
+  const presetItems = [["Your own settings", ""]].concat(Object.keys(DITHER_PRESETS).map(k => [k, k])), algoItems = DITHER_ALGOS.map(a => [a, a]);
+  const toneItems = [["1 ink", "1"], ["2 inks", "2"], ["3 inks", "3"]], angleItems = [["45°", "45"], ["15°", "15"], ["30°", "30"], ["60°", "60"], ["75°", "75"], ["0°", "0"], ["90°", "90"]];
+  fillSelect($i("dtPreset"), presetItems); fillSelect($i("dtAlgo"), algoItems); fillSelect($i("dtTones"), toneItems); fillSelect($i("dtAngle"), angleItems);
+  const sliders = ["dtCell", "dtBrightness", "dtContrast", "dtSharpen", "dtRadius", "dtBlur", "dtDenoise", "dtNoise"], keyOf = { dtCell: "cell", dtBrightness: "brightness", dtContrast: "contrast", dtSharpen: "sharpen", dtRadius: "radius", dtBlur: "blur", dtDenoise: "denoise", dtNoise: "noise" };
+  const hexes = { dtInk1: "ink1", dtInk2: "ink2", dtInk3: "ink3", dtBg: "bg" };
+  const setSel = (sel, items, v) => { const i = items.findIndex(it => it[1] === String(v)); if (i >= 0) { try { sel.selectedIndex = i; } catch (e) {} sel.value = String(v); } };
+  const validHex = v => /^#[0-9a-f]{6}$/i.test(v);
+  function read() {
+    const o = Object.assign({}, DITHER_DEFAULTS);
+    o.algo = readSelect($i("dtAlgo"), algoItems); o.tones = +readSelect($i("dtTones"), toneItems); o.angle = +readSelect($i("dtAngle"), angleItems);
+    sliders.forEach(id => { o[keyOf[id]] = +$i(id).value; });
+    Object.keys(hexes).forEach(id => { const v = $i(id).value.trim().toLowerCase(); if (validHex(v) || (id === "dtBg" && v === "transparent")) o[hexes[id]] = v; });
+    o.invert = !!$i("dtInvert").checked; return o;
+  }
+  function paint(o) {
+    sliders.forEach(id => { $i(id + "V").textContent = id === "dtCell" ? o.cell + " px" : String(o[keyOf[id]]); });
+    Object.keys(hexes).forEach(id => { const v = o[hexes[id]]; $i(id + "C").style.backgroundColor = v === "transparent" ? "transparent" : v; });
+    $i("dtInk2W").style.display = o.tones >= 2 ? "block" : "none"; $i("dtInk3W").style.display = o.tones >= 3 ? "block" : "none";
+    $i("dtAngleWrap").style.visibility = /Halftone|Line|Cross/.test(o.algo) ? "visible" : "hidden";
+  }
+  function load(o) {
+    setSel($i("dtAlgo"), algoItems, o.algo); setSel($i("dtTones"), toneItems, o.tones); setSel($i("dtAngle"), angleItems, o.angle);
+    sliders.forEach(id => { $i(id).value = o[keyOf[id]]; });
+    Object.keys(hexes).forEach(id => { $i(id).value = o[hexes[id]]; }); $i("dtInvert").checked = !!o.invert; paint(o);
+  }
+  let t = 0, busy = false, again = false;
+  async function preview() {
+    if (busy) { again = true; return; } busy = true;
+    try {
+      let doc = null; try { doc = ps.app.activeDocument; } catch (e) {}
+      if (!doc) { $i("dtPrevNote").textContent = "Open a document to see a preview."; $i("dtPrev").style.display = "none"; return; }
+      $i("dtPrevNote").textContent = "Drawing the preview…";
+      const b64 = await ditherPreview(read(), 360);
+      $i("dtPrev").src = "data:image/jpeg;base64," + b64; $i("dtPrev").style.display = "block"; $i("dtPrevNote").textContent = "Actual size, from the middle of your document.";
+    } catch (e) { $i("dtPrev").style.display = "none"; $i("dtPrevNote").textContent = /encode/i.test(e.message || "") ? "Preview needs Photoshop 2024 or newer. Apply still works." : (e.message || "Couldn't draw the preview."); }
+    finally { busy = false; if (again) { again = false; preview(); } }
+  }
+  const changed = () => { $i("dtPreset").value = ""; try { $i("dtPreset").selectedIndex = 0; } catch (e) {} paint(read()); clearTimeout(t); t = setTimeout(preview, 450); };
+  sliders.forEach(id => { $i(id).addEventListener("input", () => paint(read())); $i(id).addEventListener("change", changed); });
+  ["dtAlgo", "dtTones", "dtAngle", "dtInvert"].forEach(id => $i(id).addEventListener("change", changed));
+  Object.keys(hexes).forEach(id => $i(id).addEventListener("change", changed));
+  $i("dtPreset").addEventListener("change", () => { const k = readSelect($i("dtPreset"), presetItems); if (!k) return; load(Object.assign({}, DITHER_DEFAULTS, DITHER_PRESETS[k])); setSel($i("dtPreset"), presetItems, k); clearTimeout(t); t = setTimeout(preview, 100); });
+  $i("dtPrevBtn").addEventListener("click", preview);
+  $i("dtApply").addEventListener("click", async () => { const o = read(); status(`Dithering with ${o.algo}… big documents take a few seconds.`); try { await applyDither(o); status(`Dither (${o.algo}) is on a new layer above your photo. Your original layers weren't touched.`); } catch (e) { status(e.message, true); } });
+  load(Object.assign({}, DITHER_DEFAULTS));
+}
 function setupPanel() {
   const palPick = document.getElementById("palPick"), sw = document.getElementById("swatches"), inkPick = document.getElementById("inkPick"), texPick = document.getElementById("texPick");
   fillSelect(palPick, PAL_ITEMS); fillSelect(inkPick, INK_ITEMS); fillSelect(texPick, TEX_ITEMS);
@@ -493,6 +669,7 @@ function setupPanel() {
       status(kind === "Cyanotype negative" ? "The negative is on a new layer. Before printing it on film, flip it with Image › Image Rotation › Flip Canvas Horizontal." : kind + " is on a new layer above your photo. Your original layers weren't touched.");
     } catch (e) { status(e.message, true); }
   });
+  try { setupDither(); } catch (e) { status("Dither didn't start: " + e.message, true); }
   try { setupScanner(); } catch (e) { status("The pocket scanner didn't start: " + e.message, true); }
   status("Ready. Messages and errors show up here.");
 }
@@ -505,4 +682,4 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   const fitScroll = () => { const el = document.querySelector(".scroll"); if (el && window.innerHeight) el.style.height = window.innerHeight + "px"; };
   try { fitScroll(); window.addEventListener("resize", fitScroll); } catch (e) {}
 }
-if (typeof module !== "undefined" && module.exports) module.exports = { decryptScan, newPairing, imageKind, readZip, readASE, textureRGBA, textureAlpha, mainColors, pixelsToPoints, filterRGBA, grayFromPixels };
+if (typeof module !== "undefined" && module.exports) module.exports = { ditherRGBA, ditherPrep, ditherLevels, DITHER_PRESETS, DITHER_DEFAULTS, DITHER_ALGOS, decryptScan, newPairing, imageKind, readZip, readASE, textureRGBA, textureAlpha, mainColors, pixelsToPoints, filterRGBA, grayFromPixels };

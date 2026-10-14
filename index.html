@@ -641,9 +641,9 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
         <div class="home-plugin" id="homePlugin">
           <div>
             <h3 class="home-h">Trailhead for Photoshop</h3>
-            <p>A free panel for Photoshop. It runs Linocut, Photo to topo, Line art and Cyanotype on the photo you have open, and puts the result on a new layer. It also opens files you save here straight from the zip, keeps all ten trail palettes a click away, pulls colors from your document, and paints paper grain, halftone and other textures.</p>
+            <p>A free panel for Photoshop. It runs Linocut, Photo to topo, Line art and Cyanotype on the photo you have open, and puts the result on a new layer. Its dither tool turns any photo into halftone dots, 1-bit pixels, riso grain or engraved lines in up to three inks, with an actual-size preview. It also opens files you save here straight from the zip, keeps all ten trail palettes a click away, pulls colors from your document, and paints paper grain, halftone and other textures.</p>
             <div class="btns"><button class="btn" id="homePluginDl">Download the plugin</button></div>
-            <p class="hint">Works with Photoshop 2023 or newer. Textures and pulling colors need Photoshop 2024 or newer.</p>
+            <p class="hint">Works with Photoshop 2023 or newer. Dither, textures and pulling colors need Photoshop 2024 or newer.</p>
           </div>
           <ol class="steps home-steps">
             <li><span class="n">1</span><div><h3>Download and unzip</h3><p>You get Trailhead.ccx and a short README with these same steps.</p></div></li>
@@ -2633,7 +2633,7 @@ Upper Peninsula</textarea></div>
             <div class="file"><b>.png</b><span class="from">from every photo tool and Gradient</span><p>A flat image, good for sharing or dropping straight into a layout.</p></div>
             <div class="file"><b>.svg</b><span class="from">from Line art</span><p>Every line as a vector, so it scales to any size and opens in Illustrator.</p></div>
             <div class="file"><b>.otf</b><span class="from">from Letter maker</span><p>Your own font. Double-click to install it, then restart Photoshop to see it in the font list.</p></div>
-            <div class="next"><span class="script">the trailhead panel</span><p>A Photoshop plugin that opens these zips directly, runs the Linocut, topo, line art and cyanotype filters on any photo you have open, keeps all ten palettes in a panel, and paints textures onto new layers. Download it from the home page. Once it's installed, it appears under Plugins › Trailhead.</p></div>
+            <div class="next"><span class="script">the trailhead panel</span><p>A Photoshop plugin that opens these zips directly, runs the Linocut, topo, line art and cyanotype filters on any photo you have open, dithers it into dots, pixels or engraved lines in up to three inks, keeps all ten palettes in a panel, paints textures onto new layers, and takes photos straight from your phone. Download it from the home page. Once it's installed, it appears under Plugins › Trailhead.</p></div>
           </div>
         </div>
       </section>
@@ -8363,7 +8363,7 @@ async function sendTo(from, to) {
 Object.keys(SEND_FROM).forEach(tab => {
   const panel = $(`section.page[data-page="${tab}"] aside.panel`); if (!panel) return;
   const wrap = document.createElement("div"); wrap.className = "send-block";
-  wrap.innerHTML = `<hr><h3>send it on</h3><div class="ctl send-to"><label for="sendTo-${tab}">Send to</label><select id="sendTo-${tab}" data-send-from="${tab}">${sendOptions(tab)}</select></div><p class="hint">Opens your result in another tool with everything you did here kept, so you can keep going.</p>`;
+  wrap.innerHTML = `<hr><div class="ctl send-to"><label for="sendTo-${tab}">Send to</label><select id="sendTo-${tab}" data-send-from="${tab}">${sendOptions(tab)}</select></div><p class="hint">Opens your result in another tool with everything you did here kept, so you can keep going.</p>`;
   panel.appendChild(wrap);
   $("select", wrap).addEventListener("change", e => { const to = e.target.value; e.target.value = ""; if (to) sendTo(tab, to); });
 });

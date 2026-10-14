@@ -3,6 +3,7 @@
 A Photoshop panel that opens what you make on the Trailhead site.
 
 - **Open a Trailhead file**: pick a zip you saved from the site. The layered .psd opens and any swatches go into your Swatches panel. You don't need to unzip anything. Plain .psd, .png and .ase files work too.
+- **Dither**: twelve methods (Atkinson, Floyd–Steinberg, Jarvis, Stucki, Sierra, Bayer 4×4 and 8×8, blue noise, halftone, line screen, crosshatch and pixel grid) in 1 to 3 inks over any background color or transparency. Dot size, angle, brightness, contrast, sharpen, blur, noise smoothing and grain, plus eight starting presets and an actual-size preview from the middle of your document.
 - **Trailhead filters**: runs Linocut, Photo to topo, Line art, Cyanotype print or Cyanotype negative on everything visible in your document. The result lands on a new layer, with an optional paper layer underneath, so your original stays untouched.
 - **Palettes**: all ten Trailhead palettes. Tap a color to make it your foreground color, or add a whole palette to Swatches.
 - **Colors from this document**: finds the main colors in whatever you have open (3 to 8 of them) and adds them to Swatches.

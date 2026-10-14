@@ -19,6 +19,17 @@
   .sw { width: 26px; height: 26px; border-radius: 6px; margin: 0 6px 6px 0; border: 1.5px solid rgba(107, 64, 45, .3); cursor: pointer; }
   .status { margin: 0 0 6px; padding: 8px 10px; border-radius: 8px; background: #f7e7cc; color: #6b402d; min-height: 16px; line-height: 1.4; }
   .status.bad { background: #f3d6c8; color: #8a2a12; }
+  .rng { margin-bottom: 6px; }
+  .rng input { width: 100%; }
+  .rng label span { float: right; color: #6b402d; }
+  .row2 { display: flex; } .row2 > div { flex: 1 1 0; margin-right: 8px; } .row2 > div:last-child { margin-right: 0; }
+  .inks { display: flex; flex-wrap: wrap; } .ink { width: 50%; box-sizing: border-box; padding-right: 8px; margin-bottom: 6px; }
+  .hexrow { display: flex; align-items: center; } .hexrow input { flex: 1 1 auto; width: 70px; font-size: 12px; }
+  .chipc { width: 18px; height: 18px; border-radius: 4px; margin-right: 6px; border: 1.5px solid rgba(107, 64, 45, .35); flex: 0 0 auto; }
+  .small { font-size: 11px; }
+  .preview { width: 100%; margin: 4px 0 8px; background: #c9cdbd; border-radius: 8px; overflow: hidden; min-height: 40px; }
+  .preview img { display: block; width: 100%; }
+  .preview span { display: block; padding: 10px; font-size: 11px; color: #666a57; }
   label.check { display: flex; align-items: center; gap: 6px; font-size: 12px; letter-spacing: 0; color: #6b402d; margin: 0 0 8px; }
   label { display: block; font-size: 11px; letter-spacing: 1px; margin-bottom: 4px; color: #666a57; }
 </style>
@@ -63,6 +74,37 @@
     <button id="pullBtn">Pull colors</button>
     <div class="row" id="pulled"></div>
     <button class="ghost" id="pullAdd">Add to Swatches</button>
+  </div>
+
+  <div class="section">
+    <h2>dither</h2>
+    <p>Turns the document into dots, pixels or engraved lines in 1 to 3 inks. The result lands on a new layer.</p>
+    <label for="dtPreset">Start from</label>
+    <select id="dtPreset"></select>
+    <label for="dtAlgo">Method</label>
+    <select id="dtAlgo"></select>
+    <div class="rng"><label for="dtCell">Dot size <span id="dtCellV"></span></label><input type="range" id="dtCell" min="1" max="48" value="3"></div>
+    <div class="row2">
+      <div><label for="dtTones">Inks</label><select id="dtTones"></select></div>
+      <div id="dtAngleWrap"><label for="dtAngle">Angle</label><select id="dtAngle"></select></div>
+    </div>
+    <div class="inks">
+      <div class="ink"><label for="dtInk1">Shadow</label><div class="hexrow"><span class="chipc" id="dtInk1C"></span><input type="text" id="dtInk1" maxlength="7"></div></div>
+      <div class="ink" id="dtInk2W"><label for="dtInk2">Middle</label><div class="hexrow"><span class="chipc" id="dtInk2C"></span><input type="text" id="dtInk2" maxlength="7"></div></div>
+      <div class="ink" id="dtInk3W"><label for="dtInk3">Light</label><div class="hexrow"><span class="chipc" id="dtInk3C"></span><input type="text" id="dtInk3" maxlength="7"></div></div>
+      <div class="ink"><label for="dtBg">Background</label><div class="hexrow"><span class="chipc" id="dtBgC"></span><input type="text" id="dtBg" maxlength="11"></div></div>
+    </div>
+    <p class="small">Type a hex color like #1f3b4d, or "transparent" for the background.</p>
+    <div class="rng"><label for="dtBrightness">Brightness <span id="dtBrightnessV"></span></label><input type="range" id="dtBrightness" min="-100" max="100" value="0"></div>
+    <div class="rng"><label for="dtContrast">Contrast <span id="dtContrastV"></span></label><input type="range" id="dtContrast" min="-100" max="100" value="0"></div>
+    <div class="rng"><label for="dtSharpen">Sharpen <span id="dtSharpenV"></span></label><input type="range" id="dtSharpen" min="0" max="300" value="0"></div>
+    <div class="rng"><label for="dtRadius">Sharpen radius <span id="dtRadiusV"></span></label><input type="range" id="dtRadius" min="1" max="10" value="2"></div>
+    <div class="rng"><label for="dtBlur">Blur <span id="dtBlurV"></span></label><input type="range" id="dtBlur" min="0" max="10" value="0"></div>
+    <div class="rng"><label for="dtDenoise">Smooth out noise <span id="dtDenoiseV"></span></label><input type="range" id="dtDenoise" min="0" max="100" value="0"></div>
+    <div class="rng"><label for="dtNoise">Grain <span id="dtNoiseV"></span></label><input type="range" id="dtNoise" min="0" max="100" value="0"></div>
+    <label class="check"><input type="checkbox" id="dtInvert"> Invert</label>
+    <div class="preview"><img id="dtPrev" alt="Dither preview"><span id="dtPrevNote">Open a document and press Preview.</span></div>
+    <button class="ghost" id="dtPrevBtn">Preview</button><button id="dtApply">Apply dither</button>
   </div>
 
   <div class="section">
