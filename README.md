@@ -10,6 +10,11 @@ Everything runs in the browser. Photos people open stay on their device. There's
 index.html              The whole site: markup, styles and scripts in one file
 fonts/                  TAY Dumpling and TAY Sundae (see "Before you make this public")
 photos/                 The four example photos used across the tools
+icons/                  App icons, tab icons and the social preview card (social-card.jpg)
+thumbs/                 Small before/after pictures shown on tool pages and in search
+manifest.webmanifest    Lets phones and computers install Trailhead as an app
+sw.js                   Service worker: keeps a copy of the site so it works offline
+404.html                The "off the trail" page GitHub shows for broken links
 downloads/              trailhead-for-photoshop.zip, served by the home page's download button
 photoshop-plugin/       Source for the Photoshop panel (UXP, manifest v5)
 scripts/build-plugin.sh Rebuilds the plugin zip after you change the plugin
@@ -37,6 +42,14 @@ Then open http://localhost:8000.
 
 The `.nojekyll` file tells GitHub Pages to serve the files as they are.
 
+## Offline and install
+
+After someone visits once, `sw.js` keeps a copy of the page, fonts, photos and libraries, so the site opens with no connection. The page itself is always fetched fresh when online, so updates show up right away. If you add new files the site needs offline, list them in `CORE` in `sw.js` and bump `VERSION`.
+
+## Share previews
+
+The preview image for links shared on social media and in texts is set in the `<head>` of `index.html` (`og:image`). It points at `https://harastiaj-star.github.io/cautious-fishstick/icons/social-card.jpg`. If you rename the repository or add a custom domain, update that address.
+
 ## Updating the plugin
 
 See [photoshop-plugin/README.md](photoshop-plugin/README.md). In short: edit the plugin, bump the version in `manifest.json`, run `bash scripts/build-plugin.sh`, and commit the new zip.
@@ -45,5 +58,4 @@ See [photoshop-plugin/README.md](photoshop-plugin/README.md). In short: edit the
 
 - **Fonts.** TAY Dumpling and TAY Sundae are commercial fonts. Check that your license covers web embedding and hosting the .woff files in a public repository. If it doesn't, make the repository private (GitHub Pages on a private repository needs a paid plan) or replace the fonts.
 - **Photos.** Make sure you have the rights to every photo in `photos/`. Swap any you didn't take yourself for your own or for properly licensed ones.
-- **Contact email.** The Privacy and Terms pages contain a `[CONTACT EMAIL]` placeholder. Search `index.html` for it and fill in a real address.
 - **License.** There's no license file yet, which means nobody else may reuse the code. If you want people to be able to, add one. GitHub offers a picker when you create a file called `LICENSE`.
