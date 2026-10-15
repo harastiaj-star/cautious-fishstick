@@ -8,7 +8,7 @@ Everything runs in the browser. Photos people open stay on their device. There's
 
 ```
 index.html              The whole site: markup, styles and scripts in one file
-fonts/                  TAY Dumpling and TAY Sundae (see "Before you make this public")
+fonts/                  TAY Dumpling and TAY Bread Pan (see "Before you make this public")
 photos/                 The four example photos used across the tools
 icons/                  App icons, tab icons and the social preview card (social-card.jpg)
 thumbs/                 Small before/after pictures shown on tool pages and in search
@@ -59,6 +59,6 @@ See [photoshop-plugin/README.md](photoshop-plugin/README.md). In short: edit the
 
 ## Before you make this public
 
-- **Fonts.** TAY Dumpling and TAY Sundae are commercial fonts. Check that your license covers web embedding and hosting the .woff files in a public repository. If it doesn't, make the repository private (GitHub Pages on a private repository needs a paid plan) or replace the fonts.
+- **Fonts.** TAY Dumpling and TAY Bread Pan are commercial fonts. Check that your license covers web embedding and hosting the .woff files in a public repository. If it doesn't, make the repository private (GitHub Pages on a private repository needs a paid plan) or replace the fonts.
 - **Photos.** Make sure you have the rights to every photo in `photos/`. Swap any you didn't take yourself for your own or for properly licensed ones.
 - **License.** There's no license file yet, which means nobody else may reuse the code. If you want people to be able to, add one. GitHub offers a picker when you create a file called `LICENSE`.

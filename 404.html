@@ -7,13 +7,13 @@
 <link rel="icon" type="image/png" href="icons/favicon-32.png">
 <style>
 @font-face { font-family: "TAY Dumpling"; src: url("fonts/TAYDumpling-Regular.woff") format("woff"); }
-@font-face { font-family: "TAY Sundae"; src: url("fonts/TAYSundae-Regular.woff") format("woff"); }
+@font-face { font-family: "TAY Bread Pan"; src: url("fonts/TAYBreadPan.woff") format("woff"); }
 html, body { margin: 0; background: #f7f0dd; color: #6b402d; font-family: "TAY Dumpling", "Arial Rounded MT Bold", sans-serif; }
 main { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px 16px; gap: 14px; box-sizing: border-box; }
 img { width: 140px; height: auto; }
 h1 { font-weight: 400; font-size: clamp(40px, 9vw, 72px); line-height: .95; color: #894c29; margin: 0; letter-spacing: .03em; }
 p { margin: 0; max-width: 40ch; line-height: 1.5; color: #666a57; letter-spacing: .03em; }
-.s { font-family: "TAY Sundae", cursive; font-size: 30px; color: #c07640; letter-spacing: 0; }
+.s { font-family: "TAY Bread Pan", "TAY Dumpling", sans-serif; font-size: 16px; color: #894c29; letter-spacing: .04em; }
 a { display: inline-block; margin-top: 8px; background: #894c29; color: #f7f0dd; text-decoration: none; padding: 11px 18px 9px; border-radius: 10px; letter-spacing: .06em; }
 a:hover { background: #6b402d; }
 </style>
@@ -31,7 +31,7 @@ a:hover { background: #6b402d; }
   (function () { var parts = location.pathname.split("/").filter(Boolean), root = location.hostname.endsWith("github.io") && parts.length ? "/" + parts[0] + "/" : "/";
     document.getElementById("home").href = root; document.getElementById("bird").src = root + "icons/icon-192.png";
     document.querySelectorAll('link[rel="icon"]').forEach(function (l) { l.href = root + "icons/favicon-32.png"; });
-    var st = document.createElement("style"); st.textContent = '@font-face{font-family:"TAY Dumpling";src:url("' + root + 'fonts/TAYDumpling-Regular.woff")}@font-face{font-family:"TAY Sundae";src:url("' + root + 'fonts/TAYSundae-Regular.woff")}'; document.head.appendChild(st); })();
+    var st = document.createElement("style"); st.textContent = '@font-face{font-family:"TAY Dumpling";src:url("' + root + 'fonts/TAYDumpling-Regular.woff")}@font-face{font-family:"TAY Bread Pan";src:url("' + root + 'fonts/TAYBreadPan.woff")}'; document.head.appendChild(st); })();
 </script>
 </body>
 </html>
