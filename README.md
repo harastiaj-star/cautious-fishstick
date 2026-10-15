@@ -11,6 +11,7 @@ index.html              The whole site: markup, styles and scripts in one file
 fonts/                  TAY Dumpling and TAY Bread Pan (see "Before you make this public")
 photos/                 The four example photos used across the tools
 icons/                  App icons, tab icons and the social preview card (social-card.jpg)
+art/                    The bird logo, the About tree and the home page demo pictures
 thumbs/                 Small before/after pictures shown on tool pages and in search
 videos/                 The example clip for the Video tools, as MP4 and WebM
 manifest.webmanifest    Lets phones and computers install Trailhead as an app
