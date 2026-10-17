@@ -310,12 +310,15 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
 .home-demo figcaption { font-size: 13px; color: var(--muted); }
 .home-h { font-size: 24px; letter-spacing: .04em; color: var(--ink); margin: 44px 0 14px; }
 .home-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(260px, calc((100% - 28px) / 3)), 1fr)); gap: 14px; }
-.home-tile { background: var(--pottery); border: 1.5px solid transparent; border-radius: var(--r-card); padding: 20px; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 8px; }
-.home-tile:hover { border-color: var(--clay); background: var(--paper); }
+.home-tile { background: var(--pottery); border: 1.5px solid transparent; border-radius: var(--r-card); padding: 20px; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+.home-tools { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.home-tools button { background: none; border: 0; padding: 3px 0; cursor: pointer; color: var(--ink); font-family: var(--f-script); font-size: 13px; letter-spacing: 0; text-align: left; }
+.home-tools button:hover { color: var(--clay); text-decoration: underline; text-underline-offset: 3px; }
 .home-ico svg { width: 56px; height: 56px; display: block; }
 .home-tile b { font-weight: 400; font-size: 22px; line-height: 1.05; color: var(--clay); letter-spacing: .03em; }
 .home-desc { font-size: 13.5px; line-height: 1.5; color: var(--ink); flex: 1; }
-.home-go { font-size: 12.5px; letter-spacing: .1em; color: var(--clay); }
+.home-go { font-size: 12.5px; letter-spacing: .1em; color: var(--clay); background: none; border: 0; padding: 4px 0 0; cursor: pointer; text-align: left; align-self: flex-start; }
+.home-go:hover { text-decoration: underline; text-underline-offset: 3px; }
 .home-plugin { margin-top: 44px; padding-top: 6px; border-top: 3px solid var(--ink); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px; align-items: start; }
 .home-plugin > div { display: flex; flex-direction: column; gap: 14px; }
 .home-plugin p { font-size: 15px; line-height: 1.6; color: var(--ink); }
@@ -688,12 +691,12 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
         <div class="home-hero">
           <div class="home-intro">
             <h2>Design tools for people who make things by hand</h2>
-            <p>Trailhead is a free set of tools for posters, zines, patches, trail maps and anything else you'd rather look printed than digital. Pick colors from a photo, turn a snapshot into a linocut or a topo map, lay out a zine that folds from one sheet of paper, then take it all into Photoshop with the layers intact.</p>
-            <p>Everything runs in your browser. Photos you open stay on your device, and there's nothing to sign up for.</p>
+            <p>Trailhead is a free set of tools for creating just about anything you'd rather look printed than digital.</p>
+            <p>Everything runs in your browser. Photos you open stay on your device. Download the app, or install the Photoshop plugin directly.</p>
             <div class="btns">
-              <button class="btn" data-go="color">Start with colors</button>
-              <button class="btn" data-go="photo">Open the photo lab</button>
-              <button class="btn ghost" id="homeToPlugin">Get the Photoshop plugin</button>
+              <button class="btn" data-go="color">Design tools</button>
+              <button class="btn" data-go="photo">Photo lab</button>
+              <button class="btn ghost" id="homeToPlugin">Download the Photoshop plugin</button>
             </div>
           </div>
           <figure class="home-demo">
@@ -703,7 +706,6 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
               <div><img src="art/home/topo.webp" width="600" height="400" decoding="async" alt="The same view as topographic contour lines"><span>Photo to topo</span></div>
               <div><img src="art/home/linocut.webp" width="600" height="400" decoding="async" alt="The same view as a carved linocut print"><span>Linocut</span></div>
             </div>
-            <figcaption>One photo, four ways. Each of these came from the same picture in a few seconds.</figcaption>
           </figure>
         </div>
 
@@ -711,22 +713,18 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
           <h3 class="home-h">Your favorites</h3>
           <div class="fav-row" id="favRow"></div>
         </div>
-        <h3 class="home-h">Start a project</h3>
-        <p class="home-sub">Step-by-step guides that take you through a few tools to finish one real thing. A small guide follows you from tool to tool.</p>
-        <div class="home-projects" id="homeProjects"></div>
-        <p style="margin-top:10px"><button class="linkish" data-go-tab="projects">See all projects ›</button></p>
         <h3 class="home-h">What's here</h3>
         <div class="home-tiles">
-          <button class="home-tile" data-go="color"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 50 L30 10 L40 14 L26 52 Z"/><path d="M26 52 L46 22 L54 28 L36 56 Z"/><circle cx="28" cy="20" r="3"/><circle cx="44" cy="32" r="3"/><path d="M10 56 H58" stroke-width="1.5"/></svg></span><b>Color &amp; type</b><span class="home-desc">Palettes, gradients and shadows, type sizes, the colors hiding in a photo, every palette at once, and a letter maker that turns your handwriting into a font.</span><span class="home-go">Open color &amp; type ›</span></button>
-          <button class="home-tile" data-go="photo"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="48" height="38" rx="3"/><path d="M12 46 L26 28 L34 38 L42 30 L52 46"/><circle cx="44" cy="22" r="4"/></svg></span><b>Photo lab</b><span class="home-desc">Light and color, blend modes, print effects, golden-hour light, and a live camera that turns what you see into a print as you move.</span><span class="home-go">Open photo lab ›</span></button>
-          <button class="home-tile" data-go="video"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="16" width="36" height="32" rx="3"/><path d="M44 28 L56 20 V44 L44 36"/><path d="M8 24 H44 M8 40 H44"/><path d="M14 16 V24 M22 16 V24 M30 16 V24 M38 16 V24"/></svg></span><b>Video</b><span class="home-desc">Looks and effects for short clips, cinemagraphs where one thing keeps moving, animated titles, moving type, and clips redrawn as a hand-drawn sketch.</span><span class="home-go">Open video ›</span></button>
-          <button class="home-tile" data-go="print"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="34" width="40" height="18" rx="2"/><path d="M14 34 V28 H42 V34" stroke-width="2"/><circle cx="48" cy="18" r="8"/><path d="M48 26 V34 M40 18 H22 V28" stroke-width="2"/></svg></span><b>Printmaking</b><span class="home-desc">Linocut with carving sheets, cyanotype negatives, screen print and riso separations, line art and photo-to-topo.</span><span class="home-go">Open printmaking ›</span></button>
-          <button class="home-tile" data-go="handmade"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 52 L44 20"/><circle cx="47" cy="17" r="3.5"/><path d="M44 20 C56 30 30 40 40 54" stroke-width="2"/><path d="M12 12 h8 v8 h-8z M24 12 h8 v8 h-8z M12 24 h8 v8 h-8z" stroke-width="1.5"/></svg></span><b>Handmade</b><span class="home-desc">Cross-stitch, knitting and quilt patterns, layered paper cuts, stamps and patches, zines and stapled booklets.</span><span class="home-go">Open handmade ›</span></button>
-          <button class="home-tile" data-go="layouts"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="8" width="30" height="42"/><path d="M15 30 L22 20 L27 26 L31 21 L36 30" stroke-width="2"/><path d="M15 38 H35 M15 43 H29" stroke-width="2"/><circle cx="46" cy="44" r="12"/><circle cx="46" cy="44" r="7" stroke-width="1.5"/></svg></span><b>Layouts</b><span class="home-desc">Posters, badges, field guide cards, trail maps, patterns, a mood board, mockups, letterpress, and a wiggle that makes still art look hand-animated.</span><span class="home-go">Open layouts ›</span></button>
-          <button class="home-tile" data-go="field"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/><path d="M32 14 L37 32 L32 50 L27 32 Z" stroke-width="2"/><path d="M8 32 h4 M52 32 h4 M32 6 v4 M32 54 v4" stroke-width="2"/></svg></span><b>Field kit</b><span class="home-desc">Prints made from a bird call or a creek, star charts for a place and night, leaf prints, lichen and coral that grow on screen, and paper textures.</span><span class="home-go">Open field kit ›</span></button>
-          <button class="home-tile" data-go="check"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="30" height="36" stroke-dasharray="4 4" stroke-width="2"/><path d="M8 14 H14 V8 M50 14 H44 V8 M8 50 H14 V56 M50 50 H44 V56" stroke-width="2"/><circle cx="40" cy="38" r="9"/><path d="M47 45 L56 54"/></svg></span><b>Check it</b><span class="home-desc">A quick read of any design against the Trailhead style, and a print check for sharpness, bleed and color.</span><span class="home-go">Open check it ›</span></button>
-          <button class="home-tile" data-go="handoff"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10 L56 22 L32 34 L8 22 Z"/><path d="M8 32 L32 44 L56 32"/><path d="M8 42 L32 54 L56 42"/></svg></span><b>Photoshop</b><span class="home-desc">How to take what you make here into Photoshop with the layers still in place, plus the Trailhead plugin.</span><span class="home-go">Open photoshop ›</span></button>
-          <button class="home-tile" data-go="about"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 56 V14"/><path d="M14 16 H44 L50 22 L44 28 H16"/><path d="M30 56 L44 36 L52 44 L58 38" stroke-width="2"/><path d="M8 56 H58" stroke-width="1.5"/></svg></span><b>About</b><span class="home-desc">Why Trailhead exists and who it's for.</span><span class="home-go">Open about ›</span></button>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 50 L30 10 L40 14 L26 52 Z"/><path d="M26 52 L46 22 L54 28 L36 56 Z"/><circle cx="28" cy="20" r="3"/><circle cx="44" cy="32" r="3"/><path d="M10 56 H58" stroke-width="1.5"/></svg></span><b>Color &amp; type</b><ul class="home-tools" data-sec="color"></ul><button class="home-go" data-go="color">Open color &amp; type ›</button></div>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="48" height="38" rx="3"/><path d="M12 46 L26 28 L34 38 L42 30 L52 46"/><circle cx="44" cy="22" r="4"/></svg></span><b>Photo lab</b><ul class="home-tools" data-sec="photo"></ul><button class="home-go" data-go="photo">Open photo lab ›</button></div>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="16" width="36" height="32" rx="3"/><path d="M44 28 L56 20 V44 L44 36"/><path d="M8 24 H44 M8 40 H44"/><path d="M14 16 V24 M22 16 V24 M30 16 V24 M38 16 V24"/></svg></span><b>Video</b><ul class="home-tools" data-sec="video"></ul><button class="home-go" data-go="video">Open video ›</button></div>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="34" width="40" height="18" rx="2"/><path d="M14 34 V28 H42 V34" stroke-width="2"/><circle cx="48" cy="18" r="8"/><path d="M48 26 V34 M40 18 H22 V28" stroke-width="2"/></svg></span><b>Printmaking</b><ul class="home-tools" data-sec="print"></ul><button class="home-go" data-go="print">Open printmaking ›</button></div>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 52 L44 20"/><circle cx="47" cy="17" r="3.5"/><path d="M44 20 C56 30 30 40 40 54" stroke-width="2"/><path d="M12 12 h8 v8 h-8z M24 12 h8 v8 h-8z M12 24 h8 v8 h-8z" stroke-width="1.5"/></svg></span><b>Handmade</b><ul class="home-tools" data-sec="handmade"></ul><button class="home-go" data-go="handmade">Open handmade ›</button></div>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="8" width="30" height="42"/><path d="M15 30 L22 20 L27 26 L31 21 L36 30" stroke-width="2"/><path d="M15 38 H35 M15 43 H29" stroke-width="2"/><circle cx="46" cy="44" r="12"/><circle cx="46" cy="44" r="7" stroke-width="1.5"/></svg></span><b>Layouts</b><ul class="home-tools" data-sec="layouts"></ul><button class="home-go" data-go="layouts">Open layouts ›</button></div>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/><path d="M32 14 L37 32 L32 50 L27 32 Z" stroke-width="2"/><path d="M8 32 h4 M52 32 h4 M32 6 v4 M32 54 v4" stroke-width="2"/></svg></span><b>Field kit</b><ul class="home-tools" data-sec="field"></ul><button class="home-go" data-go="field">Open field kit ›</button></div>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="30" height="36" stroke-dasharray="4 4" stroke-width="2"/><path d="M8 14 H14 V8 M50 14 H44 V8 M8 50 H14 V56 M50 50 H44 V56" stroke-width="2"/><circle cx="40" cy="38" r="9"/><path d="M47 45 L56 54"/></svg></span><b>Check it</b><ul class="home-tools" data-sec="check"></ul><button class="home-go" data-go="check">Open check it ›</button></div>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10 L56 22 L32 34 L8 22 Z"/><path d="M8 32 L32 44 L56 32"/><path d="M8 42 L32 54 L56 42"/></svg></span><b>Photoshop</b><ul class="home-tools" data-sec="handoff"></ul><button class="home-go" data-go="handoff">Open photoshop ›</button></div>
+          <div class="home-tile"><span class="home-ico"><svg viewBox="0 0 64 64" fill="none" stroke="#6b402d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 56 V14"/><path d="M14 16 H44 L50 22 L44 28 H16"/><path d="M30 56 L44 36 L52 44 L58 38" stroke-width="2"/><path d="M8 56 H58" stroke-width="1.5"/></svg></span><b>About</b><ul class="home-tools" data-sec="about"></ul><button class="home-go" data-go="about">Open about ›</button></div>
         </div>
 
         <div id="homeShelf" hidden>
@@ -2510,14 +2508,6 @@ Upper Peninsula</textarea></div>
         </div>
       </section>
 
-      <!-- PROJECTS -->
-      <section class="page" data-page="projects" hidden>
-        <div class="page-head">
-          <h2>Projects</h2>
-          <p class="lede">Each project takes you through a few tools to finish one real thing, like a patch, a sun print or a zine. Press Start and a small guide follows you from tool to tool.</p>
-        </div>
-        <div class="proj-grid" id="projectsList"></div>
-      </section>
 
       <!-- SHELF -->
       <section class="page" data-page="shelf" hidden>
@@ -2888,7 +2878,7 @@ Upper Peninsula</textarea></div>
 </div>
 <footer class="foot wrap">
   <span>Trailhead · tools for making things by hand <label class="season">· Season <select id="seasonPick" aria-label="Season colors"><option value="auto">Auto</option><option value="spring">Spring</option><option value="summer">Summer</option><option value="fall">Fall</option><option value="winter">Winter</option></select></label></span>
-  <nav aria-label="Fine print"><button id="installBtn" hidden>Install Trailhead</button><button id="shelfLink">Your shelf</button><button data-go-tab="projects">Projects</button><button data-fine="privacy">Privacy</button><button data-fine="terms">Terms of use</button><button data-fine="credits">Credits</button></nav>
+  <nav aria-label="Fine print"><button id="installBtn" hidden>Install Trailhead</button><button id="shelfLink">Your shelf</button><button data-fine="privacy">Privacy</button><button data-fine="terms">Terms of use</button><button data-fine="credits">Credits</button></nav>
 </footer>
 <div class="finder" id="finder" hidden role="dialog" aria-modal="true" aria-label="Find a tool">
   <div class="finder-box">
@@ -2897,12 +2887,6 @@ Upper Peninsula</textarea></div>
     <p class="hint">Arrow keys to move, Enter to open, Esc to close. Press / anywhere to search.</p>
   </div>
 </div>
-<aside class="dock" id="dock" hidden aria-label="Project guide">
-  <div class="dock-head"><b id="dockTitle"></b><button class="dock-x" id="dockClose" aria-label="Close the project guide">×</button></div>
-  <span class="sub" id="dockCount"></span>
-  <p id="dockText"></p>
-  <div class="btns"><button class="btn ghost" id="dockBack">Back</button><button class="btn" id="dockNext">Next step</button></div>
-</aside>
 <div class="ar-view" id="arView" hidden role="dialog" aria-label="Living print camera">
   <canvas id="arOut"></canvas>
   <div class="ar-top"><span id="arStatus">Starting the camera…</span><button class="btn ghost" id="arSound" hidden>Sound on</button><button class="btn" id="arClose">Close</button></div>
@@ -3195,12 +3179,11 @@ const SECTIONS = {
   check: { name: "Check it", tabs: [["director", "Art director"], ["printcheck", "Print check"]] },
   handoff: { name: "Photoshop", tabs: [["handoff", "Photoshop handoff"], ["scanner", "Pocket scanner"]] },
   about: { name: "About", tabs: [["about", "About"]] },
-  projects: { name: "Projects", tabs: [["projects", "Projects"]] },
   shelf: { name: "Your shelf", tabs: [["shelf", "Your shelf"]] },
   fine: { name: "The fine print", tabs: [["privacy", "Privacy"], ["terms", "Terms of use"], ["credits", "Credits"]] }
 };
 const PHOTO = new Set(["extract", "adjust", "blend", "effects", "lineart", "screenprint", "topo", "linocut", "cyanotype", "relight", "riso", "stitch", "papercut", "knit"]);
-const lastTab = { projects: "projects", shelf: "shelf", home: "home", color: "palette", photo: "adjust", video: "clip", print: "linocut", handmade: "stitch", layouts: "poster", field: "sound", check: "director", handoff: "handoff", about: "about", fine: "privacy" };
+const lastTab = { shelf: "shelf", home: "home", color: "palette", photo: "adjust", video: "clip", print: "linocut", handmade: "stitch", layouts: "poster", field: "sound", check: "director", handoff: "handoff", about: "about", fine: "privacy" };
 let current = "palette";
 const rendered = {};
 const secOf = tab => Object.keys(SECTIONS).find(k => SECTIONS[k].tabs.some(t => t[0] === tab));
@@ -3257,8 +3240,14 @@ $$(".marker").forEach(b => b.addEventListener("click", () => { show(lastTab[b.da
 $$("[data-fine-link]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.fineLink); window.scrollTo({ top: 0 }); }));
 document.addEventListener("click", e => { const b = e.target.closest("[data-go-tab]"); if (b) { show(b.dataset.goTab); window.scrollTo({ top: 0 }); } });
 $("#homeLink").addEventListener("click", () => { show("home"); window.scrollTo({ top: 0 }); });
-$$(".home-tile, .home-intro [data-go]").forEach(b => b.addEventListener("click", () => { show(lastTab[b.dataset.go]); window.scrollTo({ top: 0 }); }));
-$("#homeToPlugin").addEventListener("click", () => $("#homePlugin").scrollIntoView({ behavior: "smooth", block: "start" }));
+$$(".home-tile [data-go], .home-intro [data-go]").forEach(b => b.addEventListener("click", () => { show(lastTab[b.dataset.go]); window.scrollTo({ top: 0 }); }));
+/* each tile lists the tools in its section, straight from SECTIONS so new tools show up on their own */
+$$(".home-tools[data-sec]").forEach(ul => {
+  const S = SECTIONS[ul.dataset.sec]; if (!S || S.tabs.length < 2) { ul.remove(); return; }
+  ul.innerHTML = S.tabs.map(([id, n]) => `<li><button data-tool="${id}">${n.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</button></li>`).join("");
+  ul.addEventListener("click", e => { const b = e.target.closest("[data-tool]"); if (b) { show(b.dataset.tool); window.scrollTo({ top: 0 }); } });
+});
+$("#homeToPlugin").addEventListener("click", () => { $("#homePluginDl").click(); $("#homePlugin").scrollIntoView({ behavior: "smooth", block: "start" }); });
 $("#homePluginDl").addEventListener("click", async () => {
   try {
     // A web host can serve the ready-made zip. The preview host can't serve .zip files, so build it from the plugin files instead.
@@ -5223,7 +5212,9 @@ const PIN_MAKERS = {
 /* =========================================================
    SHARED: art from any tool or example photo, fast blurs
    ========================================================= */
-function artNames(tool) { return [...Object.keys(EXAMPLES), ...SOURCE_NAMES.filter(n => n !== "My file" || uploads[tool])]; }
+/* a few tools leave out sources that don't suit them */
+const ART_SKIP = { colorway: ["Leaf print"] };
+function artNames(tool) { const skip = ART_SKIP[tool] || []; return [...Object.keys(EXAMPLES), ...SOURCE_NAMES.filter(n => (n !== "My file" || uploads[tool]) && !skip.includes(n))]; }
 function fillArtSelect(sel, def, tool) { const names = artNames(tool); sel.innerHTML = names.map(n => `<option>${esc(n)}</option>`).join(""); sel.value = names.includes(def) ? def : names[0]; }
 async function getArt(name, tool, opts = {}) { if (EXAMPLES[name]) return EXAMPLES[name](1500, 1000); return getSource(name, tool, opts); }
 function boxBlur(a, W, H, r) {
@@ -6478,7 +6469,7 @@ $("#wgVideo").addEventListener("click", async () => {
    COLORWAY GRID
    ========================================================= */
 let cwArt = null, cwPal = "Pine Forest", cwT = 0;
-fillArtSelect($("#cwSrc"), "Linocut", "colorway");
+fillArtSelect($("#cwSrc"), "Waterfall", "colorway");
 $("#cwUpload").addEventListener("change", async e => { const f = e.target.files[0]; e.target.value = ""; if (!f) return; try { uploads.colorway = await fileToCanvas(f, 1600); fillArtSelect($("#cwSrc"), "My file", "colorway"); cwArt = null; scheduleCW(); } catch (err) { toast(err.message); } });
 $("#cwSrc").addEventListener("input", () => { cwArt = null; scheduleCW(); });
 ["cwTones", "cwSmooth", "cwFlip"].forEach(id => $("#" + id).addEventListener("input", scheduleCW));
@@ -8516,7 +8507,6 @@ const TOOL_INFO = {
   director: ["A quick read of any design", "critique review feedback check design"],
   printcheck: ["Check size, sharpness and bleed before printing", "print dpi bleed resolution size check"],
   handoff: ["Get files into Photoshop with the layers", "photoshop psd plugin layers import"],
-  projects: ["Step-by-step projects that chain tools together", "projects guides how to tutorial ideas start"],
   shelf: ["Things you've saved recently", "shelf recent saved downloads history"],
   about: ["What Trailhead is and who it's for", "about info"],
   privacy: ["How your photos and files are handled", "privacy data"], terms: ["Terms of use", "terms legal"], credits: ["Fonts, libraries and data", "credits licenses attribution"]
@@ -8558,58 +8548,6 @@ document.addEventListener("keydown", e => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); finder.hidden ? findOpen() : findClose(); }
   if (e.key === "Escape" && !finder.hidden) findClose();
 });
-/* ---------- projects ---------- */
-const PROJECTS = [
-  { id: "patch", title: "Make a camp patch", time: "15 minutes", blurb: "Turn a trail photo into a carved-look patch and see it on a tote.", steps: [
-    { tab: "linocut", ex: "Mountain", click: '[data-li="Forest block"]', text: "Pick a photo with one clear subject. Use an example above or your own, then try the styles until the shapes read well small." },
-    { tab: "stamp", text: "Choose Patch, set the art to Linocut, and type the words you want around the edge." },
-    { tab: "mockups", text: "Pick the tote and set the design to Stamps & patches to see it on something real." },
-    { tab: "printcheck", text: "Before you send it to a patch maker, check the size and sharpness here." } ] },
-  { id: "sky", title: "Print a star map as a gift", time: "10 minutes", blurb: "The sky over a place on a night that matters, framed.", steps: [
-    { tab: "sky", text: "Pick the place, the date and the time. Night chart and Cyanotype look best framed. Type a title that means something to them." },
-    { tab: "mockups", text: "Choose the framed print and set the design to your sky print to see how it hangs." },
-    { tab: "sky", text: "Press Save image. It's 8 × 10.7 in at 300 dpi, ready for a print shop or a home printer on heavy paper." } ] },
-  { id: "sun", title: "Make a sun print this afternoon", time: "1 hour, mostly waiting", blurb: "A real cyanotype from your photo, with the negative and the timer.", steps: [
-    { tab: "cyanotype", ex: "Rock arch", text: "Choose a photo with strong lights and darks. Check The print view, and use Contrast if it looks flat." },
-    { tab: "cyanotype", click: '#cyView [data-v="sheet"]', text: "Look at the film sheet. Keep the test strip on for your first print, then press Save film sheet and print it on transparency film at 100%." },
-    { tab: "cyanotype", text: "Coat your paper in a dim room and let it dry. Lay the film on it under glass, pick your light and press Start on the timer. Rinse when it says so." } ] },
-  { id: "block", title: "Carve your first linocut", time: "An evening", blurb: "From photo to a block you can carve, with sheets for two colors.", steps: [
-    { tab: "linocut", ex: "Mountain", text: "Pick a photo and a style. Bigger cut sizes are easier to carve, so start around 14." },
-    { tab: "linocut", click: '#liView [data-v="sheet"]', text: "Switch to Transfer sheet, choose your block size and save it. Black stays, hatched areas get carved away." },
-    { tab: "riso", text: "Want a print without carving? Riso print shop splits the same photo into inks a riso studio can print." } ] },
-  { id: "zine", title: "Fold a trail zine", time: "30 minutes", blurb: "Eight pages from one sheet of paper, with maps and drawings.", steps: [
-    { tab: "topo", ex: "Mountain", text: "Make a topo map from a photo of the place. Survey map is a good start." },
-    { tab: "lineart", text: "Make a line drawing for another page." },
-    { tab: "zine", text: "Fill each page with a photo, a tool's art or your own words, then save and print one sheet. The fold steps are right there." } ] },
-  { id: "stitch", title: "Stitch a trail souvenir", time: "Pattern in 5 minutes", blurb: "A cross-stitch pattern of a favorite place, with the floss list.", steps: [
-    { tab: "stitch", ex: "Mountain", text: "Pick the photo. Around 80 stitches across and 8 to 12 colors keeps it relaxing to stitch." },
-    { tab: "stitch", click: '#sxView [data-v="chart"]', text: "Check the chart, then turn up Fewer lone stitches until there aren't many single squares of a color." },
-    { tab: "stitch", text: "Press Save pattern. Take the floss list to the craft store." } ] },
-  { id: "sound", title: "Keep the sound of a place", time: "10 minutes", blurb: "Record a bird or a creek and hang it on the wall.", steps: [
-    { tab: "sound", text: "Record up to 30 seconds on your phone, or use an audio file. Hold still and get close." },
-    { tab: "sound", text: "Try Woodcut, Tree rings and Sound topo. Trim the clip to the best part, and give it a title and a place." },
-    { tab: "mockups", text: "Pick the framed print and set the design to Sound print to see it on a wall. Then go back and press Save image to print it." } ] }
-];
-let dockProject = null, dockStep = 0;
-$("#homeProjects").innerHTML = PROJECTS.map(p => `<button class="proj" data-proj="${p.id}"><span class="sub">${esc(p.time)} · ${p.steps.length} steps</span><b>${esc(p.title)}</b><span>${esc(p.blurb)}</span></button>`).join("");
-$("#projectsList").innerHTML = PROJECTS.map(p => `<article class="proj-card"><span class="sub">${esc(p.time)}</span><h3>${esc(p.title)}</h3><p>${esc(p.blurb)}</p><ol>${p.steps.map(s => `<li><b>${esc(tabName(s.tab))}</b> · ${esc(s.text)}</li>`).join("")}</ol><button class="btn" data-proj="${p.id}">Start this project</button></article>`).join("");
-function dockRender() {
-  const d = $("#dock"); if (!dockProject) { d.hidden = true; return; }
-  const p = dockProject, s = p.steps[dockStep]; d.hidden = false;
-  $("#dockTitle").textContent = p.title; $("#dockCount").textContent = `Step ${dockStep + 1} of ${p.steps.length} · ${tabName(s.tab)}`; $("#dockText").textContent = s.text;
-  $("#dockBack").disabled = dockStep === 0; $("#dockNext").textContent = dockStep === p.steps.length - 1 ? "Finish" : "Next step";
-}
-function dockGo(i) {
-  dockStep = i; const s = dockProject.steps[i];
-  if (s.ex && EXAMPLES[s.ex] && imgInfo.name !== s.ex && imgInfo.example) setImage(EXAMPLES[s.ex](1200, 800), { name: s.ex, example: true });
-  show(s.tab); window.scrollTo({ top: 0 });
-  if (s.click) setTimeout(() => { const b = $(s.click); if (b) b.click(); }, 120);
-  dockRender();
-}
-document.addEventListener("click", e => { const b = e.target.closest("[data-proj]"); if (!b) return; dockProject = PROJECTS.find(p => p.id === b.dataset.proj); dockGo(0); });
-$("#dockNext").addEventListener("click", () => { if (dockStep < dockProject.steps.length - 1) dockGo(dockStep + 1); else { dockProject = null; dockRender(); toast("Project done. Nice work."); } });
-$("#dockBack").addEventListener("click", () => { if (dockStep > 0) dockGo(dockStep - 1); });
-$("#dockClose").addEventListener("click", () => { dockProject = null; dockRender(); });
 /* ---------- your shelf (kept in this browser only) ---------- */
 const SHELF_MAX = 30, SHELF_BYTES = 120e6;
 function shelfDB() { return new Promise((res, rej) => { try { const r = indexedDB.open("trailhead-shelf", 1); r.onupgradeneeded = () => r.result.createObjectStore("items", { keyPath: "id" }); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch (e) { rej(e); } }); }
