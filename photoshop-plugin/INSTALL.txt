@@ -1,6 +1,6 @@
 Trailhead for Photoshop
 
-Needs Photoshop 2023 (version 24.2) or newer. Filters, textures and color pulling need Photoshop 2024 or newer.
+Needs Photoshop 2023 (version 24.2) or newer. Pixel art, dither, filters, textures and color pulling need Photoshop 2024 or newer.
 
 Install
 1. Quit Photoshop.
@@ -14,5 +14,8 @@ Some versions of Photoshop 2026 refuse plugins installed this way. Load it with 
 2. Unzip Trailhead.ccx like a normal zip file into a folder you'll keep.
 3. In UXP Developer Tool, click Add Plugin and choose manifest.json in that folder.
 4. Click the ... next to Trailhead and choose Load.
+
+Updating from an older version
+Install the new Trailhead.ccx the same way. It replaces the old one, so you don't need to uninstall first.
 
 To remove it, find Trailhead in the Creative Cloud app's plugin list and choose Uninstall.

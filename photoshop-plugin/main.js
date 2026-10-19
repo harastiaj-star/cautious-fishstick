@@ -9,16 +9,17 @@ try { ps = require("photoshop"); uxp = require("uxp"); } catch (e) { /* running 
 
 /* ---------- palettes (same as the site) ---------- */
 const PALETTES = {
-  "Pine Forest": [["Deep Fir", "#2f3d2c"], ["Spruce", "#4f6b45"], ["Fern", "#7d9466"], ["Lichen", "#b9c39a"], ["Bark", "#8a5a3b"], ["Birch", "#efe9d6"]],
-  "Alpine Lake": [["Deep Water", "#1f3b4d"], ["Lake", "#3f6e86"], ["Glacier", "#8fb3bf"], ["Snowmelt", "#d9e4df"], ["Treeline", "#6d7b62"], ["Granite", "#a7988a"]],
-  "Wildflower Meadow": [["Meadow Grass", "#5f7a3e"], ["Goldenrod", "#c9a227"], ["Fireweed", "#b85c7a"], ["Lupine", "#7d6fa8"], ["Dry Grass", "#e8d9b0"], ["Cloud", "#f4efe1"]],
-  "Autumn Ridge": [["Maple", "#7a2e1d"], ["Rust Leaf", "#b5542b"], ["Aspen Gold", "#d89a3c"], ["Oak Bark", "#6e5a3a"], ["Sedge", "#8c8a5c"], ["Frost", "#efe3c8"]],
-  "Coastal Fog": [["Sea Stone", "#3e5560"], ["Fog Bank", "#6f8a8f"], ["Sea Glass", "#a9bcb8"], ["Mist", "#d8dcd3"], ["Driftwood", "#9c8f74"], ["Dune Grass", "#5d6b4a"]],
-  "Campfire Night": [["Night Sky", "#1e2433"], ["Dusk", "#3a3f5c"], ["Ember", "#c4572b"], ["Flame", "#e8a33d"], ["Moonlight", "#f2e4c4"], ["Pine Shadow", "#4a5a3f"]],
-  "Desert Summer": [["Wet Clay", "#894c29"], ["Burnt Sunrise", "#c07640"], ["Pollen Dust", "#e0a85a"], ["Toe Beans", "#cd774d"], ["Sage Olive", "#b5ae7d"], ["Pine Needles", "#666a57"], ["Dry Pottery", "#f7e7cc"], ["Desert Aloe", "#c9cdbd"]],
+  "Michigan": [["Wet Clay", "#894c29"], ["Burnt Sunrise", "#c07640"], ["Pollen Dust", "#e0a85a"], ["Toe Beans", "#cd774d"], ["Sage Olive", "#b5ae7d"], ["Pine Needles", "#666a57"], ["Dry Pottery", "#f7e7cc"], ["Desert Aloe", "#c9cdbd"]],
+  "PNW": [["Leather", "#5e3721"], ["Fall Leaves", "#8d5c2f"], ["Mustard", "#c5953e"], ["Trail Dust", "#c8b38b"], ["Field Notes", "#f4eee6"], ["Pine Dew", "#bfbfa2"], ["Moss Pillow", "#7e7639"], ["PNW Breeze", "#443b1c"]],
+  "Moose": [["Glacier Mist", "#a7bfd9"], ["Almond Cream", "#e9e2d0"], ["Olive Green", "#a69f4e"], ["Mosswood", "#44442a"], ["Brown Coffee", "#693b23"]],
+  "Saguaro": [["Pacifica", "#7ba8ad"], ["Yucatan", "#ee8802"], ["Notte", "#502d1a"], ["Sera", "#eda495"], ["Madera", "#e24b36"], ["Saguaro", "#3e441e"]],
+  "Shutter": [["Linen", "#edddc5"], ["Brick", "#7d2027"], ["Straw", "#c8b067"], ["Marigold", "#ce9042"], ["Sage", "#9ab08d"], ["Forest", "#274133"]],
+  "Evergreen": [["Deep Fir", "#2f3d2c"], ["Spruce", "#4f6b45"], ["Fern", "#7d9466"], ["Lichen", "#b9c39a"], ["Bark", "#8a5a3b"], ["Birch", "#efe9d6"]],
+  "Autumn": [["Maple", "#7a2e1d"], ["Rust Leaf", "#b5542b"], ["Aspen Gold", "#d89a3c"], ["Oak Bark", "#6e5a3a"], ["Sedge", "#8c8a5c"], ["Frost", "#efe3c8"]],
+  "Coastal": [["Sea Stone", "#3e5560"], ["Fog Bank", "#6f8a8f"], ["Sea Glass", "#a9bcb8"], ["Mist", "#d8dcd3"], ["Driftwood", "#9c8f74"], ["Dune Grass", "#5d6b4a"]],
+  "Campfire": [["Night Sky", "#1e2433"], ["Dusk", "#3a3f5c"], ["Ember", "#c4572b"], ["Flame", "#e8a33d"], ["Moonlight", "#f2e4c4"], ["Pine Shadow", "#4a5a3f"]],
   "Trail": [["Trail Orange", "#d2693a"], ["Boot Red", "#b60001"], ["Trail Sage", "#80ac8b"], ["Forest", "#516743"], ["Paper", "#f7f0dd"]],
-  "Folk Poster": [["Folk Green", "#3c7c59"], ["Folk Red", "#df3222"], ["Marigold", "#e09542"], ["Ink Black", "#141210"], ["Paper", "#f7f0dd"]],
-  "Western Editorial": [["Newsprint", "#f4f1ea"], ["Ink Black", "#141210"], ["Mesa Red", "#a8512f"], ["Wet Clay", "#894c29"]]
+  "Folk": [["Folk Green", "#3c7c59"], ["Folk Red", "#df3222"], ["Marigold", "#e09542"], ["Ink Black", "#141210"], ["Paper", "#f7f0dd"]]
 };
 const INKS = [["Ink brown", "#6b402d"], ["Ink black", "#141210"], ["Deep fir", "#2f3d2c"], ["Deep water", "#1f3b4d"], ["Wet clay", "#894c29"], ["Paper", "#f7f0dd"]];
 const hexToRgb = h => { const n = parseInt(h.replace("#", ""), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; };
@@ -396,6 +397,150 @@ async function ditherPreview(o, size) {
   try { return await ps.imaging.encodeImageData({ imageData: img, base64: true }); } finally { img.dispose(); }
 }
 
+/* ---------- pixel art ----------
+   Same idea as Pixel cutout on the site. The document is read on a fine grid, the background is
+   flood-filled from the most common edge color (a see-through document uses its own transparency),
+   small islands are dropped, and the subject is redrawn on a coarse square grid in one ink.
+   Cells that are light, or clearly lighter than their neighbors, stay empty so details still read.
+   The pixels land exactly over the subject, on a new layer. */
+const PIXEL_LOOKS = {
+  "Cobalt": { ink: "#1f4dff", paper: "#e2dbcd", cells: 40, detail: 60 },
+  "Pocket game": { ink: "#1f3a1c", paper: "#a9bf5a", cells: 32, detail: 55 },
+  "Riso pink": { ink: "#f2479b", paper: "#f3ead7", cells: 44, detail: 60 },
+  "Ink stamp": { ink: "#1d1a17", paper: "#f4efe4", cells: 52, detail: 65 },
+  "Night": { ink: "#f1e6c8", paper: "#1c2433", cells: 40, detail: 60 },
+  "Rust": { ink: "#a8471f", paper: "#efe2c9", cells: 30, detail: 55 }
+};
+const PIXEL_DEFAULTS = { look: "Cobalt", cut: "bg", tol: 28, cells: 40, detail: 60, ink: "#1f4dff", paper: "#e2dbcd" };
+function pixelMask(data, comps, fw, fh, mode, tol) {
+  const n = fw * fh, L = new Float32Array(n), subj = new Uint8Array(n), col = i => [data[i * comps], data[i * comps + 1], data[i * comps + 2]];
+  for (let i = 0; i < n; i++) { const [r, g, b] = col(i); L[i] = (.2126 * r + .7152 * g + .0722 * b) / 255; }
+  let clear = 0; if (comps === 4) for (let i = 0; i < n; i++) if (data[i * 4 + 3] < 128) clear++;
+  if (clear > n * .02) { for (let i = 0; i < n; i++) subj[i] = data[i * 4 + 3] >= 128; return { subj, L }; }
+  if (mode === "all") { subj.fill(1); return { subj, L }; }
+  const t = tol * 2.2, dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+  const border = []; for (let x = 0; x < fw; x++) border.push(x, (fh - 1) * fw + x); for (let y = 1; y < fh - 1; y++) border.push(y * fw, y * fw + fw - 1);
+  const buckets = new Map(); border.forEach(i => { const [r, g, b] = col(i), k = (r >> 5) * 64 + (g >> 5) * 8 + (b >> 5), e = buckets.get(k) || [0, 0, 0, 0]; e[0]++; e[1] += r; e[2] += g; e[3] += b; buckets.set(k, e); });
+  const top = [...buckets.values()].sort((a, b) => b[0] - a[0])[0], ref = [top[1] / top[0], top[2] / top[0], top[3] / top[0]];
+  const bg = new Uint8Array(n), q = new Int32Array(n); let qh = 0, qt = 0;
+  border.forEach(i => { if (!bg[i] && dist(col(i), ref) < t) { bg[i] = 1; q[qt++] = i; } });
+  while (qh < qt) {
+    const i = q[qh++], x = i % fw, y = (i / fw) | 0, ci = col(i);
+    for (const j of [x > 0 ? i - 1 : -1, x < fw - 1 ? i + 1 : -1, y > 0 ? i - fw : -1, y < fh - 1 ? i + fw : -1]) {
+      if (j < 0 || bg[j]) continue; const cj = col(j);
+      if (dist(cj, ref) < t * 1.6 && dist(cj, ci) < t * .55) { bg[j] = 1; q[qt++] = j; }
+    }
+  }
+  for (let i = 0; i < n; i++) subj[i] = bg[i] ? 0 : 1;
+  const lab = new Int32Array(n).fill(-1), sizes = [], st = new Int32Array(n);
+  for (let i = 0; i < n; i++) {
+    if (!subj[i] || lab[i] >= 0) continue; const id = sizes.length; let sp = 0, cnt = 0; st[sp++] = i; lab[i] = id;
+    while (sp) { const k = st[--sp]; cnt++; const x = k % fw; for (const j of [x > 0 ? k - 1 : -1, x < fw - 1 ? k + 1 : -1, k - fw, k + fw]) if (j >= 0 && j < n && subj[j] && lab[j] < 0) { lab[j] = id; st[sp++] = j; } }
+    sizes.push(cnt);
+  }
+  const big = sizes.length ? Math.max(...sizes) : 0;
+  for (let i = 0; i < n; i++) if (subj[i] && sizes[lab[i]] < big * .04) subj[i] = 0;
+  return { subj, L };
+}
+function pixelCells(subj, L, fw, fh, cols, detail) {
+  const cs = fw / cols, rows = Math.max(1, Math.round(fh / cs)), csy = fh / rows, inC = new Uint8Array(cols * rows), lum = new Float32Array(cols * rows);
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    let t = 0, k = 0, l = 0; const x0 = Math.floor(c * cs), x1 = Math.max(x0 + 1, Math.floor((c + 1) * cs)), y0 = Math.floor(r * csy), y1 = Math.max(y0 + 1, Math.floor((r + 1) * csy));
+    for (let y = y0; y < y1 && y < fh; y++) for (let x = x0; x < x1 && x < fw; x++) { t++; const i = y * fw + x; if (subj[i]) { k++; l += L[i]; } }
+    if (t && k / t > .45) { inC[r * cols + c] = 1; lum[r * cols + c] = l / k; }
+  }
+  const vals = []; for (let i = 0; i < inC.length; i++) if (inC[i]) vals.push(lum[i]); vals.sort((a, b) => a - b);
+  const lo = vals.length ? vals[Math.floor(vals.length * .03)] : 0, hi = vals.length ? vals[Math.floor(vals.length * .97)] : 1, span = Math.max(.04, hi - lo), tn = i => (lum[i] - lo) / span, d = detail / 100;
+  const ink = new Uint8Array(cols * rows);
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const i = r * cols + c; if (!inC[i]) continue;
+    let sum = 0, cnt = 0; for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const rr = r + dy, cc = c + dx; if (rr < 0 || cc < 0 || rr >= rows || cc >= cols) continue; const j = rr * cols + cc; if (inC[j]) { sum += tn(j); cnt++; } }
+    const t = tn(i), local = t - sum / cnt;
+    ink[i] = d === 0 || (t < 1.25 - d * .6 && local < .3 - d * .3) ? 1 : 0;
+  }
+  return { ink, cols, rows };
+}
+/* Draws the cells over a W×H area: ink cells in ink, the rest paper (or clear). */
+function pixelRGBA(cells, W, H, inkHex, paperHex) {
+  const { ink, cols, rows } = cells, out = new Uint8Array(W * H * 4), [ir, ig, ib] = hexToRgb(inkHex), paper = paperHex ? hexToRgb(paperHex) : null;
+  const colOf = new Int32Array(W); for (let x = 0; x < W; x++) colOf[x] = Math.min(cols - 1, Math.floor(x * cols / W));
+  for (let y = 0; y < H; y++) {
+    const r = Math.min(rows - 1, Math.floor(y * rows / H)), base = r * cols;
+    for (let x = 0; x < W; x++) {
+      const o = (y * W + x) * 4;
+      if (ink[base + colOf[x]]) { out[o] = ir; out[o + 1] = ig; out[o + 2] = ib; out[o + 3] = 255; }
+      else if (paper) { out[o] = paper[0]; out[o + 1] = paper[1]; out[o + 2] = paper[2]; out[o + 3] = 255; }
+    }
+  }
+  return out;
+}
+async function pixelRead(doc) {
+  const W = Math.round(doc.width), H = Math.round(doc.height), fw = Math.min(260, W), fh = Math.max(2, Math.round(fw * H / W));
+  const res = await ps.imaging.getPixels({ documentID: doc.id, targetSize: { width: fw, height: fh }, componentSize: 8, applyAlpha: false, colorSpace: "RGB" }), img = res.imageData;
+  try { const data = await img.getData({ chunky: true }), w = img.width, h = img.height; return { data, comps: img.components || Math.round(data.length / (w * h)), fw: w, fh: h, W, H }; }
+  finally { try { img.dispose(); } catch (e) {} }
+}
+function pixelCheckDoc() {
+  const app = ps.app, C = ps.constants; if (!app.activeDocument) throw new Error("Open a photo first.");
+  const doc = app.activeDocument;
+  try { if (C && C.DocumentMode && doc.mode !== C.DocumentMode.RGB) throw new Error("Pixel art needs an RGB document. Switch with Image › Mode › RGB Color."); } catch (e) { if (/RGB/.test(e.message)) throw e; }
+  if (!ps.imaging) throw new Error("This version of Photoshop can't read pixels from a plugin. Photoshop 2024 or newer can.");
+  return doc;
+}
+const pixelFrom = (r, o) => { const m = pixelMask(r.data, r.comps, r.fw, r.fh, o.cut, o.tol); return pixelCells(m.subj, m.L, r.fw, r.fh, o.cells, o.detail); };
+async function applyPixel(o) {
+  const doc = pixelCheckDoc(), W = Math.round(doc.width), H = Math.round(doc.height);
+  if (W * H > 40e6) throw new Error("That document is very large. Try pixel art on a copy under 40 megapixels.");
+  await modal("Trailhead pixel art", async () => {
+    const cells = pixelFrom(await pixelRead(doc), o);
+    if (o.paper) { const [r, g, b] = hexToRgb(o.paper), pb = new Uint8Array(W * H * 4); for (let i = 0; i < pb.length; i += 4) { pb[i] = r; pb[i + 1] = g; pb[i + 2] = b; pb[i + 3] = 255; } await putLayer(doc, "Trailhead · Pixel paper", pb, W, H); }
+    await putLayer(doc, "Trailhead · Pixels", pixelRGBA(cells, W, H, o.ink, null), W, H);
+  });
+}
+async function pixelPreview(o, size) {
+  const doc = pixelCheckDoc(), W = Math.round(doc.width), H = Math.round(doc.height), s = Math.min(1, size / Math.max(W, H)), pw = Math.max(1, Math.round(W * s)), ph = Math.max(1, Math.round(H * s));
+  let out; await modal("Trailhead pixel preview", async () => { out = pixelRGBA(pixelFrom(await pixelRead(doc), o), pw, ph, o.ink, o.paper || "#ffffff"); });
+  const img = await ps.imaging.createImageDataFromBuffer(out, { width: pw, height: ph, components: 4, chunky: true, colorSpace: "RGB", colorProfile: "sRGB IEC61966-2.1" });
+  try { return await ps.imaging.encodeImageData({ imageData: img, base64: true }); } finally { img.dispose(); }
+}
+function setupPixel() {
+  const $i = id => document.getElementById(id);
+  const lookItems = [["Your own settings", ""]].concat(Object.keys(PIXEL_LOOKS).map(k => [k, k])), cutItems = [["Remove the background", "bg"], ["Keep the whole document", "all"]];
+  fillSelect($i("pxLook"), lookItems); fillSelect($i("pxCut"), cutItems);
+  const sliders = { pxCells: "cells", pxDetail: "detail", pxTol: "tol" }, validHex = v => /^#[0-9a-f]{6}$/i.test(v);
+  const setSel = (sel, items, v) => { const i = items.findIndex(it => it[1] === String(v)); if (i >= 0) { try { sel.selectedIndex = i; } catch (e) {} sel.value = String(v); } };
+  function read() {
+    const o = Object.assign({}, PIXEL_DEFAULTS); o.cut = readSelect($i("pxCut"), cutItems);
+    Object.keys(sliders).forEach(id => { o[sliders[id]] = +$i(id).value; });
+    const ink = $i("pxInk").value.trim().toLowerCase(), paper = $i("pxPaper").value.trim().toLowerCase();
+    if (validHex(ink)) o.ink = ink; o.paper = paper === "transparent" || paper === "" ? "" : validHex(paper) ? paper : o.paper; return o;
+  }
+  function paint(o) {
+    Object.keys(sliders).forEach(id => { $i(id + "V").textContent = String(o[sliders[id]]); });
+    $i("pxInkC").style.backgroundColor = o.ink; $i("pxPaperC").style.backgroundColor = o.paper || "transparent";
+    $i("pxTolWrap").style.display = o.cut === "bg" ? "block" : "none";
+  }
+  function load(k) { const m = PIXEL_LOOKS[k]; $i("pxCells").value = m.cells; $i("pxDetail").value = m.detail; $i("pxInk").value = m.ink; $i("pxPaper").value = m.paper; paint(read()); }
+  let t = 0, busy = false, again = false;
+  async function preview() {
+    if (busy) { again = true; return; } busy = true;
+    try {
+      let doc = null; try { doc = ps.app.activeDocument; } catch (e) {}
+      if (!doc) { $i("pxPrevNote").textContent = "Open a document to see a preview."; $i("pxPrev").style.display = "none"; return; }
+      $i("pxPrevNote").textContent = "Drawing the preview…";
+      $i("pxPrev").src = "data:image/jpeg;base64," + await pixelPreview(read(), 360); $i("pxPrev").style.display = "block"; $i("pxPrevNote").textContent = "The whole document, scaled down.";
+    } catch (e) { $i("pxPrev").style.display = "none"; $i("pxPrevNote").textContent = /encode/i.test(e.message || "") ? "Preview needs Photoshop 2024 or newer. Apply still works." : (e.message || "Couldn't draw the preview."); }
+    finally { busy = false; if (again) { again = false; preview(); } }
+  }
+  const changed = () => { try { $i("pxLook").selectedIndex = 0; } catch (e) {} $i("pxLook").value = ""; paint(read()); clearTimeout(t); t = setTimeout(preview, 450); };
+  Object.keys(sliders).forEach(id => { $i(id).addEventListener("input", () => paint(read())); $i(id).addEventListener("change", changed); });
+  ["pxCut", "pxInk", "pxPaper"].forEach(id => $i(id).addEventListener("change", changed));
+  $i("pxLook").addEventListener("change", () => { const k = readSelect($i("pxLook"), lookItems); if (!k) return; load(k); setSel($i("pxLook"), lookItems, k); clearTimeout(t); t = setTimeout(preview, 100); });
+  $i("pxPrevBtn").addEventListener("click", preview);
+  $i("pxApply").addEventListener("click", async () => { status("Drawing the pixels… big documents take a few seconds."); try { await applyPixel(read()); status("The pixels are on a new layer above your photo. Your original layers weren't touched."); } catch (e) { status(e.message, true); } });
+  setSel($i("pxLook"), lookItems, "Cobalt"); load("Cobalt");
+}
+
 /* ---------- colors from the open document ---------- */
 function rgbToHex(r, g, b) { return "#" + [r, g, b].map(v => clamp(Math.round(v), 0, 255).toString(16).padStart(2, "0")).join(""); }
 function rgbToHsl(r, g, b) { r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2; if (mx !== mn) { const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; } return [h, s, l]; }
@@ -670,6 +815,7 @@ function setupPanel() {
     } catch (e) { status(e.message, true); }
   });
   try { setupDither(); } catch (e) { status("Dither didn't start: " + e.message, true); }
+  try { setupPixel(); } catch (e) { status("Pixel art didn't start: " + e.message, true); }
   try { setupScanner(); } catch (e) { status("The pocket scanner didn't start: " + e.message, true); }
   status("Ready. Messages and errors show up here.");
 }
@@ -682,4 +828,4 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   const fitScroll = () => { const el = document.querySelector(".scroll"); if (el && window.innerHeight) el.style.height = window.innerHeight + "px"; };
   try { fitScroll(); window.addEventListener("resize", fitScroll); } catch (e) {}
 }
-if (typeof module !== "undefined" && module.exports) module.exports = { ditherRGBA, ditherPrep, ditherLevels, DITHER_PRESETS, DITHER_DEFAULTS, DITHER_ALGOS, decryptScan, newPairing, imageKind, readZip, readASE, textureRGBA, textureAlpha, mainColors, pixelsToPoints, filterRGBA, grayFromPixels };
+if (typeof module !== "undefined" && module.exports) module.exports = { pixelMask, pixelCells, pixelRGBA, PIXEL_LOOKS, ditherRGBA, ditherPrep, ditherLevels, DITHER_PRESETS, DITHER_DEFAULTS, DITHER_ALGOS, decryptScan, newPairing, imageKind, readZip, readASE, textureRGBA, textureAlpha, mainColors, pixelsToPoints, filterRGBA, grayFromPixels };

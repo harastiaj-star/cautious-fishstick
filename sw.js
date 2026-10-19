@@ -2,11 +2,11 @@
    The page itself is fetched fresh when you're online (so updates show up), and falls back to the saved copy offline.
    Everything else (fonts, photos, icons, the two libraries) is served from the saved copy and refreshed in the background.
    Bump VERSION whenever you change the list below. */
-const VERSION = "trailhead-v5";
+const VERSION = "trailhead-v6";
 const CORE = [
   "./", "./index.html", "./manifest.webmanifest",
   "./fonts/TAYDumpling-Regular.woff", "./fonts/TAYBreadPan.woff",
-  "./photos/waterfall.jpg", "./photos/rock-arch.jpg", "./photos/city-patio.jpg", "./photos/mountain.jpg",
+  "./photos/waterfall.jpg", "./photos/rock-arch.jpg", "./photos/city-patio.jpg", "./photos/mountain.jpg", "./photos/woodcock.jpg",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/favicon-32.png",
   "./art/bird.webp", "./art/home/photo.webp", "./art/home/lineart.webp", "./art/home/topo.webp", "./art/home/linocut.webp",
   "./videos/waterfall.mp4",

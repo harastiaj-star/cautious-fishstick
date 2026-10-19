@@ -215,36 +215,6 @@ pre.code { margin: 0; background: var(--paper); border: 1.5px solid var(--line);
 .marker b { font-weight: 400; font-size: 22px; line-height: 1.05; color: var(--ink); }
 .marker span:last-child { font-size: 13.5px; line-height: 1.5; color: var(--muted); }
 
-/* mood board */
-.mb-example { font-size: 13px; line-height: 1.45; color: var(--muted); background: var(--pottery); padding: 9px 12px 7px; border-radius: 10px; }
-.board-wrap { position: relative; width: 100%; max-width: 100%; aspect-ratio: 16 / 10; overflow: hidden; outline: 1.5px solid var(--line); touch-action: none; background: var(--aloe); }
-.board { position: absolute; left: 0; top: 0; width: 1600px; height: 1000px; transform-origin: 0 0; background-size: 100% 100%; --inv: 2; }
-.bi { position: absolute; cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }
-.bi.sel { outline: calc(2px * var(--inv)) dashed var(--clay); outline-offset: calc(5px * var(--inv)); }
-.bi-photo, .bi-swatch, .bi-note.card, .bi-note.sticky { box-shadow: 0 3px 10px rgba(60, 40, 20, .22); }
-.bi-photo { background: #fbf7ec; }
-.bi-photo img { position: absolute; left: 12px; top: 12px; width: calc(100% - 24px); height: calc(100% - 24px); object-fit: cover; pointer-events: none; display: block; max-width: none; }
-.bi-photo.clean { background: none; box-shadow: none; }
-.bi-photo.clean img { left: 0; top: 0; width: 100%; height: 100%; }
-.tape { position: absolute; top: -14px; left: 50%; width: 120px; height: 28px; margin-left: -60px; background: rgba(224, 168, 90, .72); transform: rotate(-4deg); pointer-events: none; }
-.bi-swatch { background: #fbf7ec; border-radius: 14px; }
-.bi-swatch i { position: absolute; left: 10px; top: 10px; right: 10px; border-radius: 8px; }
-.bi-swatch b, .bi-swatch span { position: absolute; left: 12px; right: 8px; line-height: 1; font-weight: 400; white-space: nowrap; overflow: hidden; color: #6b402d; letter-spacing: 0; }
-.bi-swatch span { color: #666a57; }
-.bi-strip { border-radius: 10px; overflow: hidden; display: flex; }
-.bi-strip i { flex: 1; }
-.bi-note { white-space: pre-wrap; overflow-wrap: anywhere; letter-spacing: 0; line-height: 1.15; }
-.bi-note.card { background: #fbf7ec; border-radius: 10px; }
-.bi-note.sticky { background: #e8d9b0; border-radius: 4px; }
-.bi-note [contenteditable="true"] { outline: none; cursor: text; user-select: text; -webkit-user-select: text; }
-.hd { position: absolute; width: calc(20px * var(--inv)); height: calc(20px * var(--inv)); border-radius: 50%; background: var(--paper); border: calc(2.5px * var(--inv)) solid var(--clay); }
-.hd-size { right: calc(-10px * var(--inv)); bottom: calc(-10px * var(--inv)); cursor: nwse-resize; }
-.hd-rot { left: 50%; top: calc(-40px * var(--inv)); margin-left: calc(-10px * var(--inv)); cursor: grab; }
-.inks { display: flex; flex-wrap: wrap; gap: 6px; }
-.ink { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line-strong); cursor: pointer; padding: 0; }
-.ink[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--ink); }
-textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--paper); border: 1.5px solid var(--line-strong); border-radius: 8px; padding: 8px 9px; font: inherit; font-size: 14px; color: inherit; letter-spacing: inherit; }
-
 /* letter maker */
 .lm-top { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 16px; align-items: start; }
 .pad-wrap { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
@@ -412,9 +382,6 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
 .shelf-thumb span { font-size: 40px; color: var(--clay); }
 .shelf-item b { font-weight: 400; font-size: 14px; letter-spacing: .03em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .shelf-item .btns .btn { padding: 7px 10px 5px; font-size: 12.5px; }
-.whats-new ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; border-top: 1.5px solid var(--line); }
-.whats-new li { padding: 12px 0; border-bottom: 1.5px solid var(--line); display: flex; flex-direction: column; gap: 3px; font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 80ch; }
-.whats-new li b { font-weight: 400; color: var(--ink); margin-right: 6px; }
 
 
 /* colorway, booklet */
@@ -732,20 +699,12 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
           <div class="shelf-grid" id="homeShelfList"></div>
           <p style="margin-top:10px"><button class="linkish" data-go-tab="shelf">Open your shelf ›</button></p>
         </div>
-        <div class="whats-new">
-          <h3 class="home-h">What's new</h3>
-          <ul>
-            <li><span class="sub">October 2026</span><b>Five more tools and a lot of polish.</b> A colorway grid, knitting and quilt charts, letterpress, a booklet maker and leaf prints. Plus search (press /), projects, a shelf for things you've saved, share links, and the site now works offline once you've visited.</li>
-            <li><span class="sub">October 2026</span><b>Seven new tools, new sections.</b> Riso print shop, stitch patterns, paper-cut layers, sound prints, sky prints, growth patterns and the hand-drawn wiggle, with the site sorted into clearer groups.</li>
-            <li><span class="sub">October 2026</span><b>Cyanotype, live camera and carving sheets.</b> Sun-print negatives with a timer, a camera that turns what you see into a print, linocut transfer sheets, and filters inside the Photoshop plugin.</li>
-          </ul>
-        </div>
         <div class="home-plugin" id="homePlugin">
           <div>
             <h3 class="home-h">Trailhead for Photoshop</h3>
-            <p>A free panel for Photoshop. It runs Linocut, Photo to topo, Line art and Cyanotype on the photo you have open, and puts the result on a new layer. Its dither tool turns any photo into halftone dots, 1-bit pixels, riso grain or engraved lines in up to three inks, with an actual-size preview. It also opens files you save here straight from the zip, keeps all ten trail palettes a click away, pulls colors from your document, and paints paper grain, halftone and other textures.</p>
+            <p>A free panel for Photoshop. It brings pixel art, dither, Linocut, Photo to topo, Line art and Cyanotype to the photo you have open, each on a new layer. It also opens your Trailhead downloads, keeps every palette a click away, pulls colors from your document and adds textures.</p>
             <div class="btns"><button class="btn" id="homePluginDl">Download the plugin</button></div>
-            <p class="hint">Works with Photoshop 2023 or newer. Dither, textures and pulling colors need Photoshop 2024 or newer.</p>
+            <p class="hint">Works with Photoshop 2023 or newer. Pixel art, dither, textures and pulling colors need Photoshop 2024 or newer.</p>
           </div>
           <ol class="steps home-steps">
             <li><span class="n">1</span><div><h3>Download and unzip</h3><p>You get Trailhead.ccx and a short README with these same steps.</p></div></li>
@@ -760,7 +719,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="palette">
         <div class="page-head">
           <h2>Palettes</h2>
-          <p class="lede">Ready-made palettes, plus one you can grow from a single color. Pick a box to see every color's codes for print and screen, check that your text reads, and save swatches for Photoshop.</p>
+          <p class="lede">Ready-made palettes, or grow one from a single color.</p>
         </div>
         <div class="lib-grid" id="libGrid"></div>
         <div class="pal-work" id="palWork">
@@ -813,9 +772,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
                 <button class="btn ghost" id="libPNG">Save as image</button>
                 <button class="btn ghost" id="libCopy">Copy hex codes</button>
                 <button class="btn ghost" id="palCSS">Copy CSS</button>
-                <button class="btn ghost" data-pin="palette">Pin to mood board</button>
               </div>
-              <p class="hint">Swatches come as an .ase file that Photoshop, Illustrator and InDesign all open, plus CSS and JSON copies. Click any color band to copy its hex code.</p>
             </div>
           </div>
         </div>
@@ -825,7 +782,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="gradient" hidden>
         <div class="page-head">
           <h2>Gradient &amp; shadow</h2>
-          <p class="lede">Set a fill and the shadow under it, and watch both change on the card. Copy the CSS or save the fill as an image.</p>
+          <p class="lede">A fill and the shadow under it, with CSS to copy.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -862,9 +819,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
             <div class="btns">
               <button class="btn" id="gSave">Save fill</button>
               <button class="btn ghost" id="gCopy">Copy CSS</button>
-              <button class="btn ghost" data-pin="gradient">Pin to mood board</button>
             </div>
-            <p class="hint">The fill saves as a 1920 × 1080 PNG, ready to drop in as a background.</p>
           </aside>
         </div>
       </section>
@@ -873,7 +828,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="type" hidden>
         <div class="page-head">
           <h2>Type scale</h2>
-          <p class="lede">Pick a base size and a ratio. Each step up is the one below it times that ratio, so 16px at 1.25 gives you 20, 25 and 31.</p>
+          <p class="lede">A full type scale from one size and a ratio.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -909,7 +864,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="extract" hidden>
         <div class="page-head">
           <h2>Image colors</h2>
-          <p class="lede">Drop in a photo from the trail and see which colors it's really built from, and how much of the picture each one covers.</p>
+          <p class="lede">Find the colors a photo is really built from.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -928,9 +883,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
             <div class="btns">
               <button class="btn" id="exUse">Open in Palette</button>
               <button class="btn ghost" id="exCSS">Copy CSS</button>
-              <button class="btn ghost" data-pin="extract">Pin to mood board</button>
             </div>
-            <p class="hint">Open in Palette to check contrast or save the colors as swatches.</p>
           </aside>
         </div>
       </section>
@@ -939,7 +892,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="letters" hidden>
         <div class="page-head">
           <h2>Letter maker</h2>
-          <p class="lede">Draw each letter on the pad, or photograph a page of hand lettering and let the tool trace it. You get a font file you can install. A handful of letters is enough to start.</p>
+          <p class="lede">Draw or trace your letters and get a font you can install.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -991,55 +944,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
             <h3>save it</h3>
             <div class="btns">
               <button class="btn" id="lmSave">Save font</button>
-              <button class="btn ghost" id="lmPin">Pin to mood board</button>
             </div>
-            <p class="hint">The font downloads as an .otf inside a zip. Double-click it to install, and it will show up in Photoshop and your other apps. It also appears in Type scale as Your letters.</p>
-          </aside>
-        </div>
-      </section>
-
-      <!-- MOOD BOARD -->
-      <section class="page" data-page="moodboard" hidden>
-        <div class="page-head">
-          <h2>Mood board</h2>
-          <p class="lede">Collect the photos, colors and notes for a project in one place. Drag to move things. The corner handle resizes and the top handle rotates.</p>
-        </div>
-        <div class="tool">
-          <div class="stage">
-            <p class="mb-example" id="mbExample">This is a sample board. Clear it when you want to start your own.</p>
-            <div class="board-wrap" id="boardWrap"><div class="board" id="board"></div></div>
-            <p class="hint">Drop or paste photos onto the board. Double-click a note to edit it, and press Delete to remove the selected item. The board is saved in this browser.</p>
-          </div>
-          <aside class="panel">
-            <h3>start from</h3>
-            <span class="sub">Board</span>
-            <div class="chips" id="mbBgs"></div>
-            <div class="btns">
-              <button class="btn ghost" id="mbClear">Clear the board</button>
-              <button class="btn ghost" id="mbSample">Example board</button>
-            </div>
-            <hr>
-            <h3>add to it</h3>
-            <label class="btn file-btn">Add photos<input type="file" id="mbFiles" accept="image/*" multiple aria-label="Add photos to the board"></label>
-            <span class="sub">Example photos</span>
-            <div class="chips" id="mbExamples"></div>
-            <div class="btns">
-              <button class="btn ghost" data-add="note">Note</button>
-              <button class="btn ghost" data-add="script">Accent note</button>
-              <button class="btn ghost" data-add="swatches">Swatches</button>
-              <button class="btn ghost" data-add="strip">Color strip</button>
-            </div>
-            <p class="hint">Swatches and strips use the colors open in Palette right now: <span id="mbPalName"></span>.</p>
-            <hr>
-            <h3>tune it</h3>
-            <div id="mbSel" style="display:flex;flex-direction:column;gap:12px"></div>
-            <hr>
-            <h3>save it</h3>
-            <div class="btns">
-              <button class="btn" id="mbPSD">Save for Photoshop</button>
-              <button class="btn ghost" id="mbPNG">Save image</button>
-            </div>
-            <p class="hint">In Photoshop every photo, note and swatch arrives as its own layer.</p>
           </aside>
         </div>
       </section>
@@ -1048,7 +953,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="adjust" hidden>
         <div class="page-head">
           <h2>Adjust</h2>
-          <p class="lede">Change the warmth, contrast and grain, or start from a preset look. Drag the slider under the photo to compare it with the original.</p>
+          <p class="lede">Warmth, contrast, grain and preset looks for a photo.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1072,9 +977,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
             <div class="btns">
               <button class="btn" id="adjPSD">Save for Photoshop</button>
               <button class="btn ghost" id="adjPNG">Save image</button>
-              <button class="btn ghost" data-pin="adjust">Pin to mood board</button>
             </div>
-            <p class="hint">The Photoshop file keeps your original underneath the edit, so you can mask or fade it later.</p>
           </aside>
         </div>
       </section>
@@ -1083,7 +986,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="blend" hidden>
         <div class="page-head">
           <h2>Blend modes</h2>
-          <p class="lede">Put a layer over your photo and see all sixteen Photoshop blend modes at once. Click any thumbnail to see it full size.</p>
+          <p class="lede">All sixteen Photoshop blend modes side by side.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1104,9 +1007,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
             <div class="btns">
               <button class="btn" id="blPSD">Save for Photoshop</button>
               <button class="btn ghost" id="blPNG">Save image</button>
-              <button class="btn ghost" data-pin="blend">Pin to mood board</button>
             </div>
-            <p class="hint">In Photoshop the top layer stays live, with this blend mode and strength already set.</p>
           </aside>
         </div>
       </section>
@@ -1115,7 +1016,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="effects" hidden>
         <div class="page-head">
           <h2>Print effects</h2>
-          <p class="lede">These copy old printing methods. Halftone turns the photo into dots, like a newspaper. Dither and posterize redraw it with a few inks, and duotone uses just two.</p>
+          <p class="lede">Halftone, dither, posterize and duotone, like old print methods.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1132,9 +1033,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
             <div class="btns">
               <button class="btn" id="fxPSD">Save for Photoshop</button>
               <button class="btn ghost" id="fxPNG">Save image</button>
-              <button class="btn ghost" data-pin="effects">Pin to mood board</button>
             </div>
-            <p class="hint">The Photoshop file keeps your original photo underneath the print.</p>
           </aside>
         </div>
       </section>
@@ -1143,7 +1042,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="textures" hidden>
         <div class="page-head">
           <h2>Texture maker</h2>
-          <p class="lede">Paper grain, kraft fiber, ink speckle, halftone, worn stamp, linen and topo lines. Lay one over a flat digital design and it starts to look printed.</p>
+          <p class="lede">Paper, ink and grain to make a flat design look printed.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1172,9 +1071,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
               <button class="btn ghost" id="txPNG">Save image</button>
               <button class="btn ghost" id="txOverlay">Save overlay</button>
               <button class="btn ghost" id="txBlend">Try in Blend modes</button>
-              <button class="btn ghost" data-pin="texture">Pin to mood board</button>
             </div>
-            <p class="hint">The overlay is the ink on a transparent background, so it drops onto any design. In the Photoshop file, the ink is its own layer above the paper.</p>
           </aside>
         </div>
       </section>
@@ -1183,7 +1080,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="lineart" hidden>
         <div class="page-head">
           <h2>Line art</h2>
-          <p class="lede">Turns a photo into a drawing with one line weight, like the Trailhead illustrations. Photos with a clear subject and a plain background work best.</p>
+          <p class="lede">Turns a photo into a clean, single-weight line drawing.</p>
         </div>
         <div class="tool">
           <div class="stage"><div class="canvas-box"><canvas id="laOut"></canvas></div></div>
@@ -1210,9 +1107,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
               <button class="btn ghost" id="laPNG">Save image</button>
               <button class="btn ghost" id="laSVG">Save as vector</button>
               <button class="btn ghost" id="laLines">Save lines only</button>
-              <button class="btn ghost" data-pin="lineart">Pin to mood board</button>
             </div>
-            <p class="hint">The .svg holds every line as a vector, so you can scale it to any size in Illustrator. Lines only is a PNG with a transparent background.</p>
           </aside>
         </div>
       </section>
@@ -1221,7 +1116,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="screenprint" hidden>
         <div class="page-head">
           <h2>Screen print</h2>
-          <p class="lede">Splits your image into two or three ink layers, the way a screen printer or risograph would print it. Where inks overlap, they mix. You get a preview and the black-and-white plates a print shop asks for.</p>
+          <p class="lede">Splits an image into ink layers and print-ready plates.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1248,9 +1143,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
               <button class="btn" id="spPSD">Save for Photoshop</button>
               <button class="btn ghost" id="spPNG">Save preview</button>
               <button class="btn ghost" id="spPlatesBtn">Save plates</button>
-              <button class="btn ghost" data-pin="screenprint">Pin to mood board</button>
             </div>
-            <p class="hint">In Photoshop each ink is its own layer, set to Multiply. The plates come as one black-and-white PNG per ink, zipped together.</p>
           </aside>
         </div>
       </section>
@@ -1259,7 +1152,7 @@ textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--pa
       <section class="page" data-page="poster" hidden>
         <div class="page-head">
           <h2>Poster maker</h2>
-          <p class="lede">Choose one of the four Trailhead layouts, then add your words and art. The art can be your photo, your badge or your trail map, and the headline can use the font you made in Letter maker.</p>
+          <p class="lede">Pick a layout, add your words and art.</p>
         </div>
         <div class="tool">
           <div class="stage"><div class="canvas-box poster-box"><canvas id="poOut"></canvas></div></div>
@@ -1286,10 +1179,8 @@ Pine cone prints</textarea></div>
             <div class="btns">
               <button class="btn" id="poPSD">Save for Photoshop</button>
               <button class="btn ghost" id="poPNG">Save image</button>
-              <button class="btn ghost" data-pin="poster">Pin to mood board</button>
               <button class="btn ghost" data-go-tab="printcheck" data-src="Poster">Check it for print</button>
             </div>
-            <p class="hint">Anything in square brackets is a placeholder for you to fill in. The Photoshop file keeps the art, headline, text and texture on separate layers.</p>
           </aside>
         </div>
       </section>
@@ -1298,7 +1189,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="badge" hidden>
         <div class="page-head">
           <h2>Badge maker</h2>
-          <p class="lede">Round badges with words curved around the edge and a little drawing in the middle, for logos, stickers, patches and merch.</p>
+          <p class="lede">Round badges with curved words for stickers, patches and logos.</p>
         </div>
         <div class="tool">
           <div class="stage"><div class="canvas-box checker"><canvas id="bdOut"></canvas></div></div>
@@ -1325,9 +1216,7 @@ Pine cone prints</textarea></div>
             <div class="btns">
               <button class="btn" id="bdPNG">Save image</button>
               <button class="btn ghost" id="bdPSD">Save for Photoshop</button>
-              <button class="btn ghost" data-pin="badge">Pin to mood board</button>
             </div>
-            <p class="hint">The background is transparent, so the badge works on any color. The Two-band poster layout uses it too.</p>
           </aside>
         </div>
       </section>
@@ -1336,7 +1225,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="trailmap" hidden>
         <div class="page-head">
           <h2>Trail map</h2>
-          <p class="lede">Draw a route, add landmarks and labels, and the legend fills itself in. Use it for event maps, hike invites or directions to a wedding.</p>
+          <p class="lede">Draw a route, add landmarks, and the legend fills itself in.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1371,9 +1260,7 @@ Pine cone prints</textarea></div>
             <div class="btns">
               <button class="btn" id="tmPSD">Save for Photoshop</button>
               <button class="btn ghost" id="tmPNG">Save image</button>
-              <button class="btn ghost" data-pin="trailmap">Pin to mood board</button>
             </div>
-            <p class="hint">The map is saved in this browser. The Photoshop file puts terrain, trails, landmarks and labels on separate layers.</p>
           </aside>
         </div>
       </section>
@@ -1382,7 +1269,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="mockups" hidden>
         <div class="page-head">
           <h2>Mockups</h2>
-          <p class="lede">See your design on a tote bag, a tee, a framed print, a sticker or a postcard before you send it off to be made.</p>
+          <p class="lede">See your design on a tote, a tee, a frame or a postcard.</p>
         </div>
         <div class="tool">
           <div class="stage"><div class="canvas-box"><canvas id="mkOut"></canvas></div></div>
@@ -1404,7 +1291,6 @@ Pine cone prints</textarea></div>
             <h3>save it</h3>
             <div class="btns">
               <button class="btn" id="mkPNG">Save image</button>
-              <button class="btn ghost" data-pin="mockups">Pin to mood board</button>
             </div>
           </aside>
         </div>
@@ -1414,7 +1300,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="director" hidden>
         <div class="page-head">
           <h2>Art director</h2>
-          <p class="lede">Checks a design against the Trailhead style rules: how many colors it uses, which trail palette it is closest to, how much contrast it has, and how busy it looks. It runs in your browser, so nothing is sent anywhere.</p>
+          <p class="lede">Checks a design against the Trailhead style rules.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1434,7 +1320,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="printcheck" hidden>
         <div class="page-head">
           <h2>Print check</h2>
-          <p class="lede">Checks a file against the size you want to print it at: sharpness, what gets trimmed, bleed, the safe area for text, and colors that look brighter on screen than ink can manage.</p>
+          <p class="lede">Checks a file against the size you want to print it at.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1455,7 +1341,6 @@ Pine cone prints</textarea></div>
             <div class="btns">
               <button class="btn" id="pcSave">Save print-ready file</button>
             </div>
-            <p class="hint">Crops to the print shape, adds bleed by extending the edges, and tags the PNG with its real print resolution.</p>
           </aside>
         </div>
       </section>
@@ -1464,7 +1349,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="topo" hidden>
         <div class="page-head">
           <h2>Photo to topo</h2>
-          <p class="lede">Treats the light and dark in a photo as height and draws contour lines over it, like a hiking map. Bright areas become peaks and shadows become valleys.</p>
+          <p class="lede">Contour lines drawn from the light and dark in a photo.</p>
         </div>
         <div class="tool">
           <div class="stage"><div class="canvas-box"><canvas id="toOut"></canvas></div></div>
@@ -1490,9 +1375,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="toPSD">Save for Photoshop</button>
               <button class="btn ghost" id="toPNG">Save image</button>
               <button class="btn ghost" id="toLinesBtn">Save lines only</button>
-              <button class="btn ghost" data-pin="topo">Pin to mood board</button>
             </div>
-            <p class="hint">Lines only is a PNG with a transparent background, ready to lay over a poster or map.</p>
           </aside>
         </div>
       </section>
@@ -1501,7 +1384,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="linocut" hidden>
         <div class="page-head">
           <h2>Linocut</h2>
-          <p class="lede">Makes a photo look carved into a block and printed by hand. Dark areas print solid, light areas are cut away, and the tones in between turn into gouge marks.</p>
+          <p class="lede">Makes a photo look carved into a block and printed by hand.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1532,9 +1415,7 @@ Pine cone prints</textarea></div>
             <div class="btns">
               <button class="btn" id="liPSD">Save for Photoshop</button>
               <button class="btn ghost" id="liPNG">Save image</button>
-              <button class="btn ghost" data-pin="linocut">Pin to mood board</button>
             </div>
-            <p class="hint">In Photoshop the key block and the color block are separate layers, the way you'd carve and print them.</p>
             <hr>
             <h3>carve it</h3>
             <div class="row">
@@ -1542,7 +1423,6 @@ Pine cone prints</textarea></div>
               <div class="ctl" style="flex:1 1 90px"><label for="liSheet">Paper</label><select id="liSheet"></select></div>
             </div>
             <div class="btns"><button class="btn" id="liTransfer">Save transfer sheet</button></div>
-            <p class="hint">A full-size, mirrored print of your design to transfer onto a real block. Black areas stay and print. Hatched areas get carved away. With a second color you get one sheet per block, with matching corner marks to line them up.</p>
           </aside>
         </div>
       </section>
@@ -1551,7 +1431,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="cyanotype" hidden>
         <div class="page-head">
           <h2>Cyanotype</h2>
-          <p class="lede">Turns a photo into a negative for sun printing. Print the negative on transparency film, lay it on paper coated with cyanotype chemistry, and leave it in the sun. The preview shows roughly how the finished print will look.</p>
+          <p class="lede">Turns a photo into a negative for sun printing.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1596,9 +1476,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="cyFilm">Save film sheet</button>
               <button class="btn ghost" id="cyPNG">Save preview</button>
               <button class="btn ghost" id="cyPSD">Save for Photoshop</button>
-              <button class="btn ghost" data-pin="cyanotype">Pin to mood board</button>
             </div>
-            <p class="hint">The film sheet is a 300 dpi image at true size. Print it on inkjet transparency film at 100% with no scaling. Mirroring puts the ink side against the paper, which keeps the print sharp. The curve corrects for how cyanotype handles midtones. If your prints come out too dark in the middle, raise it. If they look flat, lower it.</p>
           </aside>
         </div>
       </section>
@@ -1607,7 +1485,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="living" hidden>
         <div class="page-head">
           <h2>Living prints</h2>
-          <p class="lede">Print something here, hang it up, then point a phone at it and it comes alive on the paper. The stars turn, the sound plays, the lichen grows, the lines shimmer. A small code on the print tells any phone which animation belongs to it, so friends can scan it too.</p>
+          <p class="lede">Prints that come alive when a phone looks at them.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1625,7 +1503,6 @@ Pine cone prints</textarea></div>
               <button class="btn" id="lvLive">Bring it to life</button>
               <button class="btn ghost" id="lvSave">Save the print</button>
             </div>
-            <p class="hint">Print it at any size on matte paper, so lights don't glare off it. Then press Bring it to life on your phone, or scan the code with your phone's camera. Prints with lots of detail track best. The camera image stays on your phone.</p>
           </aside>
         </div>
       </section>
@@ -1634,7 +1511,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="lake" hidden>
         <div class="page-head">
           <h2>Lake color year</h2>
-          <p class="lede">Pick a lake and a year, and Trailhead reads the color of the water from NASA satellite photos, one day at a time. You get the whole year as a print: winter ice, spring runoff, summer blue, algae blooms, fall storms. Then use those colors as a palette anywhere on the site.</p>
+          <p class="lede">A year of lake color, read from NASA satellite photos.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1663,9 +1540,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="lkPNG">Save image</button>
               <button class="btn ghost" id="lkPal">Use as a palette</button>
               <button class="btn ghost" id="lkCSV">Save the daily colors</button>
-              <button class="btn ghost" data-pin="lake">Pin to mood board</button>
             </div>
-            <p class="hint">The daily colors file is a spreadsheet of every day's color, for your own projects. Satellite imagery courtesy of NASA's Global Imagery Browse Services (GIBS). Only the place and dates are sent to NASA.</p>
           </aside>
         </div>
       </section>
@@ -1674,7 +1549,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="scanner" hidden>
         <div class="page-head">
           <h2>Pocket scanner</h2>
-          <p class="lede">Turn your phone into a scanner for Photoshop. Shoot a leaf, a pencil sketch, bark or a paper texture, and it lands in your open Photoshop document a few seconds later as its own layer. No cables, no AirDrop, no emailing yourself.</p>
+          <p class="lede">Use your phone as a scanner that drops shots into Photoshop.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1716,7 +1591,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="clip" hidden>
         <div class="page-head">
           <h2>Clip lab</h2>
-          <p class="lede">Color looks and effects for short video clips. Trim it, crop it for a post, give it the feel of slide film or a riso print, and turn moving water silky with a long exposure. Everything plays live, and nothing leaves your device.</p>
+          <p class="lede">Color looks and effects for short video clips.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1763,9 +1638,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="vlSave">Save video</button>
               <button class="btn ghost" id="vlGIF">Save GIF</button>
               <button class="btn ghost" id="vlStill">Save this frame</button>
-              <button class="btn ghost" data-pin="clip">Pin to mood board</button>
             </div>
-            <p class="hint" id="vlSaveHint">Save video records from Start to End as it plays, with sound if Sound is on. GIFs hold the first six seconds at 12 frames a second, good for sites and messages. Instagram and TikTok want the video.</p>
           </aside>
         </div>
       </section>
@@ -1774,7 +1647,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="cinemagraph" hidden>
         <div class="page-head">
           <h2>Cinemagraph</h2>
-          <p class="lede">A still photo where one thing keeps moving. Paint over the part that should move, like falling water, steam from a mug or a flag, and everything else freezes. The loop is crossfaded so it never jumps.</p>
+          <p class="lede">A still photo where one part keeps moving.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1806,9 +1679,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="cgGIF">Save GIF</button>
               <button class="btn ghost" id="cgSave">Save video</button>
               <button class="btn ghost" id="cgStill">Save the still</button>
-              <button class="btn ghost" data-pin="cinemagraph">Pin to mood board</button>
             </div>
-            <p class="hint">GIFs loop on their own, which is what cinemagraphs are made for. The video saves one loop. Set it to repeat when you post it.</p>
           </aside>
         </div>
       </section>
@@ -1817,7 +1688,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="titles" hidden>
         <div class="page-head">
           <h2>Titles</h2>
-          <p class="lede">Animated titles and name bars in the Trailhead fonts, laid over your clip. Good for the start of a trip video, a reel or a class project.</p>
+          <p class="lede">Animated titles and name bars laid over your clip.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1858,7 +1729,6 @@ Pine cone prints</textarea></div>
               <button class="btn ghost" id="ttGIF">Save GIF</button>
               <button class="btn ghost" id="ttStill">Save this frame</button>
             </div>
-            <p class="hint">The video records from Start to End with sound if Sound is on. Titles come in and leave at the times you set, measured through the clip.</p>
           </aside>
         </div>
       </section>
@@ -1867,7 +1737,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="rotoscope" hidden>
         <div class="page-head">
           <h2>Rotoscope sketch</h2>
-          <p class="lede">Turns a clip into a hand-drawn animation. Every frame is traced as ink lines on paper, the lines boil like a sketchbook flip-book, and you can add a watercolor wash or flat colors from a palette.</p>
+          <p class="lede">Turns a clip into a hand-drawn animation.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1898,9 +1768,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="rtSave">Save video</button>
               <button class="btn ghost" id="rtGIF">Save GIF</button>
               <button class="btn ghost" id="rtStill">Save this frame</button>
-              <button class="btn ghost" data-pin="rotoscope">Pin to mood board</button>
             </div>
-            <p class="hint">Real hand-drawn animation runs at 8 to 12 drawings a second, so a little choppiness is part of the look.</p>
           </aside>
         </div>
       </section>
@@ -1909,7 +1777,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="movingtype" hidden>
         <div class="page-head">
           <h2>Moving type</h2>
-          <p class="lede">Your words fill the frame in rows, and a drifting shape moves through them like a flock of starlings. Inside the shape the words print dark, and outside they fade to a whisper. Type anything, pick a shape, and save a loop that never jumps.</p>
+          <p class="lede">Your words in rows, with a drifting shape moving through them.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -1945,9 +1813,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="mtSave">Save video</button>
               <button class="btn ghost" id="mtGIF">Save GIF</button>
               <button class="btn ghost" id="mtStill">Save this frame</button>
-              <button class="btn ghost" data-pin="movingtype">Pin to mood board</button>
             </div>
-            <p class="hint">Everything moves in a loop of the length you pick, so the video and GIF repeat with no jump. GIFs keep the first six seconds.</p>
           </aside>
         </div>
       </section>
@@ -1957,7 +1823,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="relight" hidden>
         <div class="page-head">
           <h2>Golden hour</h2>
-          <p class="lede">Relights a flat midday photo as sunrise, golden hour, sunset or blue hour. Click the photo to move the sun.</p>
+          <p class="lede">Relights a photo as sunrise, golden hour, sunset or blue hour. Click to move the sun.</p>
         </div>
         <div class="tool">
           <div class="stage"><div class="canvas-box"><canvas id="reOut" style="cursor:crosshair"></canvas></div></div>
@@ -1975,9 +1841,115 @@ Pine cone prints</textarea></div>
             <div class="btns">
               <button class="btn" id="rePSD">Save for Photoshop</button>
               <button class="btn ghost" id="rePNG">Save image</button>
-              <button class="btn ghost" data-pin="relight">Pin to mood board</button>
             </div>
-            <p class="hint">The sun marker only shows here. It never ends up in your saved files.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ASCII ART -->
+      <section class="page" data-page="ascii" hidden>
+        <div class="page-head">
+          <h2>ASCII art</h2>
+          <p class="lede">Rebuilds a photo out of typed characters.</p>
+        </div>
+        <div class="tool">
+          <div class="stage"><div class="canvas-box"><canvas id="asOut"></canvas></div></div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="chips" id="asLooks"></div>
+            <hr>
+            <h3>tune it</h3>
+            <div class="ctl"><label for="asSet">Characters</label>
+              <select id="asSet">
+                <option>Classic</option><option>Dense</option><option>Letters</option><option selected>Symbols</option><option>Blocks</option><option>Binary</option><option>Your words</option>
+              </select>
+            </div>
+            <div class="ctl" id="asWordsBox" hidden><label for="asWords">Your words</label><input type="text" id="asWords" value="trailhead" maxlength="200"></div>
+            <div class="ctl"><label for="asCell">Letter size <output></output></label><input type="range" id="asCell" min="6" max="40" value="20"></div>
+            <div class="ctl"><label for="asContrast">Contrast <output></output></label><input type="range" id="asContrast" min="0" max="100" value="55"></div>
+            <div class="ctl"><label for="asWhere">Where the letters go</label>
+              <select id="asWhere">
+                <option value="all">The whole photo</option>
+                <option value="dark">Just the dark parts</option>
+                <option value="light" selected>Just the light parts</option>
+              </select>
+            </div>
+            <div class="ctl" id="asCutBox"><label for="asCut">Cutoff <output></output></label><input type="range" id="asCut" min="5" max="95" value="62"></div>
+            <div class="ctl"><label for="asBehind">Around the letters</label>
+              <select id="asBehind">
+                <option value="photo">The original photo</option>
+                <option value="paper">Paper color</option>
+                <option value="clear">Nothing (see-through)</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 90px"><label for="asInk">Ink</label><input type="color" id="asInk" value="#f4ecd6"></div>
+              <div class="ctl" style="flex:1 1 90px"><label for="asPaper">Paper</label><input type="color" id="asPaper" value="#7fa3c4"></div>
+            </div>
+            <label class="check"><input type="checkbox" id="asFill" checked> Fill the shape with paper color</label>
+            <label class="check"><input type="checkbox" id="asColor"> Color each letter from the photo</label>
+            <label class="check"><input type="checkbox" id="asInvert" checked> Swap light and dark</label>
+            <hr>
+            <h3>save it</h3>
+            <div class="btns">
+              <button class="btn" id="asPSD">Save for Photoshop</button>
+              <button class="btn ghost" id="asPNG">Save image</button>
+              <button class="btn ghost" id="asTXT">Save as text</button>
+              <button class="btn ghost" id="asCopy">Copy the text</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PIXEL CUTOUT -->
+      <section class="page" data-page="pixel" hidden>
+        <div class="page-head">
+          <h2>Pixel cutout</h2>
+          <p class="lede">Cuts out the subject and redraws it as chunky pixels in one ink. Click the background to remove it.</p>
+        </div>
+        <div class="tool">
+          <div class="stage"><div class="canvas-box"><canvas id="pxOut" style="cursor:crosshair"></canvas></div></div>
+          <aside class="panel">
+            <h3>start from</h3>
+            <div class="chips" id="pxLooks"></div>
+            <hr>
+            <h3>tune it</h3>
+            <div class="ctl"><label for="pxCut">Cut out by</label>
+              <select id="pxCut">
+                <option value="bg" selected>Removing the background</option>
+                <option value="dark">Keeping the dark parts</option>
+                <option value="all">Keeping the whole photo</option>
+              </select>
+            </div>
+            <div class="ctl" id="pxTolBox"><label for="pxTol">Background range <output></output></label><input type="range" id="pxTol" min="5" max="80" value="28"></div>
+            <div class="ctl"><label for="pxCells">Pixels across <output></output></label><input type="range" id="pxCells" min="12" max="120" value="40"></div>
+            <div class="ctl"><label for="pxDetail">Gaps for light details <output></output></label><input type="range" id="pxDetail" min="0" max="100" value="60"></div>
+            <div class="ctl"><label for="pxLayout">Layout</label>
+              <select id="pxLayout">
+                <option value="beside" selected>Pixels beside the cutout</option>
+                <option value="solo">Just the pixels</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="ctl" style="flex:1 1 90px"><label for="pxInk">Ink</label><input type="color" id="pxInk" value="#1f4dff"></div>
+              <div class="ctl" style="flex:1 1 90px"><label for="pxPaper">Paper</label><input type="color" id="pxPaper" value="#e2dbcd"></div>
+            </div>
+            <div class="ctl"><label for="pxGlow">Ink bleed <output></output></label><input type="range" id="pxGlow" min="0" max="100" value="45"></div>
+            <div class="ctl"><label for="pxGrain">Paper grain <output></output></label><input type="range" id="pxGrain" min="0" max="100" value="40"></div>
+            <label class="check"><input type="checkbox" id="pxMark" checked> Show where I clicked</label>
+            <hr>
+            <h3>save it</h3>
+            <div class="btns">
+              <button class="btn" id="pxPSD">Save for Photoshop</button>
+            </div>
+            <div class="ctl" style="margin-top:10px"><label for="pxSaveAs">Other ways to save</label>
+              <select id="pxSaveAs">
+                <option value="">Pick a format…</option>
+                <option value="png">Image (PNG)</option>
+                <option value="clear">Pixels only, see-through (PNG)</option>
+                <option value="svg">Pixels as SVG</option>
+              </select>
+            </div>
           </aside>
         </div>
       </section>
@@ -1986,7 +1958,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="camera" hidden>
         <div class="page-head">
           <h2>Live camera</h2>
-          <p class="lede">Point your phone or webcam at something and watch it turn into a linocut, a topo map, line art or a cyanotype as you move. Take a photo to keep working on it at full quality. The video stays on your device and never gets uploaded.</p>
+          <p class="lede">Your camera as a live linocut, topo map or sketch.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2018,7 +1990,6 @@ Pine cone prints</textarea></div>
             <p class="hint">Colors come from each tool, so pick a style in Linocut or Photo to topo first if you want a different look.</p>
             <hr>
             <h3>save it</h3>
-            <p class="hint">Take photo saves a full-size snapshot as your working photo and opens it in the matching tool, where you can fine-tune and save it for Photoshop.</p>
             <div class="btns"><button class="btn ghost" id="camSaveFrame" disabled>Save this frame</button></div>
           </aside>
         </div>
@@ -2028,7 +1999,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="riso" hidden>
         <div class="page-head">
           <h2>Riso print shop</h2>
-          <p class="lede">Splits a photo into two or three real risograph inks and shows how they'll overlap on paper, slightly out of line, the way a riso machine prints. You get one file per ink drum, ready to take to a riso studio.</p>
+          <p class="lede">Splits a photo into real risograph inks, one file per drum.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2059,9 +2030,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="riDrums">Save drum files</button>
               <button class="btn ghost" id="riPNG">Save preview</button>
               <button class="btn ghost" id="riPSD">Save for Photoshop</button>
-              <button class="btn ghost" data-pin="riso">Pin to mood board</button>
             </div>
-            <p class="hint">Drum files are grayscale 300 dpi images, one per ink, where black means ink. They're lined up exactly, so the studio's machine adds the slip. The ink colors on screen are approximations, since riso inks are printed spot colors. Ask the studio which inks they stock.</p>
           </aside>
         </div>
       </section>
@@ -2070,7 +2039,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="stitch" hidden>
         <div class="page-head">
           <h2>Stitch pattern</h2>
-          <p class="lede">Turns a photo into a cross-stitch or punch-needle pattern using real DMC floss colors. You get a printable chart with a symbol in every square, a floss list with how much of each color you need, and the finished size on your fabric.</p>
+          <p class="lede">Cross-stitch and punch-needle patterns in DMC floss colors.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2104,9 +2073,7 @@ Pine cone prints</textarea></div>
             <div class="btns">
               <button class="btn" id="sxSave">Save pattern</button>
               <button class="btn ghost" id="sxPNG">Save preview</button>
-              <button class="btn ghost" data-pin="stitch">Pin to mood board</button>
             </div>
-            <p class="hint">The pattern comes as a zip of letter-size pages: the chart split across as many pages as it needs, with numbered rows and columns and a heavier line every ten squares, plus a page with the floss list. Skein counts are estimates for two strands.</p>
           </aside>
         </div>
       </section>
@@ -2115,7 +2082,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="papercut" hidden>
         <div class="page-head">
           <h2>Paper-cut layers</h2>
-          <p class="lede">Splits a photo into layers from back to front, like sky, far ridge, near ridge and trees, for a layered paper cut or shadow box. Move your mouse over the preview, or tilt your phone, to see the depth. Each layer saves as a cut file for scissors, a craft knife or a cutting machine.</p>
+          <p class="lede">Splits a photo into layers for a paper cut or shadow box.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2140,9 +2107,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="pkSave">Save cut files</button>
               <button class="btn ghost" id="pkPNG">Save preview</button>
               <button class="btn ghost" id="pkPSD">Save for Photoshop</button>
-              <button class="btn ghost" data-pin="papercut">Pin to mood board</button>
             </div>
-            <p class="hint">You get one SVG per layer at true size, for Cricut, Silhouette or a laser cutter, plus printable templates to cut by hand. Layer 1 is the back. Every layer keeps the frame, so each one is a single piece. Stack them with foam tape or spacers between.</p>
           </aside>
         </div>
       </section>
@@ -2151,7 +2116,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="sound" hidden>
         <div class="page-head">
           <h2>Sound print</h2>
-          <p class="lede">Record a bird call, a creek or wind in the trees, and turn the sound into a print. Time runs left to right (or outward, for tree rings) and pitch runs bottom to top, so every chirp leaves its own mark. Your recording stays on your device.</p>
+          <p class="lede">Record a sound and turn it into a print.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2185,9 +2150,7 @@ Pine cone prints</textarea></div>
             <div class="btns">
               <button class="btn" id="snPSD">Save for Photoshop</button>
               <button class="btn ghost" id="snPNG">Save image</button>
-              <button class="btn ghost" data-pin="sound">Pin to mood board</button>
             </div>
-            <p class="hint">The print saves at 2400 × 3200 px, which is 8 × 10.7 in at 300 dpi. In Photoshop the paper, the sound and the words are separate layers.</p>
           </aside>
         </div>
       </section>
@@ -2196,7 +2159,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="sky" hidden>
         <div class="page-head">
           <h2>Sky print</h2>
-          <p class="lede">Draws the night sky as it looked from a place at a moment, with the stars, constellations, Milky Way and moon where they really were. Make one for the night you camped somewhere, or the night someone was born.</p>
+          <p class="lede">The night sky from a place and a moment, as a print.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2231,9 +2194,7 @@ Pine cone prints</textarea></div>
             <div class="btns">
               <button class="btn" id="skPSD">Save for Photoshop</button>
               <button class="btn ghost" id="skPNG">Save image</button>
-              <button class="btn ghost" data-pin="sky">Pin to mood board</button>
             </div>
-            <p class="hint">The chart shows the whole sky overhead, with the horizon as the circle's edge. North is at the top and east is on the left, as if you were lying on your back with your head to the north. The moon's size is exaggerated so you can see its phase. Saves at 2400 × 3200 px.</p>
           </aside>
         </div>
       </section>
@@ -2242,7 +2203,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="growth" hidden>
         <div class="page-head">
           <h2>Growth patterns</h2>
-          <p class="lede">Grows patterns the way lichen, coral and moss spread, using the same chemistry math that explains spots and stripes in nature. Draw on it to plant new growth. Every run comes out different, and the pattern tiles seamlessly.</p>
+          <p class="lede">Patterns that spread like lichen, coral and moss.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2270,9 +2231,7 @@ Pine cone prints</textarea></div>
               <button class="btn" id="grPNG">Save image</button>
               <button class="btn ghost" id="grTile">Save repeat tile</button>
               <button class="btn ghost" id="grTex">Save ink only</button>
-              <button class="btn ghost" data-pin="growth">Pin to mood board</button>
             </div>
-            <p class="hint">Images save at 2048 px. The repeat tile joins up seamlessly on every edge, so it works as a pattern fill in Photoshop (Edit › Define Pattern) or the Pattern maker here. Ink only is a PNG with a transparent background, for use as a texture layer.</p>
           </aside>
         </div>
       </section>
@@ -2281,7 +2240,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="wiggle" hidden>
         <div class="page-head">
           <h2>Hand-drawn wiggle</h2>
-          <p class="lede">Makes still artwork shimmer like a hand-drawn cartoon, where every frame was traced again by hand. Pick something you made here or upload your own, then save it as a looping GIF or a video for social posts.</p>
+          <p class="lede">Makes still art shimmer like a hand-drawn cartoon.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2304,7 +2263,6 @@ Pine cone prints</textarea></div>
               <button class="btn" id="wgGIF">Save GIF</button>
               <button class="btn ghost" id="wgVideo">Save video</button>
             </div>
-            <p class="hint">Real hand-drawn animation runs at 8 to 12 frames a second, and 3 frames is enough for the classic boil. GIFs loop forever on most sites. Instagram and TikTok want a video, so use Save video there. It records about four seconds.</p>
           </aside>
         </div>
       </section>
@@ -2313,7 +2271,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="colorway" hidden>
         <div class="page-head">
           <h2>Colorway grid</h2>
-          <p class="lede">Shows one design in every palette at once, so you can compare them side by side instead of trying them one at a time. Click a card to see it large.</p>
+          <p class="lede">One design in every palette at once.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2344,7 +2302,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="knit" hidden>
         <div class="page-head">
           <h2>Knit &amp; quilt chart</h2>
-          <p class="lede">Turns a photo into a colorwork knitting chart or a patchwork quilt layout. Knitting charts warn you about long floats. Quilts come with a cutting list and how much of each fabric to buy.</p>
+          <p class="lede">Colorwork knitting charts and quilt layouts from a photo.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2387,7 +2345,6 @@ Pine cone prints</textarea></div>
               <button class="btn" id="kqSave">Save pattern</button>
               <button class="btn ghost" id="kqPNG">Save preview</button>
             </div>
-            <p class="hint">Knitting charts read from the bottom right, one row at a time, the way you knit them. Quilt sizes are finished sizes. Cutting sizes include a 1/4 in seam allowance, and the fabric amounts assume 42 in wide fabric with a little extra.</p>
           </aside>
         </div>
       </section>
@@ -2396,7 +2353,7 @@ Pine cone prints</textarea></div>
       <section class="page" data-page="letterpress" hidden>
         <div class="page-head">
           <h2>Letterpress</h2>
-          <p class="lede">Sets your words, or a piece of art, as if they were pressed into thick cotton paper: a dent you can almost feel, ink squeezed toward the edges, and a little unevenness from a hand-inked press.</p>
+          <p class="lede">Words or art pressed into thick cotton paper.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2424,9 +2381,7 @@ Upper Peninsula</textarea></div>
             <div class="btns">
               <button class="btn" id="lpPSD">Save for Photoshop</button>
               <button class="btn ghost" id="lpPNG">Save image</button>
-              <button class="btn ghost" data-pin="letterpress">Pin to mood board</button>
             </div>
-            <p class="hint">Blind means no ink at all, only the dent, which looks best on white cotton. Saves at 300 dpi for the card size you picked. In Photoshop the paper, the dent's shading and the ink are separate layers.</p>
           </aside>
         </div>
       </section>
@@ -2435,7 +2390,7 @@ Upper Peninsula</textarea></div>
       <section class="page" data-page="booklet" hidden>
         <div class="page-head">
           <h2>Booklet maker</h2>
-          <p class="lede">Lays out a stapled booklet so the pages come out in the right order once you print, fold and staple. Add photos or art from any tool, put them in order, and it handles the shuffling that booklet printing needs.</p>
+          <p class="lede">Lays out a stapled booklet so the pages print in order.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2463,7 +2418,6 @@ Upper Peninsula</textarea></div>
             <hr>
             <h3>save it</h3>
             <div class="btns"><button class="btn" id="bkSave">Save print sheets</button></div>
-            <p class="hint">Print the sheets double-sided, flipping on the short edge. Keep them in order, fold the stack in half and staple twice along the fold.</p>
           </aside>
         </div>
       </section>
@@ -2472,7 +2426,7 @@ Upper Peninsula</textarea></div>
       <section class="page" data-page="leaf" hidden>
         <div class="page-head">
           <h2>Leaf print</h2>
-          <p class="lede">Photograph a leaf, fern or flower on plain paper and this lifts it off the background as a clean shape. Use it as a silhouette, a sun print, a rubbing or a stamp, or send it to Cyanotype as a negative.</p>
+          <p class="lede">Lifts a leaf or flower off plain paper as a clean shape.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2501,9 +2455,7 @@ Upper Peninsula</textarea></div>
               <button class="btn ghost" id="lfCut">Save cutout</button>
               <button class="btn ghost" id="lfSVG">Save outline (SVG)</button>
               <button class="btn ghost" id="lfUse">Use in other tools</button>
-              <button class="btn ghost" data-pin="leaf">Pin to mood board</button>
             </div>
-            <p class="hint">The cutout is a PNG with a transparent background. Use in other tools makes the leaf your working photo, black on white, which is exactly what Cyanotype wants for a photogram-style negative.</p>
           </aside>
         </div>
       </section>
@@ -2513,7 +2465,7 @@ Upper Peninsula</textarea></div>
       <section class="page" data-page="shelf" hidden>
         <div class="page-head">
           <h2>Your shelf</h2>
-          <p class="lede">The last 30 things you saved from Trailhead, kept in this browser so you can grab them again. Nothing is uploaded. Clearing your browser data, or opening the site in a private window, empties the shelf.</p>
+          <p class="lede">The last 30 things you saved, kept in this browser.</p>
         </div>
         <div class="shelf-grid" id="shelfList"></div>
         <div class="btns" style="margin-top:16px"><button class="btn ghost" id="shelfClear" hidden>Clear the shelf</button></div>
@@ -2523,7 +2475,7 @@ Upper Peninsula</textarea></div>
       <section class="page" data-page="zine" hidden>
         <div class="page-head">
           <h2>Zine maker</h2>
-          <p class="lede">Lay out an eight-page mini zine that prints on one sheet of letter paper. Fill each page with a photo, something you made here, or your own words. The tool puts the pages in the right order for folding.</p>
+          <p class="lede">An eight-page mini zine that prints on one sheet.</p>
         </div>
         <div class="tool">
           <div class="stage">
@@ -2558,9 +2510,7 @@ Upper Peninsula</textarea></div>
             <h3>save it</h3>
             <div class="btns">
               <button class="btn" id="znSave">Save print sheet</button>
-              <button class="btn ghost" data-pin="zine">Pin to mood board</button>
             </div>
-            <p class="hint">The sheet saves as an 11 × 8.5 inch PNG at 300 dpi. Your pages are remembered in this browser.</p>
           </aside>
         </div>
       </section>
@@ -2569,7 +2519,7 @@ Upper Peninsula</textarea></div>
       <section class="page" data-page="pattern" hidden>
         <div class="page-head">
           <h2>Pattern maker</h2>
-          <p class="lede">Repeat little drawings into a pattern for wrapping paper, fabric, phone wallpapers or poster backgrounds. You can also turn any photo or texture into a tile that repeats without seams.</p>
+          <p class="lede">Repeat drawings or photos into a seamless pattern.</p>
         </div>
         <div class="tool">
           <div class="stage"><div class="canvas-box"><canvas id="paOut"></canvas></div></div>
@@ -2606,9 +2556,7 @@ Upper Peninsula</textarea></div>
             <div class="btns">
               <button class="btn" id="paTile">Save tile</button>
               <button class="btn ghost" id="paSheet">Save full sheet</button>
-              <button class="btn ghost" data-pin="pattern">Pin to mood board</button>
             </div>
-            <p class="hint">The tile repeats seamlessly. In Photoshop, open it and choose Edit › Define Pattern to use it with the Paint Bucket or a pattern fill layer.</p>
           </aside>
         </div>
       </section>
@@ -2617,7 +2565,7 @@ Upper Peninsula</textarea></div>
       <section class="page" data-page="stamp" hidden>
         <div class="page-head">
           <h2>Stamps &amp; patches</h2>
-          <p class="lede">Turn your art into a postage stamp, an embroidered patch or an enamel pin, and see roughly how it would look made for real.</p>
+          <p class="lede">Turn your art into a stamp, a patch or an enamel pin.</p>
         </div>
         <div class="tool">
           <div class="stage"><div class="canvas-box checker"><canvas id="stOut"></canvas></div></div>
@@ -2637,9 +2585,7 @@ Upper Peninsula</textarea></div>
             <h3>save it</h3>
             <div class="btns">
               <button class="btn" id="stPNG">Save image</button>
-              <button class="btn ghost" data-pin="stamp">Pin to mood board</button>
             </div>
-            <p class="hint">Saves with a transparent background. Patch and pin colors snap to the palette you choose, the way a maker limits thread and enamel colors.</p>
           </aside>
         </div>
       </section>
@@ -2648,7 +2594,7 @@ Upper Peninsula</textarea></div>
       <section class="page" data-page="fieldguide" hidden>
         <div class="page-head">
           <h2>Field guide card</h2>
-          <p class="lede">A page in the style of an old nature guide: a plate number, a title, your art with numbered points, and notes. Click the picture to add a numbered point.</p>
+          <p class="lede">A page in the style of an old nature guide. Click the art to add a point.</p>
         </div>
         <div class="tool">
           <div class="stage"><div class="canvas-box poster-box"><canvas id="fgOut" style="cursor:crosshair"></canvas></div></div>
@@ -2672,7 +2618,6 @@ Upper Peninsula</textarea></div>
             <div class="btns">
               <button class="btn" id="fgPSD">Save for Photoshop</button>
               <button class="btn ghost" id="fgPNG">Save image</button>
-              <button class="btn ghost" data-pin="fieldguide">Pin to mood board</button>
             </div>
           </aside>
         </div>
@@ -2688,7 +2633,7 @@ Upper Peninsula</textarea></div>
           <h3>Your photos and files stay with you</h3>
           <p>Every tool on this site runs inside your browser. When you open a photo, draw letters or build a poster, the work happens on your own device. The site does not upload your photos, drawings or designs to any server.</p>
           <h3>What gets saved on your device</h3>
-          <p>To pick up where you left off, the site keeps a few things in your browser's local storage: your mood board, the letters you've drawn in Letter maker, your trail map, the last tool you had open, whether you picked light or dark mode, and your Pocket scanner pairing. They stay in this browser on this device. Nobody else can see them, including us.</p>
+          <p>To pick up where you left off, the site keeps a few things in your browser's local storage: the letters you've drawn in Letter maker, your trail map, the last tool you had open, whether you picked light or dark mode, and your Pocket scanner pairing. They stay in this browser on this device. Nobody else can see them, including us.</p>
           <p>To remove them, use Clear the board, Start over or Clear the map in each tool, or clear this site's data in your browser settings.</p>
           <h3>Downloads</h3>
           <p>Nothing saves to your computer until you press a save button and confirm the download.</p>
@@ -2774,7 +2719,7 @@ Upper Peninsula</textarea></div>
             <li><span class="n">4</span><div><h3>Load your swatches</h3><p>The Trailhead panel adds them when you open a palette zip. To do it by hand, open the Swatches panel menu, choose Import Swatches and pick the .ase file.</p></div></li>
           </ol>
           <div class="files">
-            <div class="file"><b>.psd</b><span class="from">from Adjust, Blend modes, Print effects and Mood board</span><p>A layered Photoshop document. Photo edits keep your photo's size, and a mood board comes in at 1600 × 1000 with each item on its own layer.</p></div>
+            <div class="file"><b>.psd</b><span class="from">from almost every tool</span><p>A layered Photoshop document. Your original sits on the bottom layer and each part of the effect gets its own layer above it.</p></div>
             <div class="file"><b>.ase</b><span class="from">from Palettes</span><p>Adobe swatches that also open in Illustrator and InDesign. The zip includes CSS and JSON copies too.</p></div>
             <div class="file"><b>.png</b><span class="from">from every photo tool and Gradient</span><p>A flat image, good for sharing or dropping straight into a layout.</p></div>
             <div class="file"><b>.svg</b><span class="from">from Line art</span><p>Every line as a vector, so it scales to any size and opens in Illustrator.</p></div>
@@ -2833,7 +2778,7 @@ Upper Peninsula</textarea></div>
           <button class="marker" data-go="video"><span class="script">roll the tape</span><b>Video</b><span>Looks and effects for short clips, cinemagraphs, animated titles and hand-drawn rotoscope sketches.</span></button>
           <button class="marker" data-go="print"><span class="script">ink and paper</span><b>Printmaking</b><span>Linocuts you can carve, cyanotype negatives, screen print and riso separations, line art and topo maps.</span></button>
           <button class="marker" data-go="handmade"><span class="script">by hand</span><b>Handmade</b><span>Stitch, knit and quilt patterns, layered paper cuts, stamps and patches, zines and booklets.</span></button>
-          <button class="marker" data-go="layouts"><span class="script">say it big</span><b>Layouts</b><span>Posters, badges, field guide cards, trail maps, patterns, a mood board and mockups.</span></button>
+          <button class="marker" data-go="layouts"><span class="script">say it big</span><b>Layouts</b><span>Posters, badges, field guide cards, trail maps, patterns and mockups.</span></button>
           <button class="marker" data-go="field"><span class="script">out there</span><b>Field kit</b><span>Sound prints, sky charts, leaf prints, growing patterns and paper textures.</span></button>
           <button class="marker" data-go="check"><span class="script">a second pair of eyes</span><b>Check it</b><span>A quick read of any design, and a print check before anything goes to the printer.</span></button>
           <button class="marker" data-go="handoff"><span class="script">pack it out</span><b>Photoshop handoff</b><span>Layered files, swatches and a plugin that pick up right where you left off.</span></button>
@@ -3126,7 +3071,10 @@ Object.keys(PHOTO_FILES).forEach((n, k) => EXAMPLES[n] = (W, H) => {
 
 /* ---------- shared working image ---------- */
 let src = null, imgInfo = { name: "Waterfall", example: true }, imgVersion = 0;
-function renderExampleChips() { $("#exampleChips").innerHTML = Object.keys(EXAMPLES).map(n => `<button class="chip" data-ex="${n}" aria-pressed="${imgInfo.example && imgInfo.name === n}">${n}</button>`).join(""); }
+function renderExampleChips() {
+  const px = current === "pixel", names = px ? ["Lone pine", "Woodcock"] : Object.keys(EXAMPLES);
+  $("#exampleChips").innerHTML = names.map(n => `<button class="chip" ${px ? "data-pxex" : "data-ex"}="${n}" aria-pressed="${imgInfo.example && imgInfo.name === n}">${n}</button>`).join("");
+}
 function setImage(canvas, info) {
   src = canvas; imgInfo = info; imgVersion++;
   $("#imgName").textContent = info.name;
@@ -3136,7 +3084,11 @@ function setImage(canvas, info) {
   renderExampleChips();
   photoDirty();
 }
-$("#exampleChips").addEventListener("click", e => { const b = e.target.closest("[data-ex]"); if (b) setImage(EXAMPLES[b.dataset.ex](1200, 800), { name: b.dataset.ex, example: true }); });
+$("#exampleChips").addEventListener("click", e => {
+  const b = e.target.closest("[data-ex]"), p = e.target.closest("[data-pxex]");
+  if (b) setImage(EXAMPLES[b.dataset.ex](1200, 800), { name: b.dataset.ex, example: true });
+  else if (p && !pxUseExample(p.dataset.pxex)) toast("That example is still loading. Try again in a moment.");
+});
 async function fileToCanvas(file, max = 1400) {
   const url = URL.createObjectURL(file);
   try {
@@ -3154,15 +3106,13 @@ async function loadFile(file) {
 }
 $("#imgInput").addEventListener("change", e => { loadFile(e.target.files[0]); e.target.value = ""; });
 const tray = $("#tray");
-["dragenter", "dragover"].forEach(ev => document.addEventListener(ev, e => { if ((!tray.hidden || current === "moodboard") && e.dataTransfer && [...e.dataTransfer.types].includes("Files")) { e.preventDefault(); if (!tray.hidden) tray.classList.add("drag"); } }));
+["dragenter", "dragover"].forEach(ev => document.addEventListener(ev, e => { if (!tray.hidden && e.dataTransfer && [...e.dataTransfer.types].includes("Files")) { e.preventDefault(); if (!tray.hidden) tray.classList.add("drag"); } }));
 ["dragleave", "drop"].forEach(ev => document.addEventListener(ev, () => tray.classList.remove("drag")));
 document.addEventListener("drop", e => {
-  if (current === "moodboard") { e.preventDefault(); mbAddFiles([...e.dataTransfer.files]); return; }
   if (tray.hidden) return; e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) loadFile(f);
 });
 document.addEventListener("paste", e => {
   const files = [...(e.clipboardData?.files || [])].filter(f => f.type.startsWith("image/"));
-  if (current === "moodboard") { if (files.length && !(document.activeElement && (document.activeElement.isContentEditable || /TEXTAREA|INPUT/.test(document.activeElement.tagName)))) { e.preventDefault(); mbAddFiles(files); } return; }
   if (tray.hidden) return; if (files[0]) { e.preventDefault(); loadFile(files[0]); }
 });
 
@@ -3170,11 +3120,11 @@ document.addEventListener("paste", e => {
 const SECTIONS = {
   home: { name: "Home", tabs: [["home", "Home"]] },
   color: { name: "Color & type", tabs: [["palette", "Palettes"], ["gradient", "Gradient & shadow"], ["type", "Type scale"], ["extract", "Image colors"], ["colorway", "Colorway grid"], ["letters", "Letter maker"]] },
-  photo: { name: "Photo lab", tabs: [["adjust", "Adjust"], ["blend", "Blend modes"], ["effects", "Print effects"], ["relight", "Golden hour"], ["camera", "Live camera"]] },
+  photo: { name: "Photo lab", tabs: [["adjust", "Adjust"], ["blend", "Blend modes"], ["effects", "Print effects"], ["relight", "Golden hour"], ["ascii", "ASCII art"], ["pixel", "Pixel cutout"], ["camera", "Live camera"]] },
   video: { name: "Video", tabs: [["clip", "Clip lab"], ["cinemagraph", "Cinemagraph"], ["titles", "Titles"], ["rotoscope", "Rotoscope sketch"], ["movingtype", "Moving type"]] },
   print: { name: "Printmaking", tabs: [["linocut", "Linocut"], ["cyanotype", "Cyanotype"], ["screenprint", "Screen print"], ["riso", "Riso print shop"], ["lineart", "Line art"], ["topo", "Photo to topo"]] },
   handmade: { name: "Handmade", tabs: [["stitch", "Stitch pattern"], ["knit", "Knit & quilt chart"], ["papercut", "Paper-cut layers"], ["stamp", "Stamps & patches"], ["zine", "Zine maker"], ["booklet", "Booklet maker"]] },
-  layouts: { name: "Layouts", tabs: [["poster", "Poster maker"], ["badge", "Badge maker"], ["fieldguide", "Field guide card"], ["trailmap", "Trail map"], ["pattern", "Pattern maker"], ["moodboard", "Mood board"], ["mockups", "Mockups"], ["letterpress", "Letterpress"], ["wiggle", "Hand-drawn wiggle"], ["living", "Living prints"]] },
+  layouts: { name: "Layouts", tabs: [["poster", "Poster maker"], ["badge", "Badge maker"], ["fieldguide", "Field guide card"], ["trailmap", "Trail map"], ["pattern", "Pattern maker"], ["mockups", "Mockups"], ["letterpress", "Letterpress"], ["wiggle", "Hand-drawn wiggle"], ["living", "Living prints"]] },
   field: { name: "Field kit", tabs: [["sound", "Sound print"], ["sky", "Sky print"], ["leaf", "Leaf print"], ["growth", "Growth patterns"], ["textures", "Texture maker"], ["lake", "Lake color year"]] },
   check: { name: "Check it", tabs: [["director", "Art director"], ["printcheck", "Print check"]] },
   handoff: { name: "Photoshop", tabs: [["handoff", "Photoshop handoff"], ["scanner", "Pocket scanner"]] },
@@ -3182,7 +3132,7 @@ const SECTIONS = {
   shelf: { name: "Your shelf", tabs: [["shelf", "Your shelf"]] },
   fine: { name: "The fine print", tabs: [["privacy", "Privacy"], ["terms", "Terms of use"], ["credits", "Credits"]] }
 };
-const PHOTO = new Set(["extract", "adjust", "blend", "effects", "lineart", "screenprint", "topo", "linocut", "cyanotype", "relight", "riso", "stitch", "papercut", "knit"]);
+const PHOTO = new Set(["extract", "adjust", "blend", "effects", "lineart", "screenprint", "topo", "linocut", "cyanotype", "relight", "ascii", "pixel", "riso", "stitch", "papercut", "knit"]);
 const lastTab = { shelf: "shelf", home: "home", color: "palette", photo: "adjust", video: "clip", print: "linocut", handmade: "stitch", layouts: "poster", field: "sound", check: "director", handoff: "handoff", about: "about", fine: "privacy" };
 let current = "palette";
 const rendered = {};
@@ -3200,8 +3150,14 @@ function show(tab) {
   $$(".page").forEach(p => p.hidden = p.dataset.page !== tab);
   tray.hidden = !PHOTO.has(tab);
   try { localStorage.setItem("trailhead-tab", tab); } catch (e) {}
+  if (PHOTO.has(tab) && imgInfo.example) {
+    /* Pixel cutout shows only its own examples; the other photo tools go back to the usual ones */
+    const pxEx = Object.prototype.hasOwnProperty.call(PX_EXAMPLES, imgInfo.name);
+    if (tab === "pixel" && !pxEx) pxUseExample("Lone pine");
+    else if (tab !== "pixel" && pxEx) setImage(EXAMPLES["Waterfall"](1200, 800), { name: "Waterfall", example: true });
+  }
+  if (PHOTO.has(tab)) renderExampleChips();
   if (PHOTO.has(tab) && rendered[tab] !== imgVersion) { rendered[tab] = imgVersion; RENDER[tab](); }
-  if (tab === "moodboard") { ensureBoard(); fitBoard(); renderBoard(); renderMbPanel(); }
   if (tab === "textures" && !txResult) { renderTxControls(); renderTex(); }
   if (tab === "letters") lmShow();
   if (tab === "poster") { poArtOptions($("#poArt").value || PO_LAYOUTS[poLayout].art); renderPO(); }
@@ -3697,35 +3653,9 @@ $("#fxPNG").addEventListener("click", async () => { if (fxResult) saveFile(slug(
 $("#fxPSD").addEventListener("click", () => { if (fxResult) savePSD(slug(imgInfo.name) + "-" + slug(fxKind), [{ name: "Original", canvas: cloneCanvas(src) }, { name: fxKind, canvas: cloneCanvas(fxResult) }], cloneCanvas(fxResult)); });
 
 /* =========================================================
-   MOOD BOARD
+   SHARED TEXT HELPERS (used by the poster, zine and card tools)
    ========================================================= */
-const BW = 1600, BH = 1000, NOTE_PAD = 18, FRAME = 12;
-const BOARD_BGS = { "Paper": "#f7f0dd", "Birch": "#efe9d6", "Kraft": "#c4a37a", "Cork": "#b98d5f", "Night": "#1e2433" };
-const NOTE_INKS = [["Ink brown", "#6b402d"], ["Wet clay", "#894c29"], ["Deep fir", "#2f3d2c"], ["Deep water", "#1f3b4d"], ["Ink black", "#141210"], ["Paper", "#f7f0dd"]];
 const FAMS = ['"TAY Dumpling", "Arial Rounded MT Bold", sans-serif', '"TAY Bread Pan", "TAY Dumpling", sans-serif'];
-let board = null, sel = null, drag = null, scale = .5, saveT = 0, boardWarned = false, uidN = 0;
-const bgCache = {}, imgCache = new Map(), boardEl = $("#board"), wrapEl = $("#boardWrap");
-const newId = () => "i" + Date.now().toString(36) + (uidN++);
-const findItem = id => board.items.find(i => i.id === id);
-function loadImg(srcUrl) { let i = imgCache.get(srcUrl); if (!i) { i = new Image(); i.src = srcUrl; imgCache.set(srcUrl, i); } return i; }
-function thumbURL(canvas, max = 900, png = false) { const s = Math.min(1, max / Math.max(canvas.width, canvas.height)), c = newCanvas(Math.round(canvas.width * s), Math.round(canvas.height * s)); c.getContext("2d").drawImage(canvas, 0, 0, c.width, c.height); return { url: png ? c.toDataURL("image/png") : c.toDataURL("image/jpeg", .86), w: c.width, h: c.height }; }
-
-function boardBg(kind) {
-  if (bgCache[kind]) return bgCache[kind];
-  const c = newCanvas(BW, BH), x = c.getContext("2d"), r = rng(42), col = BOARD_BGS[kind];
-  x.fillStyle = col; x.fillRect(0, 0, BW, BH);
-  const d = x.getImageData(0, 0, BW, BH), p = d.data, amt = { Paper: 16, Birch: 12, Kraft: 26, Cork: 34, Night: 10 }[kind];
-  for (let i = 0; i < p.length; i += 4) { const n = (r() - .5) * amt; p[i] += n; p[i + 1] += n; p[i + 2] += n; }
-  x.putImageData(d, 0, 0);
-  if (kind === "Kraft") { x.strokeStyle = "rgba(90,61,36,.22)"; x.lineWidth = 1.2; for (let i = 0; i < 900; i++) { const a = r() * BW, b = r() * BH; x.beginPath(); x.moveTo(a, b); x.quadraticCurveTo(a + 10, b + (r() - .5) * 8, a + 16 + r() * 18, b + (r() - .5) * 6); x.stroke(); } }
-  if (kind === "Cork") { for (let i = 0; i < 9000; i++) { x.fillStyle = r() < .5 ? "rgba(90,58,30,.35)" : "rgba(235,205,160,.28)"; x.beginPath(); x.ellipse(r() * BW, r() * BH, 1 + r() * 4, 1 + r() * 3, r() * 3, 0, Math.PI * 2); x.fill(); } }
-  if (kind === "Night") { for (let i = 0; i < 260; i++) { x.fillStyle = `rgba(242,228,196,${.15 + r() * .5})`; x.beginPath(); x.arc(r() * BW, r() * BH, .6 + r() * 1.6, 0, Math.PI * 2); x.fill(); } }
-  bgCache[kind] = { canvas: c, url: c.toDataURL("image/jpeg", .9) };
-  return bgCache[kind];
-}
-
-/* measuring notes (shared by screen and export so they match) */
-const measureCtx = newCanvas(4, 4).getContext("2d");
 function wrapLines(ctx, text, maxW) {
   const out = [];
   String(text).split("\n").forEach(par => {
@@ -3736,302 +3666,7 @@ function wrapLines(ctx, text, maxW) {
   });
   return out;
 }
-const notePad = it => it.bg === "none" ? 0 : NOTE_PAD;
-function noteLayout(it, ctx = measureCtx) { ctx.font = `${it.size}px ${FAMS[it.font]}`; const pad = notePad(it), lines = wrapLines(ctx, it.text || " ", it.w - pad * 2), lh = it.size * 1.15; return { lines, lh, pad, h: Math.ceil(lines.length * lh + pad * 2) }; }
-const swatchText = it => { const ns = clamp(it.w * .11, 14, 34); return { ns, hs: ns * .78 }; };
-function fixHeight(it) {
-  if (it.type === "note") it.h = noteLayout(it).h;
-  if (it.type === "swatch") { const { ns, hs } = swatchText(it); it.h = Math.round(it.w + ns + hs + 22); }
-}
-
-/* screen */
-function fitBoard() { const w = wrapEl.clientWidth; if (!w) return; scale = w / BW; boardEl.style.transform = `scale(${scale})`; boardEl.style.setProperty("--inv", (1 / scale).toFixed(3)); }
-try { new ResizeObserver(fitBoard).observe(wrapEl); } catch (e) { window.addEventListener("resize", fitBoard); }
-function itemEl(it) {
-  const el = document.createElement("div"); el.dataset.id = it.id;
-  el.className = "bi bi-" + it.type + (it.id === sel ? " sel" : "");
-  if (it.type === "photo") {
-    if (it.frame === "clean") el.classList.add("clean");
-    const img = document.createElement("img"); img.src = it.src; img.alt = it.name || "Photo"; img.draggable = false; el.appendChild(img);
-    if (it.frame === "tape") { const t = document.createElement("span"); t.className = "tape"; el.appendChild(t); }
-  } else if (it.type === "swatch") {
-    const { ns, hs } = swatchText(it);
-    el.innerHTML = `<i style="height:${it.w - 20}px;background:${it.color}"></i><b style="top:${it.w}px;font-size:${ns}px">${esc(it.name || "")}</b><span style="top:${it.w + ns + 6}px;font-size:${hs}px">${it.color.toUpperCase()}</span>`;
-  } else if (it.type === "strip") {
-    el.innerHTML = it.colors.map(c => `<i style="background:${c}"></i>`).join("");
-  } else if (it.type === "note") {
-    if (it.bg !== "none") el.classList.add(it.bg);
-    el.style.fontFamily = FAMS[it.font]; el.style.fontSize = it.size + "px"; el.style.color = it.ink; el.style.padding = notePad(it) + "px";
-    const t = document.createElement("div"); t.className = "txt"; t.textContent = it.text; el.appendChild(t);
-  }
-  if (it.id === sel) el.insertAdjacentHTML("beforeend", `<span class="hd hd-rot" data-h="rot" title="Turn"></span><span class="hd hd-size" data-h="size" title="Resize"></span>`);
-  applyBox(el, it);
-  return el;
-}
-function applyBox(el, it) { el.style.left = it.x + "px"; el.style.top = it.y + "px"; el.style.width = it.w + "px"; el.style.height = it.h + "px"; el.style.transform = `rotate(${it.rot}deg)`; }
-function renderBoard() {
-  if (!board) return;
-  boardEl.style.backgroundImage = `url(${boardBg(board.bg).url})`;
-  boardEl.replaceChildren(...board.items.map(itemEl));
-  $("#mbExample").hidden = !board.example;
-}
-function writeBoard() {
-  clearTimeout(saveT); saveT = 0; if (!board) return;
-  try { localStorage.setItem("trailhead-board", JSON.stringify(board)); } catch (e) { if (!boardWarned) { boardWarned = true; toast("This board is too big for the browser to remember. Save it as an image or PSD to keep it."); } }
-}
-function persist() { clearTimeout(saveT); saveT = setTimeout(writeBoard, 400); }
-window.addEventListener("pagehide", () => { if (saveT) writeBoard(); });
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && saveT) writeBoard(); });
-function changed(keepPanel) { board.example = false; renderBoard(); if (!keepPanel) renderMbPanel(); persist(); }
-function select(id) { if (sel === id) return; sel = id; renderBoard(); renderMbPanel(); }
-
-/* adding things */
-function place(it) {
-  fixHeight(it);
-  if (it.x == null) { const n = board.items.length % 6; it.x = Math.round(BW / 2 - it.w / 2 + (n - 2.5) * 46); it.y = Math.round(BH / 2 - it.h / 2 + (n % 3 - 1) * 40); }
-  if (it.rot == null) it.rot = Math.round((Math.random() * 6 - 3) * 10) / 10;
-  it.id = it.id || newId(); board.items.push(it); sel = it.id; return it;
-}
-function photoItem(url, iw, ih, name, frame = "border", w = 420) { const p = frame === "clean" ? 0 : FRAME; return { type: "photo", src: url, name, frame, w, h: Math.round((w - p * 2) * ih / iw + p * 2) }; }
-function addPhotoCanvas(canvas, name, frame, png) { const t = thumbURL(canvas, 900, png); return place(photoItem(t.url, t.w, t.h, name, frame)); }
-async function mbAddFiles(files) {
-  ensureBoard();
-  const imgs = files.filter(f => f.type.startsWith("image/")); if (!imgs.length) { toast("Those don't look like photos. Try JPG, PNG or WebP."); return; }
-  for (const f of imgs) { try { addPhotoCanvas(await fileToCanvas(f, 900), f.name.replace(/\.[^.]+$/, "")); } catch (e) { toast(e.message); } }
-  changed(); toast(imgs.length === 1 ? "Pinned " + imgs[0].name : "Pinned " + imgs.length + " photos");
-}
-$("#mbFiles").addEventListener("change", e => { mbAddFiles([...e.target.files]); e.target.value = ""; });
-const palName = () => palSource || "your palette";
-function addFromPalette(kind) {
-  if (kind === "strip") place({ type: "strip", colors: palette.map(c => c.hex), name: palName(), w: Math.min(640, 90 * palette.length), h: 110 });
-  else {
-    const n = Math.min(palette.length, 6), w = 150, gap = 26, total = n * w + (n - 1) * gap, x0 = Math.round(BW / 2 - total / 2), y0 = 380 + (board.items.length % 3) * 30;
-    palette.slice(0, 6).forEach((c, i) => place({ type: "swatch", color: c.hex, name: c.name, w, x: x0 + i * (w + gap), y: y0, rot: Math.round((Math.random() * 4 - 2) * 10) / 10 }));
-  }
-}
-$$("[data-add]").forEach(b => b.addEventListener("click", () => {
-  ensureBoard(); const k = b.dataset.add;
-  if (k === "note") place({ type: "note", text: "Trail days", font: 0, size: 64, ink: "#6b402d", bg: "none", w: 520 });
-  if (k === "script") place({ type: "note", text: "take a walk with us", font: 1, size: 56, ink: "#894c29", bg: "none", w: 560 });
-  if (k === "swatches" || k === "strip") addFromPalette(k);
-  changed();
-}));
-$("#mbExamples").innerHTML = Object.keys(EXAMPLES).map(n => `<button class="chip" data-mbex="${n}">${n}</button>`).join("");
-$("#mbExamples").addEventListener("click", e => { const b = e.target.closest("[data-mbex]"); if (!b) return; ensureBoard(); addPhotoCanvas(EXAMPLES[b.dataset.mbex](900, 600), b.dataset.mbex); changed(); });
-
-/* pinning from other tools */
-document.addEventListener("click", e => {
-  const b = e.target.closest("[data-pin]"); if (!b) return;
-  ensureBoard(); const k = b.dataset.pin;
-  if (k === "palette") place({ type: "strip", colors: palette.map(c => c.hex), name: palName(), w: Math.min(640, 90 * palette.length), h: 110 });
-  else if (k === "extract") place({ type: "strip", colors: extracted.map(c => c.hex), name: imgInfo.name + " colors", w: Math.min(640, 90 * extracted.length), h: 110 });
-  else if (k === "gradient") addPhotoCanvas(gradCanvas(800, 500), gPreset || "Gradient", "clean");
-  else if (k === "adjust" && adjResult) addPhotoCanvas(adjResult, imgInfo.name + (adjLook && adjLook !== "Original" ? " · " + adjLook : ""));
-  else if (k === "blend") addPhotoCanvas($("#blOut"), imgInfo.name + " · " + blTop);
-  else if (k === "effects" && fxResult) addPhotoCanvas(fxResult, imgInfo.name + " · " + fxKind, "tape");
-  else if (k === "texture" && txResult) addPhotoCanvas(txResult.full, txKind, "border");
-  else if (PIN_MAKERS[k]) { const r = PIN_MAKERS[k](); if (!r) { toast("Make something first, then pin it."); return; } addPhotoCanvas(r[0], r[1], r[2] || "border", r[3]); }
-  else return;
-  board.example = false; persist();
-  toast("Pinned to your mood board");
-});
-
-/* example and clearing */
-function exampleBoard() {
-  const look = {}; ADJ.forEach(([k, , , , v]) => look[k] = LOOKS["Autumn"][k] ?? v);
-  const forest = EXAMPLES["Waterfall"](900, 600), lake = EXAMPLES["Rock arch"](900, 600), mesa = EXAMPLES["Mountain"](900, 600), fall = applyAdjust(forest, look);
-  const ph = (cv, name, frame, x, y, w, rot) => { const t = thumbURL(cv); return { ...photoItem(t.url, t.w, t.h, name, frame, w), x, y, rot }; };
-  const items = [
-    { type: "note", text: "Fall trail poster", font: 0, size: 76, ink: "#6b402d", bg: "none", w: 700, x: 70, y: 56, rot: 0 },
-    { type: "note", text: "smoky, golden, a little quiet", font: 1, size: 50, ink: "#894c29", bg: "none", w: 640, x: 76, y: 150, rot: -1.5 },
-    ph(fall, "Waterfall · Autumn", "tape", 80, 270, 500, -3),
-    ph(lake, "Rock arch", "border", 640, 110, 440, 2.5),
-    ph(mesa, "Mountain", "border", 1150, 230, 360, -2),
-    { type: "strip", colors: NATURE["Autumn Ridge"].map(c => c[1]), name: "Autumn Ridge", w: 540, h: 100, x: 640, y: 520, rot: -1 },
-    { type: "swatch", color: "#7a2e1d", name: "Maple", w: 150, x: 660, y: 690, rot: -3 },
-    { type: "swatch", color: "#d89a3c", name: "Aspen Gold", w: 150, x: 840, y: 700, rot: 2 },
-    { type: "note", text: "Headline in Dumpling, dates small and tracked. Print on kraft?", font: 0, size: 26, ink: "#6b402d", bg: "sticky", w: 300, x: 1210, y: 640, rot: 3 }
-  ];
-  items.forEach(it => { it.id = newId(); fixHeight(it); });
-  return { bg: "Paper", items, example: true };
-}
-function ensureBoard() {
-  if (board) return;
-  try { const s = JSON.parse(localStorage.getItem("trailhead-board") || "null"); if (s && Array.isArray(s.items) && !s.example) board = s; } catch (e) {}
-  if (!board) board = exampleBoard();
-  if (!BOARD_BGS[board.bg]) board.bg = "Paper";
-}
-let clearArm = 0;
-$("#mbClear").addEventListener("click", e => {
-  const b = e.currentTarget;
-  if (!clearArm) { b.textContent = "Tap again to clear"; clearArm = setTimeout(() => { clearArm = 0; b.textContent = "Clear the board"; }, 3000); return; }
-  clearTimeout(clearArm); clearArm = 0; b.textContent = "Clear the board";
-  board.items = []; sel = null; changed(); toast("Fresh board, ready to go");
-});
-$("#mbSample").addEventListener("click", () => { board = exampleBoard(); sel = null; renderBoard(); renderMbPanel(); persist(); });
-function renderBgChips() { $("#mbBgs").innerHTML = Object.entries(BOARD_BGS).map(([k, v]) => `<button class="chip" data-bg="${k}" aria-pressed="${board && board.bg === k}">${dots([v])}${k}</button>`).join(""); }
-$("#mbBgs").addEventListener("click", e => { const b = e.target.closest("[data-bg]"); if (!b) return; board.bg = b.dataset.bg; changed(); });
-
-/* moving, resizing, turning */
-let lastTap = {}, editing = null;
-function startEdit(id) {
-  const node = boardEl.querySelector(`[data-id="${id}"]`), it = findItem(id); if (!node || !it) return;
-  const t = node.querySelector(".txt"); editing = { id, t };
-  t.contentEditable = "true"; t.focus();
-  try { const r = document.createRange(); r.selectNodeContents(t); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (err) {}
-  t.addEventListener("blur", commitEdit, { once: true });
-}
-function commitEdit() {
-  if (!editing) return; const { id, t } = editing; editing = null;
-  const it = findItem(id); if (!it) return;
-  it.text = t.innerText.replace(/\n$/, ""); t.contentEditable = "false"; fixHeight(it); changed();
-}
-boardEl.addEventListener("pointerdown", e => {
-  const node = e.target.closest(".bi");
-  if (node && editing && node.dataset.id === editing.id && e.target.closest('[contenteditable="true"]')) return;
-  if (editing) commitEdit();
-  if (!node) { select(null); return; }
-  e.preventDefault();
-  const it = findItem(node.dataset.id); if (!it) return;
-  const now = Date.now();
-  if (it.type === "note" && !e.target.dataset.h && lastTap.id === it.id && now - lastTap.t < 450) { lastTap = {}; startEdit(it.id); return; }
-  lastTap = { id: it.id, t: now };
-  const mode = e.target.dataset.h || "move";
-  if (sel !== it.id) select(it.id);
-  const br = boardEl.getBoundingClientRect(), s = br.width / BW;
-  drag = { id: it.id, mode, pid: e.pointerId, px: e.clientX, py: e.clientY, s, x: it.x, y: it.y, w: it.w, h: it.h, rot: it.rot, size: it.size, cx: br.left + (it.x + it.w / 2) * s, cy: br.top + (it.y + it.h / 2) * s, moved: false };
-  drag.d0 = Math.hypot(e.clientX - drag.cx, e.clientY - drag.cy) || 1;
-  try { boardEl.setPointerCapture(e.pointerId); } catch (err) {}
-});
-boardEl.addEventListener("pointermove", e => {
-  if (!drag || e.pointerId !== drag.pid) return;
-  const it = findItem(drag.id); if (!it) return;
-  const dx = (e.clientX - drag.px) / drag.s, dy = (e.clientY - drag.py) / drag.s;
-  if (!drag.moved && Math.hypot(dx, dy) < 2) return;
-  drag.moved = true;
-  if (drag.mode === "move") { it.x = Math.round(drag.x + dx); it.y = Math.round(drag.y + dy); }
-  else if (drag.mode === "size") {
-    const k = Math.hypot(e.clientX - drag.cx, e.clientY - drag.cy) / drag.d0, cx = drag.x + drag.w / 2, cy = drag.y + drag.h / 2;
-    it.w = Math.round(clamp(drag.w * k, 70, 1500));
-    if (it.type === "note") it.size = Math.round(clamp(drag.size * it.w / drag.w, 12, 160));
-    if (it.type === "photo" || it.type === "strip") it.h = Math.round(drag.h * it.w / drag.w); else fixHeight(it);
-    it.x = Math.round(cx - it.w / 2); it.y = Math.round(cy - it.h / 2);
-  } else if (drag.mode === "rot") {
-    let a = Math.atan2(e.clientY - drag.cy, e.clientX - drag.cx) * 180 / Math.PI + 90;
-    if (a > 180) a -= 360; if (Math.abs(a) < 2.5) a = 0; it.rot = Math.round(a * 10) / 10;
-  }
-  const node = boardEl.querySelector(`[data-id="${it.id}"]`);
-  if (node) { if (drag.mode === "size" && (it.type === "note" || it.type === "swatch")) node.replaceWith(itemEl(it)); else applyBox(node, it); }
-});
-function endDrag(e) { if (!drag || (e && e.pointerId !== drag.pid)) return; const moved = drag.moved; drag = null; if (moved) changed(); }
-boardEl.addEventListener("pointerup", endDrag);
-boardEl.addEventListener("pointercancel", endDrag);
-document.addEventListener("keydown", e => {
-  if (current !== "moodboard" || !sel || !board) return;
-  const a = document.activeElement; if (a && (a.isContentEditable || /INPUT|TEXTAREA|SELECT/.test(a.tagName))) return;
-  const it = findItem(sel); if (!it) return;
-  const step = e.shiftKey ? 20 : 4, moves = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] };
-  if (e.key === "Delete" || e.key === "Backspace") { e.preventDefault(); board.items = board.items.filter(i => i.id !== sel); sel = null; changed(); }
-  else if (moves[e.key]) { e.preventDefault(); it.x += moves[e.key][0]; it.y += moves[e.key][1]; changed(true); }
-  else if (e.key === "Escape") select(null);
-});
-
-/* the tune-it panel */
-function renderMbPanel() {
-  if (!board) return;
-  renderBgChips();
-  $("#mbPalName").textContent = palName();
-  const box = $("#mbSel"), it = sel && findItem(sel);
-  if (!it) { box.innerHTML = `<p class="hint">Click an item to edit it. Drag the round handles to resize or rotate it.</p>`; return; }
-  const chip = (attr, v, label, on) => `<button class="chip" data-${attr}="${v}" aria-pressed="${on}">${label}</button>`;
-  let h = "";
-  if (it.type === "note") {
-    h += `<div class="ctl"><label for="mbText">Words</label><textarea id="mbText">${esc(it.text)}</textarea></div>`;
-    h += `<span class="sub">Lettering</span><div class="chips">${chip("font", 0, "Dumpling", it.font === 0)}${chip("font", 1, "Bread Pan", it.font === 1)}</div>`;
-    h += `<div class="ctl"><label for="mbSize">Size <output>${it.size}px</output></label><input type="range" id="mbSize" min="16" max="140" value="${it.size}"></div>`;
-    h += `<span class="sub">Ink</span><div class="inks">${NOTE_INKS.map(([n, c]) => `<button class="ink" data-ink="${c}" title="${n}" aria-label="${n}" aria-pressed="${it.ink === c}" style="background:${c}"></button>`).join("")}</div>`;
-    h += `<span class="sub">Backing</span><div class="chips">${chip("nbg", "none", "None", it.bg === "none")}${chip("nbg", "card", "Card", it.bg === "card")}${chip("nbg", "sticky", "Sticky note", it.bg === "sticky")}</div>`;
-  } else if (it.type === "photo") {
-    h += `<span class="sub">Frame</span><div class="chips">${chip("frame", "border", "Paper border", it.frame === "border")}${chip("frame", "tape", "Taped", it.frame === "tape")}${chip("frame", "clean", "No frame", it.frame === "clean")}</div>`;
-  } else if (it.type === "swatch") {
-    h += `<div class="row"><input type="color" id="mbColor" value="${it.color}" aria-label="Swatch color"><div class="ctl" style="flex:1"><label for="mbName">Name</label><input type="text" id="mbName" value="${esc(it.name || "")}"></div></div>`;
-  }
-  h += `<div class="ctl"><label for="mbRot">Turn <output>${it.rot}°</output></label><input type="range" id="mbRot" min="-45" max="45" step=".5" value="${clamp(it.rot, -45, 45)}"></div>`;
-  h += `<div class="btns"><button class="btn ghost" data-act="front">Bring forward</button><button class="btn ghost" data-act="back">Send back</button><button class="btn ghost" data-act="dup">Duplicate</button><button class="btn ghost" data-act="del">Remove</button></div>`;
-  box.innerHTML = h;
-}
-$("#mbSel").addEventListener("input", e => {
-  const it = sel && findItem(sel); if (!it) return; const t = e.target;
-  if (t.id === "mbText") it.text = t.value;
-  if (t.id === "mbSize") { it.size = +t.value; t.previousElementSibling.querySelector("output").textContent = it.size + "px"; }
-  if (t.id === "mbRot") { it.rot = +t.value; t.previousElementSibling.querySelector("output").textContent = it.rot + "°"; }
-  if (t.id === "mbColor") it.color = t.value;
-  if (t.id === "mbName") it.name = t.value;
-  fixHeight(it); changed(true);
-});
-$("#mbSel").addEventListener("click", e => {
-  const it = sel && findItem(sel); if (!it) return; const b = e.target.closest("button"); if (!b) return;
-  const d = b.dataset, idx = board.items.indexOf(it);
-  if (d.font != null) it.font = +d.font;
-  if (d.ink) it.ink = d.ink;
-  if (d.nbg) it.bg = d.nbg;
-  if (d.frame) { const pOld = it.frame === "clean" ? 0 : FRAME, pNew = d.frame === "clean" ? 0 : FRAME, ar = (it.h - pOld * 2) / (it.w - pOld * 2); it.frame = d.frame; it.h = Math.round((it.w - pNew * 2) * ar + pNew * 2); }
-  if (d.act === "front" && idx < board.items.length - 1) { board.items.splice(idx, 1); board.items.splice(idx + 1, 0, it); }
-  if (d.act === "back" && idx > 0) { board.items.splice(idx, 1); board.items.splice(idx - 1, 0, it); }
-  if (d.act === "dup") { const c = JSON.parse(JSON.stringify(it)); c.id = newId(); c.x += 30; c.y += 30; board.items.splice(idx + 1, 0, c); sel = c.id; }
-  if (d.act === "del") { board.items.splice(idx, 1); sel = null; }
-  fixHeight(it); changed();
-});
-
-/* drawing for export */
 function rrect(x, X, Y, W, H, r) { x.beginPath(); if (x.roundRect) x.roundRect(X, Y, W, H, r); else x.rect(X, Y, W, H); }
-const shadowOn = x => { x.shadowColor = "rgba(60,40,20,.22)"; x.shadowBlur = 10; x.shadowOffsetY = 3; };
-const shadowOff = x => { x.shadowColor = "transparent"; x.shadowBlur = 0; x.shadowOffsetY = 0; };
-function drawCover(x, img, X, Y, W, H) {
-  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height; if (!iw || !ih) return;
-  const s = Math.max(W / iw, H / ih), sw = W / s, sh = H / s; x.drawImage(img, (iw - sw) / 2, (ih - sh) / 2, sw, sh, X, Y, W, H);
-}
-function drawItem(x, it) {
-  const w = it.w, h = it.h, L = -w / 2, T = -h / 2;
-  if (it.type === "photo") {
-    const p = it.frame === "clean" ? 0 : FRAME;
-    if (p) { shadowOn(x); x.fillStyle = "#fbf7ec"; x.fillRect(L, T, w, h); shadowOff(x); }
-    drawCover(x, loadImg(it.src), L + p, T + p, w - p * 2, h - p * 2);
-    if (it.frame === "tape") { x.save(); x.translate(0, T); x.rotate(-4 * Math.PI / 180); x.fillStyle = "rgba(224,168,90,.72)"; x.fillRect(-60, -14, 120, 28); x.restore(); }
-  } else if (it.type === "swatch") {
-    const { ns, hs } = swatchText(it);
-    shadowOn(x); x.fillStyle = "#fbf7ec"; rrect(x, L, T, w, h, 14); x.fill(); shadowOff(x);
-    x.fillStyle = it.color; rrect(x, L + 10, T + 10, w - 20, w - 20, 8); x.fill();
-    x.textBaseline = "top"; x.fillStyle = "#6b402d"; x.font = `${ns}px ${FAMS[0]}`; x.fillText(it.name || "", L + 12, T + w, w - 20);
-    x.fillStyle = "#666a57"; x.font = `${hs}px ${FAMS[0]}`; x.fillText(it.color.toUpperCase(), L + 12, T + w + ns + 6, w - 20);
-  } else if (it.type === "strip") {
-    x.save(); rrect(x, L, T, w, h, 10); x.clip(); const n = it.colors.length; it.colors.forEach((c, i) => { x.fillStyle = c; x.fillRect(L + i * w / n, T, w / n + 1, h); }); x.restore();
-  } else if (it.type === "note") {
-    const lay = noteLayout(it, x);
-    if (it.bg !== "none") { shadowOn(x); x.fillStyle = it.bg === "sticky" ? "#e8d9b0" : "#fbf7ec"; rrect(x, L, T, w, h, it.bg === "sticky" ? 4 : 10); x.fill(); shadowOff(x); }
-    x.font = `${it.size}px ${FAMS[it.font]}`; x.fillStyle = it.ink; x.textBaseline = "top";
-    lay.lines.forEach((ln, i) => x.fillText(ln, L + lay.pad, T + lay.pad + i * lay.lh + (lay.lh - it.size) / 2));
-  }
-}
-function drawAt(x, it, ox = 0, oy = 0) { x.save(); x.translate(it.x + it.w / 2 - ox, it.y + it.h / 2 - oy); x.rotate(it.rot * Math.PI / 180); drawItem(x, it); x.restore(); }
-function itemBounds(it) {
-  const a = it.rot * Math.PI / 180, c = Math.abs(Math.cos(a)), s = Math.abs(Math.sin(a)), bw = it.w * c + it.h * s, bh = it.w * s + it.h * c, pad = 30;
-  const cx = it.x + it.w / 2, cy = it.y + it.h / 2;
-  return { left: Math.floor(cx - bw / 2 - pad), top: Math.floor(cy - bh / 2 - pad), w: Math.ceil(bw + pad * 2), h: Math.ceil(bh + pad * 2) };
-}
-async function boardReady() {
-  try { await Promise.all([document.fonts.load(`40px "TAY Dumpling"`), document.fonts.load(`40px "TAY Bread Pan", "TAY Dumpling"`)]); } catch (e) {}
-  await Promise.all(board.items.filter(i => i.type === "photo").map(i => { const im = loadImg(i.src); return im.complete ? null : new Promise(r => { im.onload = im.onerror = r; }); }));
-}
-function drawBoard() { const c = newCanvas(BW, BH), x = c.getContext("2d"); x.drawImage(boardBg(board.bg).canvas, 0, 0); board.items.forEach(it => drawAt(x, it)); return c; }
-const itemLabel = it => it.type === "note" ? "Note · " + (it.text || "").split("\n")[0].slice(0, 30) : it.type === "swatch" ? "Swatch · " + (it.name || it.color) : it.type === "strip" ? "Colors · " + (it.name || "") : "Photo · " + (it.name || "");
-$("#mbPNG").addEventListener("click", async () => { ensureBoard(); await boardReady(); saveFile("trailhead-mood-board.png", await toBlob(drawBoard())); });
-$("#mbPSD").addEventListener("click", async () => {
-  ensureBoard(); await boardReady();
-  const layers = [{ name: "Board · " + board.bg, canvas: cloneCanvas(boardBg(board.bg).canvas) }];
-  board.items.forEach(it => { const b = itemBounds(it), c = newCanvas(b.w, b.h); drawAt(c.getContext("2d"), it, b.left, b.top); layers.push({ name: itemLabel(it), canvas: c, left: b.left, top: b.top }); });
-  savePSD("trailhead-mood-board", layers, drawBoard());
-});
 
 /* =========================================================
    TEXTURE MAKER
@@ -4385,15 +4020,6 @@ $("#lmSave").addEventListener("click", async () => {
   const fam = slug(lm.name || "trailhead-hand") || "trailhead-hand";
   saveFile(fam + "-font.zip", makeZip([{ name: fam + ".otf", data: new Uint8Array(lmFont.toArrayBuffer()) }]));
 });
-$("#lmPin").addEventListener("click", async () => {
-  await rebuild(); if (!lmFont) { toast("Draw at least one letter first."); return; }
-  const t = $("#lmText").value || lm.name, c = newCanvas(1200, 360), x = c.getContext("2d");
-  await document.fonts.load(`120px "Your Letters"`).catch(() => {});
-  x.fillStyle = "#f7f0dd"; x.fillRect(0, 0, 1200, 360); x.fillStyle = LM_INK; x.textBaseline = "middle";
-  let size = 150; x.font = `${size}px "Your Letters", "TAY Dumpling"`; while (x.measureText(t).width > 1100 && size > 30) { size -= 6; x.font = `${size}px "Your Letters", "TAY Dumpling"`; }
-  x.fillText(t, 50, 180);
-  ensureBoard(); addPhotoCanvas(c, lm.name + " specimen", "border"); board.example = false; persist(); toast("Pinned your letters to the mood board");
-});
 
 /* tracing a photo of letters */
 let lmPhotoCanvas = null, lmComps = null;
@@ -4511,7 +4137,7 @@ function grainLayer(W, H, ink) {
   const t = makeTexture("Paper grain", Math.round(W / 2), Math.round(H / 2), { amount: 70, scale: 4 }, 11, ink), c = newCanvas(W, H);
   c.getContext("2d").drawImage(t, 0, 0, W, H); grainCache = { [key]: c }; return c;
 }
-const SOURCE_NAMES = ["Poster", "Trail map", "Line art", "Screen print", "Photo to topo", "Linocut", "Cyanotype", "Riso", "Golden hour", "Sky print", "Sound print", "Stitch pattern", "Paper cut", "Growth pattern", "Letterpress", "Leaf print", "Mood board", "Texture", "Working photo", "My file"];
+const SOURCE_NAMES = ["Poster", "Trail map", "Line art", "Screen print", "Photo to topo", "Linocut", "Cyanotype", "Riso", "Golden hour", "ASCII art", "Pixel cutout", "Sky print", "Sound print", "Stitch pattern", "Paper cut", "Growth pattern", "Letterpress", "Leaf print", "Texture", "Working photo", "My file"];
 const uploads = {};
 function fillSourceSelect(sel, def, tool) { sel.innerHTML = SOURCE_NAMES.filter(n => n !== "My file" || uploads[tool]).map(n => `<option>${n}</option>`).join(""); sel.value = def; }
 async function getSource(name, tool, opts = {}) {
@@ -4529,11 +4155,12 @@ async function getSource(name, tool, opts = {}) {
   if (name === "Letterpress") return (lpResult || renderLetterpress(1, null)).composite;
   if (name === "Leaf print") return (lfResult || renderLeaf()).styled;
   if (name === "Golden hour") return renderRelight().composite;
+  if (name === "ASCII art") return renderAscii().composite;
+  if (name === "Pixel cutout") return renderPixel().composite;
   if (name === "Badge") return renderBadge().composite;
   if (name === "Trail map") { tmEnsure(); return renderMap().composite; }
   if (name === "Line art") return laRenderAll().full;
   if (name === "Screen print") return spRenderAll().preview;
-  if (name === "Mood board") { ensureBoard(); await boardReady(); return drawBoard(); }
   if (name === "Texture") { if (!txResult) renderTex(); return txResult.full; }
   if (name === "Working photo") return src;
   if (name === "My file") return uploads[tool] || null;
@@ -5199,15 +4826,6 @@ async function pngWithDpi(canvas, dpi) {
 }
 $("#pcSave").addEventListener("click", async () => { if (!pcCanvas || !pcPrint) { toast("Pick a file to check first."); return; } const c = buildPrintCanvas(); saveFile(`print-ready-${pcPrint.inW}x${pcPrint.inH}in-${Math.round(pcPrint.dpi)}dpi.png`, await pngWithDpi(c, pcPrint.dpi)); });
 
-/* pins from the new tools */
-const PIN_MAKERS = {
-  lineart: () => [(laResult || laRenderAll()).full, imgInfo.name + " · Line art"],
-  screenprint: () => [(spResult || spRenderAll()).preview, imgInfo.name + " · Screen print", "tape"],
-  poster: () => [renderPoster().composite, "Poster · " + $("#poHead").value],
-  badge: () => [renderBadge().composite, "Badge · " + $("#bdCenter").value, "clean", true],
-  trailmap: () => { tmEnsure(); return [renderMap().composite, "Map · " + (tm.title || "")]; },
-  mockups: () => mkResult ? [mkResult, "Mockup · " + mkScene] : null
-};
 
 /* =========================================================
    SHARED: art from any tool or example photo, fast blurs
@@ -6506,7 +6124,7 @@ async function drawCW() {
   $$("#cwGrid .cw-card").forEach(b => { const img = cwRecolor(cwArt, b.dataset.cw, 260), c = b.querySelector("canvas"); c.width = img.width; c.height = img.height; c.getContext("2d").drawImage(img, 0, 0); });
   cwBig();
 }
-function cwBig() { const img = cwRecolor(cwArt, cwPal, 1200), o = $("#cwOut"); o.width = img.width; o.height = img.height; o.getContext("2d").drawImage(img, 0, 0); $("#cwPick").textContent = "Showing " + cwPal + ". Saves at full size as a PNG."; }
+function cwBig() { const img = cwRecolor(cwArt, cwPal, 1200), o = $("#cwOut"); o.width = img.width; o.height = img.height; o.getContext("2d").drawImage(img, 0, 0); $("#cwPick").textContent = "Showing " + cwPal + "."; }
 $("#cwGrid").addEventListener("click", e => { const b = e.target.closest("[data-cw]"); if (!b) return; cwPal = b.dataset.cw; $$("#cwGrid .cw-card").forEach(c => c.setAttribute("aria-pressed", String(c === b))); cwBig(); $("#cwOut").scrollIntoView({ behavior: "smooth", block: "nearest" }); });
 $("#cwSave").addEventListener("click", async () => { if (!cwArt) return; saveFile("trailhead-colorway-" + slug(cwPal) + ".png", await toBlob(cwRecolor(cwArt, cwPal, 2400))); });
 $("#cwSheet").addEventListener("click", async () => {
@@ -7173,7 +6791,6 @@ function lkUsePalette(hexes, name) {
   const sorted = hexes.map(h => ({ h, l: hexToRgb(h).reduce((a, v) => a + v, 0) })).sort((a, b) => a.l - b.l);
   palette = sorted.map(o => ({ name: earthName(o.h), hex: o.h })); palSource = null; renderPalette(); show("palette"); window.scrollTo({ top: 0 }); toast("Palette pulled from a year of " + name);
 }
-PIN_MAKERS.lake = () => [(lkResult || (lkDraw(), lkResult)), "Lake year · " + (lkMeta ? lkMeta.place : "")];
 
 /* =========================================================
    POCKET SCANNER
@@ -7630,7 +7247,6 @@ VTAB.clip = {
 $("#vlSave").addEventListener("click", () => vidRecord("clip", "trailhead-clip-" + slug(vlLook + " " + vlFx), $("#vlStatus")));
 $("#vlGIF").addEventListener("click", () => vidGIF("clip", "trailhead-clip-" + slug(vlLook + " " + vlFx), $("#vlStatus")));
 $("#vlStill").addEventListener("click", () => vidStill("clip", "trailhead-frame-" + slug(vlLook)));
-PIN_MAKERS.clip = () => [vidCopy($("#vlOut")), "Clip · " + vlLook + (vlFx !== "None" ? " · " + vlFx : "")];
 
 /* =========================================================
    CINEMAGRAPH: a held still, with the live clip showing through a painted mask.
@@ -7737,7 +7353,6 @@ $("#cgOut").addEventListener("pointermove", e => { if (cgPaint === e.pointerId) 
 $("#cgGIF").addEventListener("click", () => vidGIF("cinemagraph", "trailhead-cinemagraph", $("#cgStatus"), { maxSec: 8 }));
 $("#cgSave").addEventListener("click", () => vidRecord("cinemagraph", "trailhead-cinemagraph", $("#cgStatus")));
 $("#cgStill").addEventListener("click", async () => { if (!cgHold) return; const c = vidCopy(cgHold); saveFile("trailhead-cinemagraph-still.png", await pngWithDpi(c, 72)); });
-PIN_MAKERS.cinemagraph = () => { const c = newCanvas(cgW || 2, cgH || 2), x = c.getContext("2d"); x.filter = CG_LOOKS[$("#cgLook").value] || "none"; if (cgHold) x.drawImage(cgHold, 0, 0); return [c, "Cinemagraph"]; };
 
 /* =========================================================
    TITLES: the clip, cropped, with animated type over it.
@@ -7865,7 +7480,6 @@ VTAB.rotoscope = {
 $("#rtSave").addEventListener("click", () => vidRecord("rotoscope", "trailhead-rotoscope", null));
 $("#rtGIF").addEventListener("click", () => vidGIF("rotoscope", "trailhead-rotoscope", null, { fps: +$("#rtRate").value, maxSec: 6 }));
 $("#rtStill").addEventListener("click", () => vidStill("rotoscope", "trailhead-rotoscope-frame"));
-PIN_MAKERS.rotoscope = () => [vidCopy($("#rtOut")), "Rotoscope sketch"];
 
 /* =========================================================
    MOVING TYPE
@@ -7998,7 +7612,6 @@ $("#mtGIF").addEventListener("click", async () => {
   mtBusy = false;
 });
 $("#mtStill").addEventListener("click", async () => saveFile("trailhead-moving-type.png", await pngWithDpi($("#mtOut"), 72)));
-PIN_MAKERS.movingtype = () => [vidCopy($("#mtOut")), "Moving type"];
 
 /* =========================================================
    PALETTE LIBRARY (lives on the Palettes page)
@@ -8110,6 +7723,320 @@ function drawRE() {
 const reName = () => slug(imgInfo.name) + "-" + slug(reMood);
 $("#rePNG").addEventListener("click", async () => saveFile(reName() + ".png", await toBlob((reResult || renderRelight()).composite)));
 $("#rePSD").addEventListener("click", () => { const r = reResult || renderRelight(); savePSD(reName(), [{ name: "Original", canvas: r.orig }, { name: reMood, canvas: cloneCanvas(r.composite) }], cloneCanvas(r.composite)); });
+
+/* =========================================================
+   ASCII ART
+   The photo is sampled on a grid of monospace cells. Each cell gets a character
+   whose weight matches how dark (or light) that spot is. "Where" can limit the
+   letters to the dark or light parts, which cuts the subject out on the grid.
+   ========================================================= */
+const AS_MONO = 'ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace';
+const AS_SETS = {
+  Classic: " .:-=+*#%@",
+  Dense: " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$",
+  Letters: " ilrcvxsoeaunzkhdbqpgmwKHDBQGMWN",
+  Symbols: " .,-~:;=!*+<>?%&$#@",
+  Blocks: " \u2591\u2592\u2593\u2588",
+  Binary: " 01"
+};
+const AS_LOOKS = {
+  "Sky cutout": { set: "Symbols", cell: 20, contrast: 55, where: "light", cut: 62, behind: "photo", ink: "#f4ecd6", paper: "#7fa3c4", fill: true, color: false, invert: true },
+  "Typewriter": { set: "Classic", cell: 15, contrast: 50, where: "all", cut: 45, behind: "paper", ink: "#2b2622", paper: "#f3ead2", fill: false, color: false, invert: false },
+  "Terminal": { set: "Dense", cell: 12, contrast: 45, where: "all", cut: 45, behind: "paper", ink: "#8fd49a", paper: "#11160f", fill: false, color: false, invert: true },
+  "Full color": { set: "Dense", cell: 11, contrast: 40, where: "all", cut: 45, behind: "paper", ink: "#f4ecd6", paper: "#16120f", fill: false, color: true, invert: true },
+  "Blocks": { set: "Blocks", cell: 14, contrast: 50, where: "all", cut: 45, behind: "paper", ink: "#3b2f27", paper: "#efe4cc", fill: false, color: false, invert: false },
+  "Words": { set: "Your words", cell: 16, contrast: 55, where: "all", cut: 50, behind: "paper", ink: "#f4ecd6", paper: "#2b2420", fill: false, color: false, invert: true }
+};
+let asLook = "Sky cutout", asResult = null;
+$("#asLooks").innerHTML = Object.keys(AS_LOOKS).map(k => `<button class="chip" data-as="${k}" aria-pressed="${k === asLook}">${k}</button>`).join("");
+function asApply(k) {
+  asLook = k; const m = AS_LOOKS[k];
+  $("#asSet").value = m.set; $("#asCell").value = m.cell; $("#asContrast").value = m.contrast; $("#asWhere").value = m.where; $("#asCut").value = m.cut;
+  $("#asBehind").value = m.behind; $("#asInk").value = m.ink; $("#asPaper").value = m.paper; $("#asFill").checked = m.fill; $("#asColor").checked = m.color; $("#asInvert").checked = m.invert;
+  $$("#asLooks .chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.as === k)));
+}
+$("#asLooks").addEventListener("click", e => { const b = e.target.closest("[data-as]"); if (b) { asApply(b.dataset.as); scheduleAS(); } });
+["asSet", "asWords", "asCell", "asContrast", "asWhere", "asCut", "asBehind", "asInk", "asPaper", "asFill", "asColor", "asInvert"].forEach(id => $("#" + id).addEventListener("input", scheduleAS));
+function renderAscii() {
+  const s = Math.min(1, 1200 / Math.max(src.width, src.height)), W = Math.round(src.width * s), H = Math.round(src.height * s);
+  const cell = +$("#asCell").value * Math.max(W, H) / 1200, cw = cell * .6, cols = Math.max(4, Math.floor(W / cw)), rows = Math.max(3, Math.floor(H / cell));
+  const ox = (W - cols * cw) / 2, oy = (H - rows * cell) / 2;
+  /* average each cell by scaling the photo down to one pixel per cell */
+  const sm = newCanvas(cols, rows), sx = sm.getContext("2d", { willReadFrequently: true }); sx.imageSmoothingEnabled = true; sx.imageSmoothingQuality = "high";
+  sx.drawImage(src, ox / s, oy / s, cols * cw / s, rows * cell / s, 0, 0, cols, rows);
+  const px = sx.getImageData(0, 0, cols, rows).data, n = cols * rows, L = new Float32Array(n);
+  for (let i = 0; i < n; i++) L[i] = (.2126 * px[i * 4] + .7152 * px[i * 4 + 1] + .0722 * px[i * 4 + 2]) / 255;
+  /* stretch the tones so a flat photo still uses the whole set of characters */
+  const sorted = Float32Array.from(L).sort(), lo = sorted[Math.floor(n * .02)], hi = sorted[Math.min(n - 1, Math.floor(n * .98))], span = Math.max(.05, hi - lo);
+  const k = .5 + +$("#asContrast").value / 50, invert = $("#asInvert").checked;
+  for (let i = 0; i < n; i++) L[i] = clamp(((L[i] - lo) / span - .5) * k + .5, 0, 1);
+  /* which cells get letters */
+  const where = $("#asWhere").value, cut = +$("#asCut").value / 100; let mask = new Uint8Array(n).fill(1);
+  if (where !== "all") {
+    for (let i = 0; i < n; i++) mask[i] = where === "dark" ? L[i] < cut : L[i] > cut;
+    const m2 = new Uint8Array(n); /* tidy single stray cells so the cut edge reads as a shape */
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) { let c = 0, t = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const yy = y + dy, xx = x + dx; if (yy < 0 || xx < 0 || yy >= rows || xx >= cols) continue; t++; c += mask[yy * cols + xx]; } m2[y * cols + x] = c * 2 > t ? 1 : 0; }
+    mask = m2;
+    /* spread the tones inside the cut shape over the whole set, so the shape reads as solid type */
+    let a = 1, z = 0; for (let i = 0; i < n; i++) if (mask[i]) { if (L[i] < a) a = L[i]; if (L[i] > z) z = L[i]; }
+    if (z - a > .02) for (let i = 0; i < n; i++) if (mask[i]) L[i] = (L[i] - a) / (z - a);
+  }
+  const setName = $("#asSet").value, words = ($("#asWords").value || "trailhead").replace(/\s+/g, " ").trim() || "trailhead";
+  const ramp = AS_SETS[setName] || AS_SETS.Classic, isWords = setName === "Your words", isBlocks = setName === "Blocks";
+  const ink = $("#asInk").value, paper = $("#asPaper").value, behind = $("#asBehind").value, fill = $("#asFill").checked, color = $("#asColor").checked;
+  /* layers: what sits around the letters, the filled shape, then the letters */
+  const back = newCanvas(W, H), bx = back.getContext("2d");
+  if (behind === "photo") bx.drawImage(src, 0, 0, W, H); else if (behind === "paper") { bx.fillStyle = paper; bx.fillRect(0, 0, W, H); }
+  const shape = newCanvas(W, H), shx = shape.getContext("2d"); shx.fillStyle = paper;
+  const letters = newCanvas(W, H), lx = letters.getContext("2d");
+  lx.font = `700 ${cell}px ${AS_MONO}`; lx.textAlign = "center"; lx.textBaseline = "middle"; lx.fillStyle = ink;
+  const text = []; let wi = 0; const jit = rng(7), cutout = where !== "all";
+  for (let y = 0; y < rows; y++) {
+    let line = "";
+    for (let x = 0; x < cols; x++) {
+      const i = y * cols + x;
+      if (!mask[i]) { line += " "; continue; }
+      if (fill && where !== "all") shx.fillRect(Math.floor(ox + x * cw), Math.floor(oy + y * cell), Math.ceil(cw) + 1, Math.ceil(cell) + 1);
+      const d = invert ? L[i] : 1 - L[i];
+      let ch;
+      if (isWords) { if (d < .12) { line += " "; continue; } ch = words[wi++ % words.length]; lx.globalAlpha = .35 + .65 * d; }
+      else if (cutout && !isBlocks) { /* inside a cut shape: mixed characters of a similar weight, so flat sky still looks typed */
+        const dd = clamp(.3 + d * .5 + (jit() - .5) * .35, .12, .95); ch = ramp[Math.max(1, Math.round(dd * (ramp.length - 1)))]; lx.globalAlpha = 1;
+      } else { ch = ramp[Math.round(d * (ramp.length - 1))]; lx.globalAlpha = 1; }
+      line += ch; if (ch === " ") continue;
+      if (isBlocks) { /* draw shade blocks as exact squares, so no font gaps show between them */
+        lx.globalAlpha = ramp.indexOf(ch) / (ramp.length - 1);
+        if (color) lx.fillStyle = `rgb(${px[i * 4]},${px[i * 4 + 1]},${px[i * 4 + 2]})`;
+        const x0 = Math.round(ox + x * cw), y0 = Math.round(oy + y * cell); lx.fillRect(x0, y0, Math.round(ox + (x + 1) * cw) - x0, Math.round(oy + (y + 1) * cell) - y0); continue;
+      }
+      if (color) { const r0 = px[i * 4], g0 = px[i * 4 + 1], b0 = px[i * 4 + 2], up = Math.min(2.4, 235 / Math.max(1, r0, g0, b0)); lx.fillStyle = `rgb(${Math.round(r0 * up)},${Math.round(g0 * up)},${Math.round(b0 * up)})`; }
+      lx.fillText(ch, ox + x * cw + cw / 2, oy + y * cell + cell * .55);
+    }
+    text.push(line.replace(/\s+$/, ""));
+  }
+  lx.globalAlpha = 1;
+  const composite = newCanvas(W, H), cx = composite.getContext("2d"); cx.drawImage(back, 0, 0); cx.drawImage(shape, 0, 0); cx.drawImage(letters, 0, 0);
+  const orig = newCanvas(W, H); orig.getContext("2d").drawImage(src, 0, 0, W, H);
+  asResult = { W, H, composite, orig, back, shape, letters, text: text.join("\n"), behind, fill: fill && where !== "all", cols, rows };
+  return asResult;
+}
+let asT = 0;
+function scheduleAS() { clearTimeout(asT); asT = setTimeout(drawAS, 60); }
+function drawAS() {
+  showOutputs(["asCell", "asContrast", "asCut"]);
+  $("#asWordsBox").hidden = $("#asSet").value !== "Your words"; $("#asCutBox").hidden = $("#asWhere").value === "all";
+  $("#asFill").closest("label").hidden = $("#asWhere").value === "all";
+  const r = renderAscii(), o = $("#asOut"); o.width = r.W; o.height = r.H; const x = o.getContext("2d"); x.clearRect(0, 0, r.W, r.H); x.drawImage(r.composite, 0, 0);
+}
+const asName = () => slug(imgInfo.name) + "-ascii";
+$("#asPNG").addEventListener("click", async () => saveFile(asName() + ".png", await toBlob((asResult || renderAscii()).composite)));
+$("#asTXT").addEventListener("click", () => saveFile(asName() + ".txt", new Blob([(asResult || renderAscii()).text + "\n"], { type: "text/plain" })));
+$("#asCopy").addEventListener("click", async () => {
+  const t = (asResult || renderAscii()).text;
+  try { await navigator.clipboard.writeText(t); toast("Copied. Paste it somewhere with a monospace font."); } catch (e) { toast("Your browser blocked copying. Use Save as text instead."); }
+});
+$("#asPSD").addEventListener("click", () => {
+  const r = asResult || renderAscii(), layers = [{ name: "Original photo", canvas: r.orig }];
+  if (r.behind === "paper") layers.push({ name: "Paper", canvas: cloneCanvas(r.back) });
+  if (r.fill) layers.push({ name: "Shape", canvas: cloneCanvas(r.shape) });
+  layers.push({ name: "Letters", canvas: cloneCanvas(r.letters) });
+  savePSD(asName(), layers, cloneCanvas(r.composite));
+});
+
+/* =========================================================
+   PIXEL CUTOUT
+   1. Find the subject on a fine grid: a see-through PNG uses its alpha, otherwise the
+      background is flood-filled from where you click (or from the most common edge color).
+   2. Redraw the subject on a coarse square grid in one ink. Light spots inside it stay paper.
+   3. Add ink bleed and paper grain, and optionally set the clean cutout beside it.
+   ========================================================= */
+const PX_LOOKS = {
+  "Cobalt": { ink: "#1f4dff", paper: "#e2dbcd", cells: 40, detail: 60, glow: 45, grain: 40 },
+  "Pocket game": { ink: "#1f3a1c", paper: "#a9bf5a", cells: 32, detail: 55, glow: 20, grain: 25 },
+  "Riso pink": { ink: "#f2479b", paper: "#f3ead7", cells: 44, detail: 60, glow: 55, grain: 50 },
+  "Ink stamp": { ink: "#1d1a17", paper: "#f4efe4", cells: 52, detail: 65, glow: 25, grain: 45 },
+  "Night": { ink: "#f1e6c8", paper: "#1c2433", cells: 40, detail: 60, glow: 50, grain: 35 },
+  "Rust": { ink: "#a8471f", paper: "#efe2c9", cells: 30, detail: 55, glow: 35, grain: 45 }
+};
+let pxLook = "Cobalt", pxSeed = null, pxSeedVer = -1, pxResult = null;
+$("#pxLooks").innerHTML = Object.keys(PX_LOOKS).map(k => `<button class="chip" data-px="${k}" aria-pressed="${k === pxLook}">${k}</button>`).join("");
+function pxApply(k) {
+  pxLook = k; const m = PX_LOOKS[k];
+  $("#pxInk").value = m.ink; $("#pxPaper").value = m.paper; $("#pxCells").value = m.cells; $("#pxDetail").value = m.detail; $("#pxGlow").value = m.glow; $("#pxGrain").value = m.grain;
+  $$("#pxLooks .chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.px === k)));
+}
+$("#pxLooks").addEventListener("click", e => { const b = e.target.closest("[data-px]"); if (b) { pxApply(b.dataset.px); schedulePX(); } });
+["pxCut", "pxTol", "pxCells", "pxDetail", "pxLayout", "pxInk", "pxPaper", "pxGlow", "pxGrain", "pxMark"].forEach(id => $("#" + id).addEventListener("input", schedulePX));
+/* clicking the picture picks the background color; in the side-by-side layout only the cutout half maps back to the photo */
+$("#pxOut").addEventListener("pointerdown", e => {
+  const r = pxResult; if (!r) return; const b = e.currentTarget.getBoundingClientRect();
+  const x = (e.clientX - b.left) / b.width * r.OW, y = (e.clientY - b.top) / b.height * r.OH, m = r.photoBox;
+  if (!m || x < m.x || y < m.y || x > m.x + m.w || y > m.y + m.h) { toast(r.layout === "beside" ? "Click the photo on the right to pick its background." : "Switch the layout to Pixels beside the cutout, then click the photo's background."); return; }
+  pxSeed = [(x - m.x) / m.w, (y - m.y) / m.h]; pxSeedVer = imgVersion; $("#pxCut").value = "bg"; schedulePX();
+});
+/* the example: the tall pine from the Mountain photo, cropped so it stands against the sky */
+const PX_PINE = [.715, .075, .93, .52];
+function pxPine() {
+  const i = photoImgs["Mountain"]; if (!i) return null; const w = i.naturalWidth, h = i.naturalHeight, [a, b, c, d] = PX_PINE;
+  const sw = Math.round((c - a) * w), sh = Math.round((d - b) * h), k = newCanvas(sw, sh); k.getContext("2d").drawImage(i, a * w, b * h, sw, sh, 0, 0, sw, sh); return k;
+}
+/* Pixel cutout has its own two examples, each a single subject on a plain background */
+const pxWood = new Image(); pxWood.src = "photos/woodcock.jpg";
+const PX_EXAMPLES = {
+  "Lone pine": pxPine,
+  "Woodcock": () => { if (!pxWood.complete || !pxWood.naturalWidth) return null; const c = newCanvas(pxWood.naturalWidth, pxWood.naturalHeight); c.getContext("2d").drawImage(pxWood, 0, 0); return c; }
+};
+function pxUseExample(n) { const c = PX_EXAMPLES[n] && PX_EXAMPLES[n](); if (!c) return false; pxSeed = null; setImage(c, { name: n, example: true }); return true; }
+function pxMask() {
+  /* fine subject mask, about 260 cells across */
+  const s = Math.min(1, 1200 / Math.max(src.width, src.height)), W = Math.round(src.width * s), H = Math.round(src.height * s);
+  const fw = Math.min(260, W), fh = Math.max(2, Math.round(fw * H / W));
+  const c = newCanvas(fw, fh), x = c.getContext("2d", { willReadFrequently: true }); x.imageSmoothingQuality = "high"; x.drawImage(src, 0, 0, fw, fh);
+  const p = x.getImageData(0, 0, fw, fh).data, n = fw * fh, L = new Float32Array(n), subj = new Uint8Array(n);
+  for (let i = 0; i < n; i++) L[i] = (.2126 * p[i * 4] + .7152 * p[i * 4 + 1] + .0722 * p[i * 4 + 2]) / 255;
+  let clear = 0; for (let i = 0; i < n; i++) if (p[i * 4 + 3] < 128) clear++;
+  const mode = $("#pxCut").value, seed = pxSeedVer === imgVersion ? pxSeed : null; let seedAt = null, how = mode;
+  if (clear > n * .02) { how = "alpha"; for (let i = 0; i < n; i++) subj[i] = p[i * 4 + 3] >= 128; }
+  else if (mode === "all") subj.fill(1);
+  else if (mode === "dark") { const sorted = Float32Array.from(L).sort(), cut = sorted[Math.floor(n * .5)]; for (let i = 0; i < n; i++) subj[i] = L[i] < cut; }
+  else {
+    const tol = +$("#pxTol").value * 2.2, col = i => [p[i * 4], p[i * 4 + 1], p[i * 4 + 2]], dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+    const bg = new Uint8Array(n), queue = new Int32Array(n); let qh = 0, qt = 0, ref;
+    if (seed) { const si = Math.min(fh - 1, Math.floor(seed[1] * fh)) * fw + Math.min(fw - 1, Math.floor(seed[0] * fw)); ref = col(si); bg[si] = 1; queue[qt++] = si; seedAt = seed; }
+    else {
+      /* the most common color around the edge is probably the background */
+      const border = []; for (let xx = 0; xx < fw; xx++) border.push(xx, (fh - 1) * fw + xx); for (let yy = 1; yy < fh - 1; yy++) border.push(yy * fw, yy * fw + fw - 1);
+      const buckets = new Map(); border.forEach(i => { const k = (p[i * 4] >> 5) * 64 + (p[i * 4 + 1] >> 5) * 8 + (p[i * 4 + 2] >> 5); const b = buckets.get(k) || [0, 0, 0, 0]; b[0]++; b[1] += p[i * 4]; b[2] += p[i * 4 + 1]; b[3] += p[i * 4 + 2]; buckets.set(k, b); });
+      const top = [...buckets.values()].sort((a, b) => b[0] - a[0])[0]; ref = [top[1] / top[0], top[2] / top[0], top[3] / top[0]];
+      border.forEach(i => { if (!bg[i] && dist(col(i), ref) < tol) { bg[i] = 1; queue[qt++] = i; } });
+    }
+    /* grow through neighbors that are close to the background color and to each other, so soft gradients like sky get taken too */
+    while (qh < qt) {
+      const i = queue[qh++], xx = i % fw, yy = (i / fw) | 0, ci = col(i);
+      for (const j of [xx > 0 ? i - 1 : -1, xx < fw - 1 ? i + 1 : -1, yy > 0 ? i - fw : -1, yy < fh - 1 ? i + fw : -1]) {
+        if (j < 0 || bg[j]) continue; const cj = col(j);
+        if (dist(cj, ref) < tol * 1.6 && dist(cj, ci) < tol * .55) { bg[j] = 1; queue[qt++] = j; }
+      }
+    }
+    for (let i = 0; i < n; i++) subj[i] = !bg[i];
+    /* drop little islands (a clump of snow, a stray leaf) so only the main subject is left */
+    const lab = new Int32Array(n).fill(-1), sizes = []; let st = new Int32Array(n);
+    for (let i = 0; i < n; i++) {
+      if (!subj[i] || lab[i] >= 0) continue; const id = sizes.length; let sp = 0, cnt = 0; st[sp++] = i; lab[i] = id;
+      while (sp) { const k = st[--sp]; cnt++; const xx = k % fw; for (const j of [xx > 0 ? k - 1 : -1, xx < fw - 1 ? k + 1 : -1, k - fw, k + fw]) if (j >= 0 && j < n && subj[j] && lab[j] < 0) { lab[j] = id; st[sp++] = j; } }
+      sizes.push(cnt);
+    }
+    const big = Math.max(0, ...sizes);
+    for (let i = 0; i < n; i++) if (subj[i] && sizes[lab[i]] < big * .04) subj[i] = 0;
+  }
+  return { W, H, fw, fh, subj, L, how, seedAt };
+}
+function pxMaskCanvas(m, W, H) {
+  /* the fine mask scaled up smoothly, used to cut the photo out with soft edges */
+  const c = newCanvas(m.fw, m.fh), x = c.getContext("2d"), d = x.createImageData(m.fw, m.fh);
+  for (let i = 0; i < m.subj.length; i++) { d.data[i * 4 + 3] = m.subj[i] ? 255 : 0; }
+  x.putImageData(d, 0, 0);
+  const big = newCanvas(W, H), bx = big.getContext("2d"); bx.imageSmoothingEnabled = true; bx.imageSmoothingQuality = "high"; bx.drawImage(c, 0, 0, W, H); return big;
+}
+function renderPixel() {
+  const m = pxMask(), { W, H, fw, fh, subj, L } = m;
+  const cols = +$("#pxCells").value, cs = fw / cols, rows = Math.max(1, Math.round(fh / cs)), csy = fh / rows;
+  /* coarse cells: in when about half the fine cells under them are subject */
+  const inC = new Uint8Array(cols * rows), lum = new Float32Array(cols * rows);
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    let t = 0, k = 0, l = 0; const x0 = Math.floor(c * cs), x1 = Math.max(x0 + 1, Math.floor((c + 1) * cs)), y0 = Math.floor(r * csy), y1 = Math.max(y0 + 1, Math.floor((r + 1) * csy));
+    for (let y = y0; y < y1 && y < fh; y++) for (let x = x0; x < x1 && x < fw; x++) { t++; const i = y * fw + x; if (subj[i]) { k++; l += L[i]; } }
+    if (t && k / t > .45) { inC[r * cols + c] = 1; lum[r * cols + c] = l / k; }
+  }
+  /* light spots inside the subject become gaps; tones are spread over the subject first */
+  const vals = []; for (let i = 0; i < inC.length; i++) if (inC[i]) vals.push(lum[i]); vals.sort((a, b) => a - b);
+  const lo = vals.length ? vals[Math.floor(vals.length * .03)] : 0, hi = vals.length ? vals[Math.floor(vals.length * .97)] : 1, detail = +$("#pxDetail").value / 100;
+  const ink = new Uint8Array(cols * rows); let bx0 = cols, by0 = rows, bx1 = -1, by1 = -1;
+  /* a cell becomes a gap when it is light overall, or clearly lighter than the cells around it (a pale feather on a dark wing) */
+  const span = Math.max(.04, hi - lo), tn = i => (lum[i] - lo) / span;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const i = r * cols + c; if (!inC[i]) continue;
+    let sum = 0, cnt = 0; for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const rr = r + dy, cc = c + dx; if (rr < 0 || cc < 0 || rr >= rows || cc >= cols) continue; const j = rr * cols + cc; if (inC[j]) { sum += tn(j); cnt++; } }
+    const t = tn(i), local = t - sum / cnt;
+    ink[i] = detail === 0 || (t < 1.25 - detail * .6 && local < .3 - detail * .3) ? 1 : 0;
+    bx0 = Math.min(bx0, c); by0 = Math.min(by0, r); bx1 = Math.max(bx1, c); by1 = Math.max(by1, r);
+  }
+  if (bx1 < 0) { bx0 = 0; by0 = 0; bx1 = cols - 1; by1 = rows - 1; }
+  const bw = bx1 - bx0 + 1, bh = by1 - by0 + 1;
+  /* layout */
+  const layout = $("#pxLayout").value, paper = $("#pxPaper").value, inkCol = $("#pxInk").value;
+  let OW, OH, art, photoBox = null;
+  if (layout === "beside") { OW = 1600; OH = 1100; art = { x: 90, y: 110, w: 680, h: 880 }; }
+  else { OW = 1200; OH = Math.round(1200 * Math.max(.6, Math.min(1.4, bh / bw * 1.05))); art = { x: 110, y: 110, w: OW - 220, h: OH - 220 }; }
+  const px = Math.max(1, Math.floor(Math.min(art.w / bw, art.h / bh))), aw = px * bw, ah = px * bh, ax = Math.round(art.x + (art.w - aw) / 2), ay = Math.round(art.y + (art.h - ah) / 2);
+  const pix = newCanvas(OW, OH), pc = pix.getContext("2d"); pc.fillStyle = inkCol;
+  const cells = [];
+  for (let r = by0; r <= by1; r++) for (let c = bx0; c <= bx1; c++) if (ink[r * cols + c]) { cells.push([c - bx0, r - by0]); pc.fillRect(ax + (c - bx0) * px, ay + (r - by0) * px, px, px); }
+  /* ink bleed: a soft halo plus slightly blurred edges, the way ink spreads into paper */
+  const glow = +$("#pxGlow").value / 100, grain = +$("#pxGrain").value / 100;
+  const bleed = newCanvas(OW, OH), blc = bleed.getContext("2d");
+  if (glow > 0) {
+    const sw = Math.round(OW / 4), sh = Math.round(OH / 4), sm = newCanvas(sw, sh), smx = sm.getContext("2d", { willReadFrequently: true }); smx.drawImage(pix, 0, 0, sw, sh);
+    const d = smx.getImageData(0, 0, sw, sh), a = new Float32Array(sw * sh); for (let i = 0; i < a.length; i++) a[i] = d.data[i * 4 + 3];
+    scBlur(a, sw, sh, Math.max(1, Math.round(px / 4 * .9)));
+    const rgb = hexToRgb(inkCol); for (let i = 0; i < a.length; i++) { d.data[i * 4] = rgb[0]; d.data[i * 4 + 1] = rgb[1]; d.data[i * 4 + 2] = rgb[2]; d.data[i * 4 + 3] = Math.min(255, a[i] * .55 * glow); }
+    smx.putImageData(d, 0, 0); blc.imageSmoothingEnabled = true; blc.imageSmoothingQuality = "high"; blc.drawImage(sm, 0, 0, OW, OH);
+  }
+  /* the clean cutout photo, set beside the pixels */
+  let cut = null;
+  if (layout === "beside") {
+    const box = { x: 860, y: 230, w: 640, h: 640 }, s2 = Math.min(box.w / W, box.h / H), cw = Math.round(W * s2), ch = Math.round(H * s2);
+    photoBox = { x: box.x + (box.w - cw) / 2, y: box.y + (box.h - ch) / 2, w: cw, h: ch };
+    const masked = newCanvas(W, H), mx = masked.getContext("2d"); mx.drawImage(src, 0, 0, W, H);
+    if (m.how !== "all") { mx.globalCompositeOperation = "destination-in"; mx.drawImage(pxMaskCanvas(m, W, H), 0, 0); }
+    cut = newCanvas(OW, OH); cut.getContext("2d").drawImage(masked, photoBox.x, photoBox.y, cw, ch);
+  }
+  /* paper with grain */
+  const back = newCanvas(OW, OH), bk = back.getContext("2d"); bk.fillStyle = paper; bk.fillRect(0, 0, OW, OH);
+  const composite = newCanvas(OW, OH), cx = composite.getContext("2d");
+  cx.drawImage(back, 0, 0); cx.drawImage(bleed, 0, 0); cx.drawImage(pix, 0, 0); if (cut) cx.drawImage(cut, 0, 0);
+  if (grain > 0) {
+    const d = cx.getImageData(0, 0, OW, OH), q = d.data, rnd = rng(11), amt = grain * 46;
+    for (let i = 0; i < q.length; i += 4) { const v = (rnd() + rnd() - 1) * amt; q[i] = clamp(q[i] + v, 0, 255); q[i + 1] = clamp(q[i + 1] + v, 0, 255); q[i + 2] = clamp(q[i + 2] + v, 0, 255); }
+    cx.putImageData(d, 0, 0);
+  }
+  const orig = newCanvas(W, H); orig.getContext("2d").drawImage(src, 0, 0, W, H);
+  pxResult = { OW, OH, composite, pix, bleed, back, cut, orig, cells, bw, bh, px, layout, photoBox, seedAt: m.seedAt, how: m.how };
+  return pxResult;
+}
+let pxT = 0;
+function schedulePX() { clearTimeout(pxT); pxT = setTimeout(drawPX, 60); }
+function drawPX() {
+  showOutputs(["pxTol", "pxCells", "pxDetail", "pxGlow", "pxGrain"]);
+  $("#pxTolBox").hidden = $("#pxCut").value !== "bg";
+  const r = renderPixel(), o = $("#pxOut"); o.width = r.OW; o.height = r.OH; const x = o.getContext("2d"); x.drawImage(r.composite, 0, 0);
+  if ($("#pxMark").checked && r.seedAt && r.photoBox) {
+    const mx = r.photoBox.x + r.seedAt[0] * r.photoBox.w, my = r.photoBox.y + r.seedAt[1] * r.photoBox.h;
+    x.lineWidth = 3; x.strokeStyle = "#f7f0dd"; x.beginPath(); x.arc(mx, my, 12, 0, Math.PI * 2); x.stroke(); x.lineWidth = 1.5; x.strokeStyle = "#2b2622"; x.beginPath(); x.arc(mx, my, 12, 0, Math.PI * 2); x.stroke();
+  }
+}
+const pxName = () => slug(imgInfo.name) + "-pixel";
+async function pxSavePNG() { saveFile(pxName() + ".png", await toBlob((pxResult || renderPixel()).composite)); }
+async function pxSaveClear() {
+  /* only the pixels, cropped to the shape, on a see-through background */
+  const r = pxResult || renderPixel(), c = newCanvas(r.bw * r.px, r.bh * r.px), x = c.getContext("2d"); x.fillStyle = $("#pxInk").value;
+  r.cells.forEach(([cx, cy]) => x.fillRect(cx * r.px, cy * r.px, r.px, r.px)); saveFile(pxName() + "-clear.png", await toBlob(c));
+}
+function pxSaveSVG() {
+  const r = pxResult || renderPixel(), rows = new Map(); r.cells.forEach(([c, y]) => { if (!rows.has(y)) rows.set(y, []); rows.get(y).push(c); });
+  let rects = ""; /* join neighbors in a row into one rectangle so the file stays small */
+  rows.forEach((cs, y) => { cs.sort((a, b) => a - b); let s0 = cs[0], prev = cs[0]; for (let k = 1; k <= cs.length; k++) { if (cs[k] === prev + 1) { prev = cs[k]; continue; } rects += `<rect x="${s0}" y="${y}" width="${prev - s0 + 1}" height="1"/>`; s0 = prev = cs[k]; } });
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${r.bw} ${r.bh}" width="${r.bw * 20}" height="${r.bh * 20}" shape-rendering="crispEdges"><g fill="${$("#pxInk").value}">${rects}</g></svg>`;
+  saveFile(pxName() + ".svg", new Blob([svg], { type: "image/svg+xml" }));
+}
+$("#pxSaveAs").addEventListener("change", e => { const v = e.target.value; e.target.value = ""; if (v === "png") pxSavePNG(); else if (v === "clear") pxSaveClear(); else if (v === "svg") pxSaveSVG(); });
+$("#pxPSD").addEventListener("click", () => {
+  const r = pxResult || renderPixel(), layers = [{ name: "Original photo", canvas: r.orig }, { name: "Paper", canvas: cloneCanvas(r.back) }];
+  if (+$("#pxGlow").value > 0) layers.push({ name: "Ink bleed", canvas: cloneCanvas(r.bleed) });
+  layers.push({ name: "Pixels", canvas: cloneCanvas(r.pix) });
+  if (r.cut) layers.push({ name: "Cutout", canvas: cloneCanvas(r.cut) });
+  savePSD(pxName(), layers, cloneCanvas(r.composite));
+});
 
 /* =========================================================
    ZINE MAKER
@@ -8429,25 +8356,6 @@ const fgName = () => "field-guide-" + slug($("#fgTitle").value || "plate");
 $("#fgPNG").addEventListener("click", async () => saveFile(fgName() + ".png", await toBlob((await renderFieldGuide()).composite)));
 $("#fgPSD").addEventListener("click", async () => { const r = await renderFieldGuide(); savePSD(fgName(), r.layers.map(l => ({ name: l.name, canvas: l.canvas, mode: l.mode })), cloneCanvas(r.composite)); });
 
-/* pins for the new tools */
-Object.assign(PIN_MAKERS, {
-  topo: () => [(toResult || renderTopo()).composite, imgInfo.name + " · Topo"],
-  linocut: () => [(liResult || renderLinocut()).composite, imgInfo.name + " · Linocut", "tape"],
-  cyanotype: () => [(cyResult || renderCyanotype()).print, imgInfo.name + " · Cyanotype", "tape"],
-  riso: () => [(riResult || renderRiso()).composite, imgInfo.name + " · Riso", "tape"],
-  stitch: () => [sxStitched(sxResult || renderStitch(), 8), imgInfo.name + " · Stitch pattern"],
-  papercut: () => [pkComposite(pkResult || renderPapercut(), [0, 0], 1.4), imgInfo.name + " · Paper cut"],
-  sound: () => [(snResult || renderSound(1)).composite, "Sound · " + ($("#snTitle").value || snLabel), "tape"],
-  sky: () => [(skResult || renderSky(1)).composite, "Sky · " + ($("#skTitle").value || ""), "tape"],
-  growth: () => [grImage(800), "Growth · " + grKind, "clean"],
-  letterpress: () => [(lpResult || renderLetterpress(1, null)).composite, "Letterpress · " + lpCard, "tape"],
-  leaf: () => [(lfResult || renderLeaf()).styled, "Leaf · " + lfName, "tape"],
-  relight: () => [(reResult || renderRelight()).composite, imgInfo.name + " · " + reMood],
-  zine: () => znLast ? [znLast, "Zine"] : null,
-  pattern: () => paTileC ? [paSheet(paTileC, 900, 600, +$("#paZoom").value / 100), "Pattern", "clean"] : null,
-  stamp: () => stResult ? [stResult, stKind, "clean", true] : null,
-  fieldguide: () => fgResult ? [fgResult.composite, "Field guide · " + $("#fgTitle").value] : null
-});
 
 /* =========================================================
    HOME
@@ -8469,6 +8377,8 @@ const TOOL_INFO = {
   blend: ["All 16 Photoshop blend modes side by side", "multiply screen overlay layers"],
   effects: ["Halftone, dither, posterize and duotone", "newspaper dots print risograph duotone"],
   relight: ["Relight a photo as sunrise, sunset or blue hour", "golden hour light sun warm glow"],
+  pixel: ["Cut out the subject and redraw it as chunky one-ink pixels", "pixel art 8-bit bit cutout silhouette remove background svg retro sprite"],
+  ascii: ["Rebuild a photo out of typed characters", "ascii text art characters letters monospace terminal typewriter cutout"],
   camera: ["Your camera as a live linocut, topo or sketch", "webcam phone live video realtime"],
   linocut: ["Carved block print look, with carving sheets", "lino block print woodcut carve transfer relief"],
   cyanotype: ["Negatives for sun printing, with a timer", "sun print blueprint negative uv film"],
@@ -8487,7 +8397,6 @@ const TOOL_INFO = {
   fieldguide: ["A field guide card with numbered notes", "field guide card nature notes labels"],
   trailmap: ["Draw your own illustrated trail map", "map trail route hike illustrated"],
   pattern: ["Repeat patterns from your art", "repeat tile pattern wallpaper fabric seamless"],
-  moodboard: ["Pin photos, colors and notes on a board", "mood board inspiration collage pin"],
   mockups: ["See your design on a tote, tee, frame or postcard", "mockup tote shirt tee frame postcard product"],
   living: ["Prints that move when you point a phone at them", "ar augmented reality animation qr camera phone moving print"],
   lake: ["A year of a lake's color from NASA satellite photos", "nasa satellite water lake michigan color year palette data"],
@@ -8618,8 +8527,8 @@ document.addEventListener("click", async e => {
 });
 
 /* ---------- before and after strips, and thumbnails in search ---------- */
-const BA_TOOLS = ["effects", "relight", "lineart", "screenprint", "topo", "linocut", "cyanotype", "riso", "stitch", "knit", "papercut"];
-const EX_TOOLS = ["palette", "movingtype", "clip", "cinemagraph", "titles", "rotoscope", "living", "poster", "badge", "stamp", "mockups", "sky", "sound", "growth", "leaf", "letterpress", "colorway", "booklet", "zine", "trailmap", "fieldguide", "pattern", "wiggle", "moodboard", "textures"];
+const BA_TOOLS = ["effects", "relight", "ascii", "pixel", "lineart", "screenprint", "topo", "linocut", "cyanotype", "riso", "stitch", "knit", "papercut"];
+const EX_TOOLS = ["palette", "movingtype", "clip", "cinemagraph", "titles", "rotoscope", "living", "poster", "badge", "stamp", "mockups", "sky", "sound", "growth", "leaf", "letterpress", "colorway", "booklet", "zine", "trailmap", "fieldguide", "pattern", "wiggle", "textures"];
 const thumbOf = t => BA_TOOLS.includes(t) || EX_TOOLS.includes(t) ? "thumbs/" + t + ".webp" : null;
 $$("section.page").forEach(page => {
   const t = page.dataset.page, head = page.querySelector(".page-head"); if (!head || !thumbOf(t)) return;
@@ -8663,13 +8572,13 @@ themeUI();
    Photo tools get it as the working photo; layout and check tools get it as "My file". */
 const SEND_FROM = {
   adjust: () => adjResult || (renderAdjust(), adjResult), blend: () => $("#blOut"), effects: () => fxResult || (renderFx(), fxResult),
-  relight: () => getSource("Golden hour"), lineart: () => getSource("Line art"), screenprint: () => getSource("Screen print"), topo: () => getSource("Photo to topo"),
+  relight: () => getSource("Golden hour"), ascii: () => (asResult || renderAscii()).composite, pixel: () => (pxResult || renderPixel()).composite, lineart: () => getSource("Line art"), screenprint: () => getSource("Screen print"), topo: () => getSource("Photo to topo"),
   linocut: () => getSource("Linocut"), cyanotype: () => getSource("Cyanotype"), riso: () => getSource("Riso"),
   stitch: () => getSource("Stitch pattern"), papercut: () => getSource("Paper cut"), knit: () => $("#kqOut") || null, stamp: () => $("#stOut") || null,
   poster: () => getSource("Poster"), badge: () => getSource("Badge"), fieldguide: () => fgResult ? fgResult.composite : $("#fgOut"), trailmap: () => getSource("Trail map"),
   pattern: () => $("#paOut") || null, mockups: () => mkResult, letterpress: () => getSource("Letterpress")
 };
-const SEND_PHOTO = ["adjust", "blend", "effects", "relight", "extract", "linocut", "cyanotype", "screenprint", "riso", "lineart", "topo", "stitch", "knit", "papercut"];
+const SEND_PHOTO = ["adjust", "blend", "effects", "relight", "ascii", "pixel", "extract", "linocut", "cyanotype", "screenprint", "riso", "lineart", "topo", "stitch", "knit", "papercut"];
 const SEND_ART = {
   stamp: c => { uploads.stamp = c; fillArtSelect($("#stSrc"), "My file", "stamp"); },
   poster: c => { uploads.poster = c; poArtOptions("Your own art"); },
@@ -8678,25 +8587,24 @@ const SEND_ART = {
   mockups: c => { uploads.mockups = c; fillSourceSelect($("#mkSrc"), "My file", "mockups"); },
   wiggle: c => { uploads.wiggle = c; fillArtSelect($("#wgSrc"), "My file", "wiggle"); wgArt = null; wgFrames = []; },
   colorway: c => { uploads.colorway = c; fillArtSelect($("#cwSrc"), "My file", "colorway"); cwArt = null; scheduleCW(); },
-  moodboard: (c, name) => { ensureBoard(); addPhotoCanvas(c, name); },
   director: c => { uploads.director = c; fillSourceSelect($("#adSrc"), "My file", "director"); },
   printcheck: c => { uploads.printcheck = c; pcSource = "My file"; }
 };
 function sendOptions(from) {
-  const groups = [["color", ["extract", "colorway"]], ["photo", ["adjust", "blend", "effects", "relight"]], ["print", ["linocut", "cyanotype", "screenprint", "riso", "lineart", "topo"]],
-    ["handmade", ["stitch", "knit", "papercut", "stamp"]], ["layouts", ["poster", "fieldguide", "pattern", "mockups", "moodboard", "wiggle"]], ["check", ["director", "printcheck"]]];
+  const groups = [["color", ["extract", "colorway"]], ["photo", ["adjust", "blend", "effects", "relight", "ascii", "pixel"]], ["print", ["linocut", "cyanotype", "screenprint", "riso", "lineart", "topo"]],
+    ["handmade", ["stitch", "knit", "papercut", "stamp"]], ["layouts", ["poster", "fieldguide", "pattern", "mockups", "wiggle"]], ["check", ["director", "printcheck"]]];
   return `<option value="">Pick a tool…</option>` + groups.map(([sec, tabs]) => `<optgroup label="${esc(SECTIONS[sec].name)}">${tabs.filter(t => t !== from).map(t => `<option value="${t}">${esc(tabName(t))}</option>`).join("")}</optgroup>`).join("");
 }
 function fitCanvas(c, max = 2000, fill = true) { const s = Math.min(1, max / Math.max(c.width, c.height)), o = newCanvas(Math.max(1, Math.round(c.width * s)), Math.max(1, Math.round(c.height * s))), x = o.getContext("2d"); if (fill) { x.fillStyle = "#f7f0dd"; x.fillRect(0, 0, o.width, o.height); } x.drawImage(c, 0, 0, o.width, o.height); return o; }
 async function sendTo(from, to) {
   let c = null; try { c = await SEND_FROM[from](); } catch (e) {}
   if (!c || !c.width) { toast("Make something here first, then send it on."); return; }
-  const base = (imgInfo && imgInfo.name ? imgInfo.name.split(" · ")[0] : tabName(from)), name = PHOTO.has(from) || from === "relight" ? base + " · " + tabName(from) : tabName(from), img = fitCanvas(c, 2000, SEND_PHOTO.includes(to));
+  const base = (imgInfo && imgInfo.name ? imgInfo.name.split(" · ")[0] : tabName(from)), name = PHOTO.has(from) || from === "relight" || from === "ascii" || from === "pixel" ? base + " · " + tabName(from) : tabName(from), img = fitCanvas(c, 2000, SEND_PHOTO.includes(to));
   if (SEND_PHOTO.includes(to)) setImage(img, { name, example: false });
   else if (SEND_ART[to]) SEND_ART[to](img, name);
   else return;
   show(to); window.scrollTo({ top: 0 });
-  toast(`Sent to ${tabName(to)}${to === "moodboard" ? " as a new photo" : " with your " + tabName(from) + " work in it"}`);
+  toast(`Sent to ${tabName(to)} with your ${tabName(from)} work in it`);
 }
 Object.keys(SEND_FROM).forEach(tab => {
   const panel = $(`section.page[data-page="${tab}"] aside.panel`); if (!panel) return;
@@ -8769,7 +8677,7 @@ $("#miCard").addEventListener("click", e => {
 miRender();
 
 /* ---------- boot ---------- */
-const RENDER = { extract: renderExtract, adjust: renderAdjust, blend: () => renderBlend(true), effects: () => { renderFxControls(); renderFx(); }, lineart: renderLA, screenprint: renderSP, topo: drawTO, linocut: drawLI, cyanotype: drawCY, relight: drawRE, riso: drawRI, stitch: drawSX, papercut: drawPK, knit: drawKQ };
+const RENDER = { extract: renderExtract, adjust: renderAdjust, blend: () => renderBlend(true), effects: () => { renderFxControls(); renderFx(); }, lineart: renderLA, screenprint: renderSP, topo: drawTO, linocut: drawLI, cyanotype: drawCY, relight: drawRE, ascii: drawAS, pixel: drawPX, riso: drawRI, stitch: drawSX, papercut: drawPK, knit: drawKQ };
 preloadPhotos.then(() => {
 setImage(EXAMPLES["Waterfall"](1200, 800), { name: "Waterfall", example: true });
 renderPalette(); renderGradient(); applyTPreset("Trail sign"); syncAdjUI();

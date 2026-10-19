@@ -4,13 +4,14 @@ A Photoshop panel that opens what you make on the Trailhead site.
 
 - **Open a Trailhead file**: pick a zip you saved from the site. The layered .psd opens and any swatches go into your Swatches panel. You don't need to unzip anything. Plain .psd, .png and .ase files work too.
 - **Dither**: twelve methods (Atkinson, Floyd–Steinberg, Jarvis, Stucki, Sierra, Bayer 4×4 and 8×8, blue noise, halftone, line screen, crosshatch and pixel grid) in 1 to 3 inks over any background color or transparency. Dot size, angle, brightness, contrast, sharpen, blur, noise smoothing and grain, plus eight starting presets and an actual-size preview from the middle of your document.
+- **Pixel art**: cuts out the subject (found from the edge color, or from the transparency of a see-through document) and redraws it as chunky pixels in one ink. Six looks, pixels across, gaps for light details, ink and paper colors, and a preview. The pixels land right over the subject on a new layer, with an optional paper layer underneath.
 - **Trailhead filters**: runs Linocut, Photo to topo, Line art, Cyanotype print or Cyanotype negative on everything visible in your document. The result lands on a new layer, with an optional paper layer underneath, so your original stays untouched.
-- **Palettes**: all ten Trailhead palettes. Tap a color to make it your foreground color, or add a whole palette to Swatches.
+- **Palettes**: the eleven palettes from the site's Palettes page, Michigan to Folk. Tap a color to make it your foreground color, or add a whole palette to Swatches.
 - **Colors from this document**: finds the main colors in whatever you have open (3 to 8 of them) and adds them to Swatches.
 - **Pocket scanner**: press Pair a phone and scan the code. Photos taken on the site's Pocket scanner page land in your open document as a placed layer, or open as a new document. Photos are encrypted on the phone with a key only this panel has, then passed through [ntfy.sh](https://ntfy.sh), which deletes them within three hours. Keep the panel open while you scan.
 - **Textures**: paper grain, speckle, halftone, stamp wear and topo lines, painted in your chosen ink on a new layer the size of your document.
 
-Works with Photoshop 2023 (version 24.2) or newer. Filters, textures and pulling colors need Photoshop 2024 or newer.
+Works with Photoshop 2023 (version 24.2) or newer. Pixel art, dither, filters, textures and pulling colors need Photoshop 2024 or newer.
 
 ## Install
 

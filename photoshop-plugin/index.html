@@ -42,19 +42,19 @@
 
   <div class="section">
     <h2>open a download</h2>
-    <p>Pick anything you saved from the Trailhead site. Zips are fine, there's no need to unzip them first.</p>
+    <p>Open anything you saved from the site. Zips are fine.</p>
     <button id="openBtn">Open a Trailhead file</button>
   </div>
 
   <div class="section">
     <h2>pocket scanner</h2>
-    <p>Use your phone as a scanner. Press Pair a phone, scan the code with your phone's camera, and any photo you send from that page lands here.</p>
+    <p>Pair your phone, then any photo you send lands here.</p>
     <button id="scPair">Pair a phone</button><button class="ghost" id="scForget">Unpair</button>
     <div id="scQR" style="display:none; margin: 4px 0 8px;"></div>
     <p id="scLink" style="display:none; font-size: 10px; word-break: break-all;"></p>
     <label class="check"><input type="checkbox" id="scInto" checked> Place into the open document</label>
     <p id="scState">Not paired.</p>
-    <p>Photos are locked on your phone and only this panel has the key. They pass through ntfy.sh, which deletes them within three hours.</p>
+    <p class="small">Photos are encrypted on your phone. ntfy.sh deletes them within three hours.</p>
   </div>
 
   <div class="section">
@@ -62,13 +62,13 @@
     <label for="palPick">Palette</label>
     <select id="palPick"></select>
     <div class="row" id="swatches"></div>
-    <p>Tap a color to make it your foreground color.</p>
+    <p>Tap a color to use it.</p>
     <button class="ghost" id="addSwatches">Add to Swatches</button>
   </div>
 
   <div class="section">
     <h2>colors from this document</h2>
-    <p>Finds the main colors in the open document, like Image colors on the site.</p>
+    <p>Finds the main colors in the open document.</p>
     <label for="countPick">How many</label>
     <select id="countPick"></select>
     <button id="pullBtn">Pull colors</button>
@@ -78,7 +78,7 @@
 
   <div class="section">
     <h2>dither</h2>
-    <p>Turns the document into dots, pixels or engraved lines in 1 to 3 inks. The result lands on a new layer.</p>
+    <p>Dots, pixels or engraved lines in 1 to 3 inks, on a new layer.</p>
     <label for="dtPreset">Start from</label>
     <select id="dtPreset"></select>
     <label for="dtAlgo">Method</label>
@@ -108,8 +108,27 @@
   </div>
 
   <div class="section">
+    <h2>pixel art</h2>
+    <p>Cuts out the subject and redraws it as chunky pixels in one ink, on a new layer.</p>
+    <label for="pxLook">Start from</label>
+    <select id="pxLook"></select>
+    <label for="pxCut">Cut out by</label>
+    <select id="pxCut"></select>
+    <div class="rng" id="pxTolWrap"><label for="pxTol">Background range <span id="pxTolV"></span></label><input type="range" id="pxTol" min="5" max="80" value="28"></div>
+    <div class="rng"><label for="pxCells">Pixels across <span id="pxCellsV"></span></label><input type="range" id="pxCells" min="12" max="120" value="40"></div>
+    <div class="rng"><label for="pxDetail">Gaps for light details <span id="pxDetailV"></span></label><input type="range" id="pxDetail" min="0" max="100" value="60"></div>
+    <div class="inks">
+      <div class="ink"><label for="pxInk">Ink</label><div class="hexrow"><span class="chipc" id="pxInkC"></span><input type="text" id="pxInk" maxlength="7"></div></div>
+      <div class="ink"><label for="pxPaper">Paper</label><div class="hexrow"><span class="chipc" id="pxPaperC"></span><input type="text" id="pxPaper" maxlength="11"></div></div>
+    </div>
+    <p class="small">Type "transparent" for paper to get the pixels alone.</p>
+    <div class="preview"><img id="pxPrev" alt="Pixel art preview"><span id="pxPrevNote">Open a document and press Preview.</span></div>
+    <button class="ghost" id="pxPrevBtn">Preview</button><button id="pxApply">Apply pixel art</button>
+  </div>
+
+  <div class="section">
     <h2>trailhead filters</h2>
-    <p>Runs a Trailhead photo tool on everything visible in your document and puts the result on a new layer. Your original layers stay as they are.</p>
+    <p>Runs a Trailhead photo tool on your document, on a new layer.</p>
     <label for="fxPick">Filter</label>
     <select id="fxPick"></select>
     <label for="fxInk">Ink</label>
@@ -128,7 +147,7 @@
     <label for="inkPick">Ink</label>
     <select id="inkPick"></select>
     <button id="texBtn">Add texture layer</button>
-    <p>Adds a new layer the size of your document with the texture in ink on a clear background. Try Multiply or lower the opacity.</p>
+    <p>Adds the texture on a clear layer. Try Multiply.</p>
   </div>
 
 </div>
